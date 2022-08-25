@@ -18,85 +18,86 @@ import 'package:flutter/material.dart';
 
 class RoutesPatient {
   //ruta para ir al home de un paciente
-  toPatientHome(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => PatientHomePage()));
+  Future<T> toPatientHome<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PatientHomePage()));
   }
+
 //ruta para entrar a calendario de síntomas
-  toCalendar(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => CalendarScreenView2()));
+  Future<T> toCalendar<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CalendarScreenView2()));
   }
+
 //ruta para entrar al formulario de sintomas no motores
-  toNoMotorSymptoms(BuildContext context, int idPatient) {
-    Navigator.push(
+  Future<T> toNoMotorSymptoms<T>(BuildContext context, int idPatient) {
+    return Navigator.push<T>(
         context,
-        new MaterialPageRoute(
+        new MaterialPageRoute<T>(
             builder: (context) => NoMotorSymptomsFormQ(
                   idPatient: idPatient,
                 )));
   }
+
 //ruta para entrar al formulario emocional
-  toFeelsForm(BuildContext context, int idPatient) {
-    Navigator.push(
+  Future<T> toFeelsForm<T>(BuildContext context, int idPatient) {
+    return Navigator.push<T>(
         context,
-        new MaterialPageRoute(
+        new MaterialPageRoute<T>(
             builder: (context) => EmotionalFormQ(
                   idPatient: idPatient,
                 )));
   }
+
 //ruta pare entrar a la página de listado de medicinas
-  toScheduleMedicines(BuildContext context, int idPatient) {
-    Navigator.push(
+  Future<T> toScheduleMedicines<T>(BuildContext context, int idPatient) {
+    return Navigator.push<T>(
         context,
         new MaterialPageRoute(
             builder: (context) => Medicines(
                   idPatient: idPatient,
                 )));
   }
+
 //ruta para entrar a la pantalla de notificaciones
-  toNotifications(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => PatientNotifications()));
-  }
-//ruta para entrar a la pantalla de notificaciones remotas
-  toRelationsRequest(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => RelationsRequest()));
-  }
-//ruta para entrar a ver el perfil de un paciente
-  toPatientProfile(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => MyHomePage1()));
-  }
-//ruta para ver información sobre el parkinson
-  toAboutParkinson(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => Information()));
-  }
-//ruta para la edición del perfil
-  toPatientEditProfile(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => ProfileEditionPatient()));
+  Future<T> toNotifications<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PatientNotifications()));
   }
 
-  toSymptomsForm(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => symptomsFormQ()));
+//ruta para entrar a la pantalla de notificaciones remotas
+  Future<T> toRelationsRequest<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => RelationsRequest()));
   }
+
+//ruta para entrar a ver el perfil de un paciente
+  Future<T> toPatientProfile<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => MyHomePage1()));
+  }
+
+//ruta para ver información sobre el parkinson
+  Future<T> toAboutParkinson<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => Information()));
+  }
+
+//ruta para la edición del perfil
+  Future<T> toPatientEditProfile<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ProfileEditionPatient()));
+  }
+
+  Future<T> toSymptomsForm<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => symptomsFormQ()));
+  }
+
 //ruta para el formulario de sintomas no motores
-  toSymptomsFormPatient(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => SymptomsFormPatient()));
+  Future<T> toSymptomsFormPatient<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => SymptomsFormPatient()));
   }
+
 //ruta para entrar a activiades y juegos
-  toToolbox(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => toolbox()));
+  Future<T> toToolbox<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => Toolbox()));
   }
+
 //ruta para entrar al juego
-  toGame(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => CountDownTimer()));
+  Future<T> toGame<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CountDownTimer()));
   }
 }

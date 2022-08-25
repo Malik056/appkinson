@@ -1,15 +1,11 @@
 //import 'package:appkinson/views/profiles/patient/patient_profile_screen.dart';
-import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/utils/utils.dart';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/views/home_different_users/doctor/doctor_home_page.dart';
-import 'package:appkinson/views/profiles/doctor/profile_edition/profile_edition_doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:foldable_sidebar/foldable_sidebar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipedetector/swipedetector.dart';
-import '../../home_initial/home_page.dart';
 
 import 'doctor_profile_screen.dart';
 
@@ -73,9 +69,7 @@ class _MyHomePageState extends State<MyHomePage2> {
             ),
             onPressed: () {
               setState(() {
-                drawerStatus = drawerStatus == FSBStatus.FSB_OPEN
-                    ? FSBStatus.FSB_CLOSE
-                    : FSBStatus.FSB_OPEN;
+                drawerStatus = drawerStatus == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
               });
             }),
       ),
@@ -145,10 +139,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               debugPrint("Tapped Profile");
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext ctx) => DoctorProfileScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext ctx) => DoctorProfileScreen()));
             },
             leading: Icon(Icons.person),
             title: Text(
@@ -173,10 +164,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               debugPrint("Tapped Payments");
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext ctx) => DoctorHomePage()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext ctx) => DoctorHomePage()));
             },
             leading: Icon(Icons.home),
             title: Text("Ir al Home"),
@@ -220,9 +208,7 @@ class ProfileListItem extends StatelessWidget {
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem(
-      {Key key, this.icon, this.text, this.hasNavigation = true})
-      : super(key: key);
+  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -236,10 +222,11 @@ class ProfileListItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 20,
         ),
-        child: FlatButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: Colors.grey[100],
+        child: TextButton(
+          style: buildButtonStyle(
+            border: roundedRadius30,
+            background: Colors.grey[100],
+          ),
           onPressed: () {},
           child: Row(
             children: <Widget>[

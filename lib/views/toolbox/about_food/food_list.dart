@@ -1,6 +1,7 @@
+// ignore_for_file: unused_field
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_admin.dart';
-import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/administrator/form_add_item.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ List<ItemToolbox> food = [];
 var id = 0;
 
 class _ListFoodState extends State<ListFood> {
-  @override
+
   final key = GlobalKey<AnimatedListState>();
   //List<AlarmInfo> food;
   DateTime _alarmTime;
@@ -35,8 +36,7 @@ class _ListFoodState extends State<ListFood> {
               child: AnimatedList(
                 key: key,
                 initialItemCount: food.length,
-                itemBuilder: (context, index, animation) =>
-                    buildItem(food[index], index, animation),
+                itemBuilder: (context, index, animation) => buildItem(food[index], index, animation),
               ),
             ),
             /*Container(
@@ -47,20 +47,19 @@ class _ListFoodState extends State<ListFood> {
         ),
       );
 
-  Widget buildItem(item, int index, Animation<double> animation) =>
-      ItemToolboxWidgetGeneral(
+  Widget buildItem(item, int index, Animation<double> animation) => ItemToolboxWidgetGeneral(
         item: item,
         animation: animation,
         onClicked: () => removeItem(index),
       );
 
-  Widget buildInsertButton() => RaisedButton(
+  Widget buildInsertButton() => ElevatedButton(
+        style: buttonStyleBackgroundWhite,
         child: Icon(
           Icons.add,
           size: 50,
           color: Colors.lightGreen,
         ),
-        color: Colors.white,
         onPressed: () {
           RoutesAdmin().toFormAddItem(context);
         },

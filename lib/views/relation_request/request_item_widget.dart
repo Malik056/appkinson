@@ -1,3 +1,4 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/views/relation_request/request.dart';
 import 'package:flutter/material.dart';
 
@@ -37,9 +38,9 @@ class RequestItemWidget extends StatelessWidget {
               icon: Icon(Icons.delete, color: Colors.red, size: 32),
               onPressed: onClicked2,
             ),
-            subtitle: RaisedButton(
+            subtitle: ElevatedButton(
+              style: buildButtonStyle(forground: Colors.green),
               child: Text("Aceptar solicitud", style: TextStyle(fontSize: 15),),
-              textColor: Colors.green,
               onPressed: onClicked,
             ),
           ),

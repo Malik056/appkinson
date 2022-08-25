@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
 import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
@@ -320,7 +321,8 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
+                style: buildButtonStyle(background: Colors.blue),
                 // onPressed: () {
                 //showDialog(
                 //  context: context,
@@ -363,9 +365,8 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                   }
                 },
                 child: Text('Agregar'),
-                color: Colors.blue,
               ),
-              FlatButton(
+              TextButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -387,7 +388,8 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        new TextButton(
+          style: buildButtonStyle(forground: Theme.of(context).primaryColor),
           onPressed: () async {
             String token = await Utils().getToken();
             if (_keyDialogForm.currentState.validate()) {
@@ -419,14 +421,13 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
               Navigator.pop(context);
             }
           },
-          textColor: Theme.of(context).primaryColor,
           child: const Text('¡Sí!'),
         ),
-        new FlatButton(
+        new TextButton(
+          style: buildButtonStyle(forground: Theme.of(context).primaryColor),
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
           child: const Text('Cancelar'),
         ),
       ],
@@ -460,7 +461,7 @@ class PatientsListItem extends ListTile {
             //subtitle: Text(user.email),
             leading: CircleAvatar(
               //child: Icon(Icons.account_circle_outlined),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: const Text('Ver reporte'),
               ),

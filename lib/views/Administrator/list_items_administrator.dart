@@ -1,3 +1,4 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_admin.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/views/administrator/item_widget_administrator.dart';
@@ -19,7 +20,9 @@ class _ListItemsAdministratorState extends State<ListItemsAdministrator> {
   }
 
   final key = GlobalKey<AnimatedListState>();
+  // ignore: unused_field
   DateTime _alarmTime;
+  // ignore: unused_field
   String _alarmTimeString;
 
   @override
@@ -49,13 +52,13 @@ class _ListItemsAdministratorState extends State<ListItemsAdministrator> {
     onClicked: () => removeItem(index),
   );
 
-  Widget buildInsertButton() => RaisedButton(
+  Widget buildInsertButton() => ElevatedButton(
+    style: buttonStyleWhite,
     child: Icon(
       Icons.add,
       size: 50,
       color: Colors.lightGreen,
     ),
-    color: Colors.white,
     onPressed: () {
       RoutesAdmin().toFormAddItem(context);
     },

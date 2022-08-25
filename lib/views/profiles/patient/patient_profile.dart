@@ -1,18 +1,12 @@
-import 'package:appkinson/routes/routes_patient.dart';
-import 'package:appkinson/utils/utils.dart';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/views/home_different_users/patient/patient_home_page.dart';
-import 'package:appkinson/views/home_initial/home_page.dart';
-import 'package:appkinson/views/relation_request/relations_requets.dart';
 import 'package:appkinson/views/profiles/patient/patient_profile_screen.dart';
-import 'package:appkinson/views/profiles/patient/profile_edition/profile_edition_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'package:swipedetector/swipedetector.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path_provider/path_provider.dart';
 
 const bla = Colors.white;
 const kSpacingUnit = 10;
@@ -24,10 +18,7 @@ final kTitleTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
 );
 
-final kCaptionTextStyle = TextStyle(
-    fontSize: ScreenUtil().setSp(kSpacingUnit * 1.3),
-    fontWeight: FontWeight.w100,
-    color: Colors.green
+final kCaptionTextStyle = TextStyle(fontSize: ScreenUtil().setSp(kSpacingUnit * 1.3), fontWeight: FontWeight.w100, color: Colors.green
     //fontFamily: "Raleway"
     );
 
@@ -75,9 +66,7 @@ class _MyHomePageState extends State<MyHomePage1> {
             ),
             onPressed: () {
               setState(() {
-                drawerStatus = drawerStatus == FSBStatus.FSB_OPEN
-                    ? FSBStatus.FSB_CLOSE
-                    : FSBStatus.FSB_OPEN;
+                drawerStatus = drawerStatus == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
               });
             }),
       ),
@@ -151,10 +140,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               debugPrint("Tapped Profile");
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext ctx) => PatientProfileScreen()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext ctx) => PatientProfileScreen()));
             },
             leading: Icon(Icons.person),
             title: Text(
@@ -168,10 +154,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               debugPrint("Tapped Payments");
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext ctx) => PatientHomePage()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext ctx) => PatientHomePage()));
             },
             leading: Icon(Icons.home),
             title: Text("Ir al Home"),
@@ -378,9 +361,7 @@ class ProfileListItem extends StatelessWidget {
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem(
-      {Key key, this.icon, this.text, this.hasNavigation = true})
-      : super(key: key);
+  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -394,10 +375,11 @@ class ProfileListItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 20,
         ),
-        child: FlatButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: Colors.grey[100],
+        child: TextButton(
+          style: buildButtonStyle(
+            border: roundedRadius30,
+            background: Colors.grey[100],
+          ),
           onPressed: () {},
           child: Row(
             children: <Widget>[

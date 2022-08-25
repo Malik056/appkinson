@@ -1,5 +1,4 @@
 import 'package:appkinson/views/alarms_and_medicine/alarm_and_medicine_page.dart';
-import 'package:appkinson/views/Medicines/alarm.dart';
 import 'package:flutter/material.dart';
 
 class AlarmItemWidget extends StatelessWidget {

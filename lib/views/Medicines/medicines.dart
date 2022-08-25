@@ -1,16 +1,12 @@
+// ignore_for_file: unused_field
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
 import 'package:appkinson/services/end_points.dart';
-import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/alarms_and_medicine/alarm_and_medicine_page.dart';
-import 'package:appkinson/views/Medicines/alarm.dart';
 import 'package:appkinson/views/Medicines/alarm_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/intl.dart';
-import 'package:appkinson/main.dart';
 
-import 'package:foldable_sidebar/foldable_sidebar.dart';
-import '../side_menus/custom_drawer_menu.dart';
 
 class Medicines extends StatefulWidget {
   final int idPatient;
@@ -28,6 +24,7 @@ class _MedicinesState extends State<Medicines> {
   void initState() {
     super.initState();
   }
+
   final key = GlobalKey<AnimatedListState>();
   final int idPatient;
   _MedicinesState(this.idPatient);
@@ -44,11 +41,11 @@ class _MedicinesState extends State<Medicines> {
           title: Text("Alarmas de Medicamentos"),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.contact_support_rounded),
-              color: Colors.white,
-              onPressed: () {
-                information(context);
-              }),
+                icon: Icon(Icons.contact_support_rounded),
+                color: Colors.white,
+                onPressed: () {
+                  information(context);
+                }),
           ],
         ),
         body: Column(
@@ -57,8 +54,7 @@ class _MedicinesState extends State<Medicines> {
               child: AnimatedList(
                 key: key,
                 initialItemCount: items.length,
-                itemBuilder: (context, index, animation) =>
-                    buildItem(items[index], index, animation),
+                itemBuilder: (context, index, animation) => buildItem(items[index], index, animation),
               ),
             ),
             /*
@@ -70,8 +66,7 @@ class _MedicinesState extends State<Medicines> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0)),
+          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
           backgroundColor: Colors.blue[800],
           child: Icon(
@@ -82,37 +77,33 @@ class _MedicinesState extends State<Medicines> {
             print('otro idp ${idPatient.toString()}');
             int size = items.length;
             AlarmAndMedicine result = await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AlarmAndMedicinePage(idPatient: idPatient)),
-              );
-              debugPrint("tamaño " + size.toString());
-              if(size!= 0){
-                insertItem(0, result);
-              }else{
-                insertItem(0, result);
-              }
-              
-
-            
+              context,
+              MaterialPageRoute(builder: (context) => AlarmAndMedicinePage(idPatient: idPatient)),
+            );
+            debugPrint("tamaño " + size.toString());
+            if (size != 0) {
+              insertItem(0, result);
+            } else {
+              insertItem(0, result);
+            }
           },
         ),
         //  floatingActionButton:  ,
       );
 
-  Widget buildItem(item, int index, Animation<double> animation) =>
-      AlarmItemWidget(
+  Widget buildItem(item, int index, Animation<double> animation) => AlarmItemWidget(
         item: item,
         animation: animation,
         onClicked: () => removeItem(index),
       );
 
-  Widget buildInsertButton(int idPatient) => RaisedButton(
+  Widget buildInsertButton(int idPatient) => ElevatedButton(
+        style: buttonStyleBackgroundWhite,
         child: Icon(
           Icons.add,
           size: 50,
           color: Colors.lightGreen,
         ),
-        color: Colors.white,
         onPressed: () {
           print('otro idp ${idPatient.toString()}');
           RoutesDoctor().toPatientAlarmAndMedicine(context, idPatient);
@@ -138,18 +129,13 @@ class _MedicinesState extends State<Medicines> {
 }
 
 information(context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) =>
-        _buildPopupDialog(context),
-    barrierDismissible: true
-  );
+  showDialog(context: context, builder: (BuildContext context) => _buildPopupDialog(context), barrierDismissible: true);
 }
 
 Widget _buildPopupDialog(BuildContext context) {
   return AlertDialog(
     title: Text(
       "El botón “+” sirve para crear una nueva alarma de medicamento",
-      ),
+    ),
   );
 }

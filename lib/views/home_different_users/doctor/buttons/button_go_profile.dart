@@ -6,6 +6,8 @@ import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/profiles/doctor/doctor_profile_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../constants/globals.dart';
+
 //import '../../register/register_page.dart';
 
 class ButtonGoProfile extends StatefulWidget {
@@ -20,8 +22,12 @@ class _ButtonGoProfileState extends State<ButtonGoProfile> {
     return Container(
       height: 150,
       margin: EdgeInsets.symmetric(horizontal: 7),
-      child: RaisedButton(
-        shape: CircleBorder(),
+      child: ElevatedButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          horiztonalPadding: 10,
+          background: Colors.grey[50],
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
           // var doctor = await EndPoints()
@@ -41,8 +47,6 @@ class _ButtonGoProfileState extends State<ButtonGoProfile> {
           });
           RoutesDoctor().toDoctorProfile(context);
         },
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        color: Colors.grey[50],
         //textColor: Colors.white,
         child: Image.asset(
           "assets/images/4-PERFIL.png",

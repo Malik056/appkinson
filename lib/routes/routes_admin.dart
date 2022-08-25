@@ -6,18 +6,18 @@ import 'package:flutter/material.dart';
 
 class RoutesAdmin {
   //ruta hacia el home del administrador
-  toAdminHome(BuildContext context) {
-    Navigator.push(
+  Future<T> toAdminHome<T>(BuildContext context) {
+    return Navigator.push<T>(
         context, new MaterialPageRoute(builder: (context) => AdminHomePage()));
   }
   //ruta hacia la pantalla agregar item
-  toFormAddItem(BuildContext context) {
-    Navigator.push(
+  Future<T> toFormAddItem<T>(BuildContext context) {
+    return Navigator.push<T>(
         context, new MaterialPageRoute(builder: (context) => FormItemToolboxPage()));
   }
   //ruta hacia la pantallaa listar items
-  toListItems(BuildContext context) {
-    Navigator.push(
+  Future<T> toListItems<T>(BuildContext context) {
+    return Navigator.push(
         context, new MaterialPageRoute(builder: (context) => ListItemsAdministrator()));
   }
 

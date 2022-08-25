@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/calendar/calendar_screen_view2.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q1.dart';
@@ -34,38 +35,39 @@ class _symptomsFormQ29 extends State<SymptomsFormPatientQ5OFF> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: fileMedia == null
-                      ? Icon(Icons.play_circle_outline, size: 240)
-                      : (source == MediaSource.image
-                          ? Image.file(fileMedia)
-                          : VideoWidget(fileMedia)),
+                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMedia) : VideoWidget(fileMedia)),
                 ),
                 const SizedBox(height: 24),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Capturar video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => capture(MediaSource.video),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Eliminar video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => delete(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Guardar registro'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   //onPressed: () => save(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                   onPressed: () async {
-                    SymptomsFormPatientM patientForm =
-                        new SymptomsFormPatientM();
+                    SymptomsFormPatientM patientForm = new SymptomsFormPatientM();
 
                     patientForm.q1 = BringAnswerPatient1().send();
                     patientForm.q2 = BringAnswerPatient2().send();
@@ -78,20 +80,15 @@ class _symptomsFormQ29 extends State<SymptomsFormPatientQ5OFF> {
                     debugPrint('enviado');
                     String id = await Utils().getFromToken('id');
                     String token = await Utils().getToken();
-                    var savedDone = await EndPoints()
-                        .registerSymptomsFormPatient(
-                            patientForm, id, token);
+                    var savedDone = await EndPoints().registerSymptomsFormPatient(patientForm, id, token);
 
                     debugPrint(savedDone.toString());
 
                     int hora = dateChoosed.hour;
 
-                    final DateTime startTime = DateTime(dateChoosed.year,
-                        dateChoosed.month, dateChoosed.day, hora, 0, 0);
-                    final DateTime endTime =
-                        startTime.add(const Duration(hours: 1));
-                    Meeting m = new Meeting(
-                        'off', startTime, endTime, Colors.red, false);
+                    final DateTime startTime = DateTime(dateChoosed.year, dateChoosed.month, dateChoosed.day, hora, 0, 0);
+                    final DateTime endTime = startTime.add(const Duration(hours: 1));
+                    Meeting m = new Meeting('off', startTime, endTime, Colors.red, false);
                     debugPrint(m.eventName);
                     //setState(() {
                     meetingPatient.add(m);

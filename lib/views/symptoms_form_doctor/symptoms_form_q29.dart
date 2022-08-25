@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import '../symptoms_form_doctor/video_plugin.dart';
 import 'package:flutter/material.dart';
@@ -43,35 +44,37 @@ class _symptomsFormQ29 extends State<symptomsFormQ29> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: fileMedia == null
-                      ? Icon(Icons.play_circle_outline, size: 240)
-                      : (source == MediaSource.image
-                          ? Image.file(fileMedia)
-                          : VideoWidget(fileMedia)),
+                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMedia) : VideoWidget(fileMedia)),
                 ),
                 const SizedBox(height: 24),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Capturar video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => capture(MediaSource.video),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Eliminar video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => delete(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Guardar registro'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   //onPressed: () => save(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                   onPressed: () async {
                     SymptomsForm patientForm = new SymptomsForm();
                     patientForm.q1 = BringAnswer1().send();
@@ -94,8 +97,7 @@ class _symptomsFormQ29 extends State<symptomsFormQ29> {
                     */
                     patientForm.video = fileMedia;
                     patientForm.date = tempDate;
-                    var savedDone = await EndPoints().registerSymptomsForm(
-                        patientForm, currentUser['id'].toString(), token);
+                    var savedDone = await EndPoints().registerSymptomsForm(patientForm, currentUser['id'].toString(), token);
 
                     RoutesGeneral().toPop(context);
                   },

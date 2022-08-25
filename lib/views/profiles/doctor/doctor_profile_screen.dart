@@ -1,13 +1,12 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/model/user.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/home_initial/home_page.dart';
-import 'package:appkinson/views/login/input_field_login.dart';
-import 'package:appkinson/views/login/login_page.dart';
-import 'package:appkinson/views/profiles/doctor/profile_edition/profile_edition_doctor.dart';
-import 'package:flutter/cupertino.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -38,10 +37,10 @@ class DoctorProfileScreen extends StatefulWidget {
 }
 
 class DoctorProfileScreenP extends State<DoctorProfileScreen> {
-  openGallery(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+  Future<void> openGallery(BuildContext context) async {
+    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
     this.setState(() {
-      imageFileDoctor = picture;
+      imageFileDoctor = File(picture.path);
     });
     var newUser = new User(photo: imageFileDoctor);
     String id = await Utils().getFromToken('id');
@@ -50,10 +49,10 @@ class DoctorProfileScreenP extends State<DoctorProfileScreen> {
     RoutesGeneral().toPop(context);
   }
 
-  openCamera(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+  Future<void> openCamera(BuildContext context) async {
+    var picture = await ImagePicker().getImage(source: ImageSource.camera);
     this.setState(() {
-      imageFileDoctor = picture;
+      imageFileDoctor = File(picture.path);
     });
     var newUser = new User(photo: imageFileDoctor);
     String id = await Utils().getFromToken('id');
@@ -129,8 +128,13 @@ class DoctorProfileScreenP extends State<DoctorProfileScreen> {
                 child: Container(
                     height: 30,
                     width: 30,
-                    child: FlatButton(
-                      color: Colors.blue,
+                    child: TextButton(
+                      style: buildButtonStyle(
+                        border: CircleBorder(),
+                        background: Colors.blue,
+                        horiztonalPadding: 1,
+                        verticalPadding: 1,
+                      ),
                       child: Stack(
                         children: <Widget>[
                           Align(
@@ -146,8 +150,6 @@ class DoctorProfileScreenP extends State<DoctorProfileScreen> {
                       onPressed: () {
                         showChoiceDialog(context);
                       },
-                      padding: EdgeInsets.all(1),
-                      shape: CircleBorder(),
                     )),
               ),
             ],
@@ -167,44 +169,43 @@ class DoctorProfileScreenP extends State<DoctorProfileScreen> {
         Text(emailDoctor, style: kCaptionTextStyle),
       ],
     ));
-    var header = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(
-            width: 10,
-          ),
-          FlatButton(
-            color: Colors.white,
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: Icon(
-                    LineAwesomeIcons.arrow_left,
-                    size: ScreenUtil().setSp(40),
-                  ),
-                )
-              ],
-            ),
-            onPressed: () {
-              RoutesGeneral().toPop(context);
-            },
-            // padding: EdgeInsets.all(1),
-            shape: CircleBorder(),
-          ),
-          profileInfo,
-          SizedBox(
-            width: 20,
-          ),
-          /* Icon(
+    var header = Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+      SizedBox(
+        width: 10,
+      ),
+      TextButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          background: Colors.white,
+        ),
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Icon(
+                LineAwesomeIcons.arrow_left,
+                size: ScreenUtil().setSp(40),
+              ),
+            )
+          ],
+        ),
+        onPressed: () {
+          RoutesGeneral().toPop(context);
+        },
+        // padding: EdgeInsets.all(1),
+      ),
+      profileInfo,
+      SizedBox(
+        width: 20,
+      ),
+      /* Icon(
             LineAwesomeIcons.sun,
             size: ScreenUtil().setSp(40),
           ),*/
-          SizedBox(
-            width: 80,
-          ),
-        ]);
+      SizedBox(
+        width: 80,
+      ),
+    ]);
 
     return Scaffold(
         body: Container(
@@ -243,9 +244,7 @@ class ProfileListItem extends StatelessWidget {
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem(
-      {Key key, this.icon, this.text, this.hasNavigation = true})
-      : super(key: key);
+  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -259,10 +258,11 @@ class ProfileListItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 20,
         ),
-        child: FlatButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: Colors.grey[100],
+        child: TextButton(
+          style: buildButtonStyle(
+            border: roundedRadius30,
+            background: Colors.grey[100],
+          ),
           onPressed: () async {
             if (text == 'Editar') {
               RoutesDoctor().toDoctorEditProfile(context);
@@ -275,9 +275,7 @@ class ProfileListItem extends StatelessWidget {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs?.clear();
               await Utils().removeBackgroundTask();
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                  (Route<dynamic> route) => false);
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage()), (Route<dynamic> route) => false);
             }
           },
           child: Row(

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
 import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
@@ -208,7 +209,7 @@ class PatientsListItem extends ListTile {
             //subtitle: Text(user.email),
             leading: CircleAvatar(
               //child: Icon(Icons.account_circle_outlined),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: const Text('Ver reporte'),
               ),
@@ -223,21 +224,21 @@ Widget _buildPopupDialog(BuildContext context, String email) {
 
     // '\nDebe esperar a que el paciente \nacepte la solicitud en el icono\n de la campana'
     actions: <Widget>[
-      new FlatButton(
+      new TextButton(
+        style: buildButtonStyle(forground: Theme.of(context).primaryColor),
         onPressed: () async {
           String tipe = await Utils().getFromToken('type');
           String token = await Utils().getToken();
           var response = await EndPoints().linkUser(email, tipe, token);
           Navigator.of(context).pop();
         },
-        textColor: Theme.of(context).primaryColor,
         child: const Text('Enviar'),
       ),
-      new FlatButton(
+      new TextButton(
+        style: buildButtonStyle(forground: Theme.of(context).primaryColor),
         onPressed: () {
           Navigator.of(context).pop();
         },
-        textColor: Theme.of(context).primaryColor,
         child: const Text('Cancelar'),
       )
     ],

@@ -1,6 +1,5 @@
 import 'package:appkinson/views/Medicines/alarm.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 final String tableAlarm = 'alarms';
 final String columnId = 'id';

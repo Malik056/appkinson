@@ -1,3 +1,6 @@
+// ignore_for_file: unused_field
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/views/login/reset_password/password_change.dart';
@@ -49,18 +52,14 @@ class _LoginPageState extends State<PasswordChangeOtm> {
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
               controller: codController,
-              decoration: InputDecoration(
-                  hintText: "Ingrese el Código Enviado a tu Correo",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder()),
+              decoration: InputDecoration(hintText: "Ingrese el Código Enviado a tu Correo", hintStyle: TextStyle(color: Colors.grey), border: OutlineInputBorder()),
             ),
             SizedBox(
               height: 80,
             ),
             Container(
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]))),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -81,8 +80,7 @@ class _LoginPageState extends State<PasswordChangeOtm> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]))),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -98,9 +96,7 @@ class _LoginPageState extends State<PasswordChangeOtm> {
                   Expanded(
                     child: TextButton(
                       onPressed: _toggle,
-                      child: new Icon(_obscurePassword
-                          ? Icons.remove_red_eye_sharp
-                          : Icons.remove_red_eye_outlined),
+                      child: new Icon(_obscurePassword ? Icons.remove_red_eye_sharp : Icons.remove_red_eye_outlined),
                     ),
                   ),
                 ],
@@ -115,15 +111,12 @@ class _LoginPageState extends State<PasswordChangeOtm> {
                     textStyle: TextStyle(
                       fontSize: 20,
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.0))),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0))),
                 onPressed: () {
                   print('hey');
-                  if (passwordRecoverController2.text ==
-                      passwordRecoverController.text) {
+                  if (passwordRecoverController2.text == passwordRecoverController.text) {
                     int otpInt = int.parse(codController.text);
-                    EndPoints().newPasswordRecover(emailRecoverController.text,
-                        passwordRecoverController2.text, otpInt);
+                    EndPoints().newPasswordRecover(emailRecoverController.text, passwordRecoverController2.text, otpInt);
                     RoutesGeneral().toLogin(context);
                   } else {
                     invalid(3, context);
@@ -140,7 +133,7 @@ class _LoginPageState extends State<PasswordChangeOtm> {
 
 invalid(int reason, context) {
   debugPrint("invalidez");
-  String invalidReason = null;
+  String invalidReason;
   if (reason == 0) {
     invalidReason = "El email no es un correo valido";
   }
@@ -155,8 +148,7 @@ invalid(int reason, context) {
   }
   showDialog(
     context: context,
-    builder: (BuildContext context) =>
-        _buildPopupDialog(context, invalidReason),
+    builder: (BuildContext context) => _buildPopupDialog(context, invalidReason),
   );
 }
 
@@ -164,11 +156,11 @@ Widget _buildPopupDialog(BuildContext context, String invalidReason) {
   return new AlertDialog(
     title: Text(invalidReason),
     actions: <Widget>[
-      new FlatButton(
+      new TextButton(
+        style: buildButtonStyle(forground: Theme.of(context).primaryColor),
         onPressed: () {
           Navigator.of(context).pop();
         },
-        textColor: Theme.of(context).primaryColor,
         child: const Text('Cerrar'),
       ),
     ],

@@ -1,4 +1,4 @@
-
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_patient.dart';
 import 'package:flutter/material.dart';
 
@@ -12,14 +12,16 @@ class ButtonGoFormNoMotoresFromCarer extends StatelessWidget {
     return Container(
       height: 130,
       margin: EdgeInsets.symmetric(horizontal: 7),
-      child: RaisedButton(
-        shape: CircleBorder(),
+      child: ElevatedButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          horiztonalPadding: 10,
+          background: Colors.grey[50],
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () {
           RoutesPatient().toNoMotorSymptoms(context, idPatient);
         },
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        color: Colors.grey[50],
         //textColor: Colors.white,
         child: Image.asset(
           "assets/images/14-LISTA.png",

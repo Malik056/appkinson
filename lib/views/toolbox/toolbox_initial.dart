@@ -1,31 +1,26 @@
+// ignore_for_file: unused_field
+
 import 'dart:math';
 
-import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/toolbox/about_excercises/buttons/button_go_about_excercises.dart';
 import 'package:appkinson/views/toolbox/about_food/buttons/button_go_about_food.dart';
 import 'package:appkinson/views/toolbox/about_news/buttons/button_go_about_news.dart';
 import 'package:appkinson/views/toolbox/about_parkinson/buttons/button_go_about_parkinson.dart';
-import 'package:appkinson/views/toolbox/pedometer/buttons/button_go_pedometer.dart';
-import 'package:appkinson/views/side_menus/custom_drawer_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
 import 'dart:async';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 //import 'package:pedometer/pedometer.dart';
-import 'package:decimal/decimal.dart';
 
 import 'buttons/ButtonGoGame.dart';
 
-class toolbox extends StatefulWidget {
+class Toolbox extends StatefulWidget {
   @override
-  _toolbox0 createState() => _toolbox0();
+  _Toolbox0 createState() => _Toolbox0();
 }
 
 bool show;
 
-class _toolbox0 extends State<toolbox> {
+class _Toolbox0 extends State<Toolbox> {
   String muestrePasos = "0";
   String _km = "0";
   String _calories = "0";
@@ -33,7 +28,7 @@ class _toolbox0 extends State<toolbox> {
   String _stepCountValue = '0';
   StreamSubscription<int> _subscription;
 
-  double numero_pasos;
+  double numeroPasos;
   double _convert;
   double _kmx;
   double burnedx;
@@ -47,12 +42,20 @@ class _toolbox0 extends State<toolbox> {
     // setUpPedometer();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _subscription?.cancel();
+  }
+
   /*void setUpPedometer() {
     Pedometer pedometer = new Pedometer();
     _subscription = pedometer.stepCountStream.listen(_onData,
         onError: _onError, onDone: _onDone, cancelOnError: true);
   }*/
 
+  // ignore: unused_element
   void _onData(int stepCountValue) async {
     // print(stepCountValue);
     setState(() {
@@ -64,10 +67,10 @@ class _toolbox0 extends State<toolbox> {
     double y = (dist + .0);
 
     setState(() {
-      numero_pasos = y;
+      numeroPasos = y;
     });
 
-    var long3 = (numero_pasos);
+    var long3 = (numeroPasos);
     long3 = num.parse(y.toStringAsFixed(2));
     var long4 = (long3 / 10000);
 
@@ -77,7 +80,7 @@ class _toolbox0 extends State<toolbox> {
     d = (d * fac).round() / fac;
     print("d: $d");
 
-    getDistanceRun(numero_pasos);
+    getDistanceRun(numeroPasos);
 
     setState(() {
       _convert = d;
@@ -93,14 +96,16 @@ class _toolbox0 extends State<toolbox> {
     });
   }
 
+  // ignore: unused_element
   void _onDone() {}
 
+  // ignore: unused_element
   void _onError(error) {
     print("Flutter Pedometer Error: $error");
   }
 
-  void getDistanceRun(double numero_pasos) {
-    var distance = ((numero_pasos * 78) / 100000);
+  void getDistanceRun(double numeroPasos) {
+    var distance = ((numeroPasos * 78) / 100000);
     distance = num.parse(distance.toStringAsFixed(2));
     var distancekmx = distance * 34;
     distancekmx = num.parse(distancekmx.toStringAsFixed(2));

@@ -25,6 +25,7 @@ class _EmotionalFormQ extends State<EmotionalFormQ> {
     initialPage: 0,
   );
 
+  // ignore: unused_field
   int _current = 0;
 
   @override

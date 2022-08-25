@@ -1,14 +1,10 @@
 import 'dart:convert';
 
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_carer.dart';
-import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/views/calendar/calendar_screen_view2_carer.dart';
-import 'package:appkinson/routes/routes_patient.dart';
-import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
-import 'package:appkinson/views/toolbox/about_food/food_list.dart';
 import 'package:flutter/material.dart';
 import '../../model/user.dart';
 
@@ -402,7 +398,8 @@ class CarerPatientsCustom extends State<CarerPatients> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        new TextButton(
+          style: buildButtonStyle(forground: Theme.of(context).primaryColor),
           onPressed: () async {
             if (_keyDialogForm.currentState.validate()) {
               _keyDialogForm.currentState.save();
@@ -417,14 +414,13 @@ class CarerPatientsCustom extends State<CarerPatients> {
               Navigator.pop(context);
             }
           },
-          textColor: Theme.of(context).primaryColor,
           child: const Text('¡Sí!'),
         ),
-        new FlatButton(
+        new TextButton(
+          style: buildButtonStyle(forground: Theme.of(context).primaryColor),
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
           child: const Text('Cancelar'),
         ),
       ],
@@ -458,7 +454,7 @@ class PatientsListItem extends ListTile {
             //subtitle: Text(user.email),
             leading: CircleAvatar(
               //child: Icon(Icons.account_circle_outlined),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {},
                 child: const Text('Ver reporte'),
               ),

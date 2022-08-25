@@ -1,7 +1,9 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/administrator/form_add_item.dart';
+// ignore: unused_import
 import 'package:appkinson/views/toolbox/about_food/food_list.dart';
 import 'package:flutter/material.dart';
 
@@ -11,15 +13,19 @@ import '../excercises_list.dart';
 
 class ButtonGoAboutExcercises extends StatelessWidget {
   @override
-  var itemsByType;
   Widget build(BuildContext context) {
+    List<ItemToolbox> itemsByType;
     Size size = MediaQuery.of(context).size;
     return Container(
       height: 200,
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(children: [
-        RaisedButton(
-          shape: CircleBorder(),
+        ElevatedButton(
+          style: buildButtonStyle(
+            border: CircleBorder(),
+            background: Colors.grey[50],
+            horiztonalPadding: 10,
+          ),
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
 
           onPressed: () async {
@@ -40,8 +46,6 @@ class ButtonGoAboutExcercises extends StatelessWidget {
             print(items.length);
             RoutesGeneral().toListExcercises(context);
           },
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          color: Colors.grey[50],
           //textColor: Colors.white,
           child: Image.asset(
             "assets/images/12-EJERCICIOS.png",
@@ -55,8 +59,7 @@ class ButtonGoAboutExcercises extends StatelessWidget {
         Text(
           "Ejercicios",
           textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.blue[900], fontSize: 20, fontFamily: "Raleway2"),
+          style: TextStyle(color: Colors.blue[900], fontSize: 20, fontFamily: "Raleway2"),
         )
       ]),
     );

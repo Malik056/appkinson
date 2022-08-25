@@ -1,4 +1,4 @@
-import 'package:appkinson/routes/routes_admin.dart';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
@@ -18,8 +18,12 @@ class ButtonGoAboutFood extends StatelessWidget {
       height: 200,
       margin: EdgeInsets.symmetric(horizontal: 20),
       child: Column(children: [
-        RaisedButton(
-          shape: CircleBorder(),
+        ElevatedButton(
+          style: buildButtonStyle(
+            border: CircleBorder(),
+            horiztonalPadding: 10,
+            background: Colors.grey[50],
+          ),
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
           onPressed: () async {
             ItemToolbox itemToolbox = new ItemToolbox();
@@ -38,8 +42,6 @@ class ButtonGoAboutFood extends StatelessWidget {
             print(food.length);
             RoutesGeneral().toListFood(context);
           },
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          color: Colors.grey[50],
           //textColor: Colors.white,
           child: Image.asset(
             "assets/images/8-COMIDA.png",
@@ -53,8 +55,7 @@ class ButtonGoAboutFood extends StatelessWidget {
         Text(
           "Alimentación",
           textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.blue[900], fontSize: 20, fontFamily: "Raleway2"),
+          style: TextStyle(color: Colors.blue[900], fontSize: 20, fontFamily: "Raleway2"),
         )
       ]),
     );

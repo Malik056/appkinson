@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/calendar/calendar_screen_view2.dart';
@@ -22,8 +23,12 @@ class _ButtonGoCalendarState extends State<ButtonGoCalendar> {
     return Container(
       height: 90,
       margin: EdgeInsets.symmetric(horizontal: 20),
-      child: RaisedButton(
-        shape: CircleBorder(),
+      child: ElevatedButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          horiztonalPadding: 10,
+          background: Colors.grey[50],
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
           meetingPatient = <Meeting>[];
@@ -87,8 +92,6 @@ class _ButtonGoCalendarState extends State<ButtonGoCalendar> {
           }
           RoutesPatient().toCalendar(context);
         },
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        color: Colors.grey[50],
         //textColor: Colors.white,
         child: Image.asset(
           "assets/images/1-CALENDARIO.png",

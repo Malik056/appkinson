@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field, unused_local_variable
+
 import 'package:flutter/material.dart';
 import '../../model/user.dart';
 
@@ -136,7 +138,7 @@ class InputFieldRegisterCustom extends State<InputFieldRegister> {
   }
 }
 
-class metod {
+class Method {
   Future<User> send() async {
     var newUser = new User(
         email: emailController.text,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/routes/routes_admin.dart';
 import 'package:appkinson/routes/routes_carer.dart';
@@ -28,19 +29,20 @@ class _FormButtonLogin extends State<ButtonLogin> {
     return Container(
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 50),
-      child: RaisedButton(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+      child: ElevatedButton(
+        style: buildButtonStyle(
+          border: roundedRadius18,
+          horiztonalPadding: 50,
+          background: Colors.blue,
+          forground: Colors.white,
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-        padding: EdgeInsets.symmetric(horizontal: 50),
         onPressed: () async {
-          var m = new metod();
+          var m = new Method();
           var user = await m.send();
           debugPrint(user.email);
           debugPrint(user.password);
           debugPrint("------");
-
-      
 
           token = await EndPoints().authUser(user);
 
@@ -77,8 +79,6 @@ class _FormButtonLogin extends State<ButtonLogin> {
             }
           }
         },
-        color: Colors.blue,
-        textColor: Colors.white,
         child: Text("Iniciar Sesión", style: TextStyle(fontSize: 15)),
       ),
     );
@@ -96,8 +96,7 @@ invalid(int reason, context) {
   }
   showDialog(
     context: context,
-    builder: (BuildContext context) =>
-        _buildPopupDialog(context, invalidReason),
+    builder: (BuildContext context) => _buildPopupDialog(context, invalidReason),
   );
 }
 
@@ -105,11 +104,11 @@ Widget _buildPopupDialog(BuildContext context, String invalidReason) {
   return new AlertDialog(
     title: Text(invalidReason),
     actions: <Widget>[
-      new FlatButton(
+      new TextButton(
+        style: buttonStyleWhite,
         onPressed: () {
           Navigator.of(context).pop();
         },
-        textColor: Theme.of(context).primaryColor,
         child: const Text('Cancelar'),
       ),
     ],

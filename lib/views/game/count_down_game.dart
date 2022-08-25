@@ -1,5 +1,4 @@
 import 'package:appkinson/routes/routes_general.dart';
-import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
@@ -231,7 +230,7 @@ class _CountDownTimerState extends State<CountDownTimer>
                     title: Text("El juego ha terminado"),
                     content: Text('Su puntaje fue de $count'),
                     actions: [
-                      FlatButton(
+                      TextButton(
                         child: Text("Listo"),
                         onPressed: () {
                           isopen = false;
@@ -255,7 +254,7 @@ class Alert extends StatelessWidget {
   Widget build(BuildContext context) {
     print("hey");
     // TODO: implement build
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {},
     );
@@ -272,5 +271,3 @@ class Alert extends StatelessWidget {
     // show the dialog
   }
 }
-
-Widget button(bool isPlaying) {}

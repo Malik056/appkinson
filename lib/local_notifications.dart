@@ -5,7 +5,7 @@ class LocalNotification {
   static AndroidNotificationDetails androidSettings;
   static IOSNotificationDetails iosSettings;
 
-  static Initializer() {
+  static void initializer() {
     flutterNotificationPlugin = FlutterLocalNotificationsPlugin();
     androidSettings = AndroidNotificationDetails(
         "111", "Solicitud de relación", "Tienes una solicitud de relación",
@@ -21,7 +21,7 @@ class LocalNotification {
     print(payload);
   }
 
-  static ShowOneTimeNotification(DateTime scheduledDate) async {
+  static Future<void> showOneTimeNotification(DateTime scheduledDate) async {
     var notificationDetails = NotificationDetails(androidSettings, null);
     await flutterNotificationPlugin.schedule(1, "Solicitud de relación",
         "¡Alguien quiere cuidar de tí!", scheduledDate, notificationDetails,

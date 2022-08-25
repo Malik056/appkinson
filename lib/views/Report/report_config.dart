@@ -1,6 +1,8 @@
+// ignore_for_file: unused_element
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
 import 'package:flutter/material.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRangePicker;
 
 List<DateTime> picked = [];
 String selectedChoice = "";
@@ -51,7 +53,7 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
     picked.add(now);
   }
 
-  List<String> selecteddataList = List();
+  List<String> selecteddataList = [];
 
   _showReportDialog() {
     showDialog(
@@ -69,7 +71,7 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
               },
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text("Aceptar"),
                 onPressed: () => Navigator.of(context).pop(),
               )
@@ -87,7 +89,7 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
             title: Text("Periodicidad"),
             content: MultiSelectChipOne(dataListPeriocity),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                   child: Text("Aceptar"),
                   onPressed: () {
                     getPeriocity(selectedChoice);
@@ -106,7 +108,7 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
           return AlertDialog(
             content: Text("Escoge una fecha para generar los reportes"),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text("Aceptar"),
                 onPressed: () => Navigator.of(context).pop(),
               )
@@ -154,12 +156,13 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
             Container(
               width: 290,
               height: 60,
-              child: FlatButton(
+              child: TextButton(
+                style: buildButtonStyle(
+                  border: roundedRadius18,
+                  background: Colors.blueAccent,
+                  forground: Colors.white,
+                ),
                 child: Text("Periodicidad"),
-                color: Colors.blueAccent,
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0)),
                 onPressed: () => _showReportDialogPeriocity(),
               ),
             ),
@@ -169,23 +172,17 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
             Container(
               width: 290,
               height: 60,
-              child: FlatButton(
+              child: TextButton(
+                style: buildButtonStyle(border: roundedRadius18, forground: Colors.white, background: Colors.blueAccent),
                 child: Text("Escoger fecha"),
-                color: Colors.blueAccent,
-                textColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0)),
                 onPressed: () {
-                   showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(DateTime.now().year - 100),
-                    lastDate: DateTime(DateTime.now().year + 1))
-                    .then((value) {
-                        selectedDate = value;
-                         if(picked.isNotEmpty){ picked.clear();}
-                        picked.add(new DateTime(selectedDate.year, selectedDate.month , selectedDate.day, 00 , 00 , 00));
-                        picked.add(new DateTime(selectedDate.year, selectedDate.month , selectedDate.day, 23 , 59 , 59));
+                  showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(DateTime.now().year - 100), lastDate: DateTime(DateTime.now().year + 1)).then((value) {
+                    selectedDate = value;
+                    if (picked.isNotEmpty) {
+                      picked.clear();
+                    }
+                    picked.add(new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 00, 00, 00));
+                    picked.add(new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59));
                   });
                   print("PRUEBAAA NUEVAAAAA");
                   print(selectedDate);
@@ -228,22 +225,23 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
             Container(
               width: 290,
               height: 60,
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0)),
+              child: TextButton(
+                style: buildButtonStyle(
+                  border: roundedRadius18,
+                  background: Colors.blueAccent,
+                  forground: Colors.white,
+                ),
                 onPressed: () {
                   print(picked[0]);
                   print(picked[1]);
                   if (picked.isNotEmpty) {
                     RoutesDoctor().toListReportPage(context, idPatient, picked);
-                  } 
-                  if(picked.isEmpty){
+                  }
+                  if (picked.isEmpty) {
                     print("ENTRA");
                   }
                 },
                 child: Text("Generar Reporte"),
-                color: Colors.blueAccent,
-                textColor: Colors.white,
               ),
             )
           ],
@@ -253,21 +251,18 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
   }
 
   _selectDate(BuildContext context) async {
-  final DateTime picked = await showDatePicker(
-    context: context,
-    initialDate: selectedDate, // Refer step 1
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2025),
-  );
-  if (picked != null && picked != selectedDate)
-    setState(() {
-      selectedDate = picked;
-    });
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate, // Refer step 1
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
 }
-
-}
-
-
 
 class MultiSelectChipOne extends StatefulWidget {
   final List<String> reportList;
@@ -329,9 +324,7 @@ class _MultiSelectChipState extends State<MultiSelectChip> {
           selected: selectedChoices.contains(item),
           onSelected: (selected) {
             setState(() {
-              selectedChoices.contains(item)
-                  ? selectedChoices.remove(item)
-                  : selectedChoices.add(item);
+              selectedChoices.contains(item) ? selectedChoices.remove(item) : selectedChoices.add(item);
               widget.onSelectionChanged(selectedChoices);
             });
           },

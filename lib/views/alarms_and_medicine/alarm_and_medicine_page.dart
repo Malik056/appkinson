@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/Medicines/medicines.dart';
@@ -14,12 +15,11 @@ class AlarmAndMedicine {
   String dose; //mg pastilla
   int id;
   String medicine;
-  /**
-   * preguntas: todos los dias las dosis?
-   * dosis como mg o ml son un dropdown o un input text?
-   * preguntar si el cuidador puede cambiar cosas del medicamento y por qué es necesario(contra no tendremos informacion segura)
-   * 
-   */
+
+  /// preguntas: todos los dias las dosis?
+  /// dosis como mg o ml son un dropdown o un input text?
+  /// preguntar si el cuidador puede cambiar cosas del medicamento y por qué es necesario(contra no tendremos informacion segura)
+  ///
   AlarmAndMedicine({
     this.title,
     this.periodicityQuantity,
@@ -80,11 +80,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
           child: Column(children: [
             Text(
               "Medicamentos: ",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: "Raleway2",
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: "Raleway2", fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 10,
@@ -94,22 +90,13 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
               height: 30,
             ),
             Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(15)),
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1), borderRadius: BorderRadius.circular(15)),
               child: DropdownButton<String>(
                 isExpanded: true,
                 style: TextStyle(color: Colors.grey, fontSize: 18),
                 underline: SizedBox(),
                 value: dose,
-                items: <String>[
-                  '1 Uno',
-                  '2 Dos',
-                  '3 Tres',
-                  '1/4 Un cuarto',
-                  '1/2 Media',
-                  '3/4 Tres cuartos'
-                ].map((String value) {
+                items: <String>['1 Uno', '2 Dos', '3 Tres', '1/4 Un cuarto', '1/2 Media', '3/4 Tres cuartos'].map((String value) {
                   return new DropdownMenuItem<String>(
                     value: value,
                     child: new Text(value),
@@ -143,16 +130,14 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
               // child: Align(
               // alignment: Alignment.center,
               child: ElevatedButton(
-                child: Text("Escoger por periodicidad",
-                    style: TextStyle(fontSize: 18)),
+                child: Text("Escoger por periodicidad", style: TextStyle(fontSize: 18)),
                 onPressed: () {
                   setState(() {
                     this.isPeriodic = false;
                   });
                 },
                 style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   )),
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -181,8 +166,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                     });
                   },
                   style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                     )),
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
@@ -205,23 +189,16 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                       children: <Widget>[
                         Text(
                           "Tipo de Periocidad: ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontFamily: "Raleway2",
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: "Raleway2", fontWeight: FontWeight.bold),
                         ),
                         Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 1),
-                              borderRadius: BorderRadius.circular(15)),
+                          decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1), borderRadius: BorderRadius.circular(15)),
                           child: DropdownButton<String>(
                             isExpanded: false,
                             style: TextStyle(color: Colors.grey, fontSize: 18),
                             underline: SizedBox(),
                             value: periodicityType,
-                            items: <String>['Hora(s)', 'Día(s)']
-                                .map((String value) {
+                            items: <String>['Hora(s)', 'Día(s)'].map((String value) {
                               return new DropdownMenuItem<String>(
                                 value: value,
                                 child: new Text(value),
@@ -246,9 +223,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                         border: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ], // Only numbers can be entered
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly], // Only numbers can be entered
                       controller: periodicityQuantity,
                     ),
                     SizedBox(
@@ -272,11 +247,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                     children: <Widget>[
                       Text(
                         "Agregar hora manualmente : ",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontFamily: "Raleway2",
-                            fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.black, fontSize: 18, fontFamily: "Raleway2", fontWeight: FontWeight.bold),
                       ),
                       relojito(size, context)
                     ],
@@ -292,17 +263,14 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                 height: 50,
                 width: 450,
                 //margin: EdgeInsets.symmetric(horizontal: 50),
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0)),
-                  //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-                  padding: EdgeInsets.symmetric(horizontal: 50),
+                child: ElevatedButton(
+                  style: buttonStyleRounded18PaddingH50Indigo600White,
                   onPressed: () async {
                     print('medicine: $medicineSelected');
                     print('Hora: ${_time.hour}:${_time.minute}');
                     print('Tipo period. $periodicityType');
                     print('periodicidad  !${periodicityQuantity.text}!');
-                    print('Tipo de dosis ${dose}');
+                    print('Tipo de dosis $dose');
 
                     AlarmAndMedicine alarmAndMedicine = new AlarmAndMedicine();
                     if (isPeriodic) {
@@ -312,14 +280,12 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                     } else {
                       String per = periodicityQuantity.text;
                       int periodiciyNumb = int.tryParse(per) ?? -1;
-                      alarmAndMedicine.periodicityQuantity =
-                          periodiciyNumb; //perioricidad
+                      alarmAndMedicine.periodicityQuantity = periodiciyNumb; //perioricidad
                       alarmAndMedicine.periodicityType = periodicityType;
                     }
                     alarmAndMedicine.alarmTime = _time; //alarma
                     alarmAndMedicine.dose = dose; // cantidad
-                    alarmAndMedicine.idMedicine =
-                        medicineSelected; //nombre medicina
+                    alarmAndMedicine.idMedicine = medicineSelected; //nombre medicina
                     debugPrint("medicina: ");
                     print("medicina" + alarmAndMedicine.idMedicine);
                     print(alarmAndMedicine.periodicityQuantity);
@@ -329,18 +295,14 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                     //tipo perioricidad
 
                     //Aquí se agrega a la lista
-                    String res = await EndPoints()
-                        .saveAlarmsAndMedicines(alarmAndMedicine, idPatient);
+                    String res = await EndPoints().saveAlarmsAndMedicines(alarmAndMedicine, idPatient);
                     print('response save medicine: $res');
                     var token = await Utils().getToken();
                     //Navigator.pop(context);
-                    items =
-                        await EndPoints().getMedicinesAlarms(idPatient, token);
+                    items = await EndPoints().getMedicinesAlarms(idPatient, token);
                     AlarmAndMedicine nuevo = items[items.length - 1];
                     Navigator.pop(context, nuevo);
                   },
-                  color: Colors.indigo[600],
-                  textColor: Colors.white,
                   child: Text("Guardar", style: TextStyle(fontSize: 15)),
                 )),
           ])),
@@ -353,10 +315,13 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
     return Container(
       height: 50,
       margin: EdgeInsets.all(2),
-      child: FlatButton(
-        minWidth: 500,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+      child: TextButton(
+        style: buildButtonStyle(
+          border: roundedRadius18,
+          background: Colors.grey[200],
+          minWidth: 500,
+        ),
+
         onPressed: () async {
           _time = await showTimePicker(context: context, initialTime: _time);
           debugPrint(_time.toString());
@@ -365,7 +330,6 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
           });
         },
         //padding: EdgeInsets.symmetric(horizontal: 10),
-        color: Colors.grey[200],
         //textColor: Colors.white,
         child: Text(
           hora,
@@ -382,9 +346,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
     print("consruyendo dropdown");
     print("longitud: " + medicines.length.toString());
     return Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1),
-            borderRadius: BorderRadius.circular(15)),
+        decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1), borderRadius: BorderRadius.circular(15)),
         child: DropdownButton<String>(
           isExpanded: true,
           value: medicineSelected,
@@ -445,8 +407,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
       Medicine medicineAux = new Medicine();
       medicineAux.idMedicine = int.parse(medicine['ID'].toString());
       medicineAux.name = medicine['NAME'];
-      print(
-          'medicine fomatted: id:${medicineAux.idMedicine.toString()} name: ${medicineAux.name}');
+      print('medicine fomatted: id:${medicineAux.idMedicine.toString()} name: ${medicineAux.name}');
       _medicines.add(medicineAux);
     }
     /*

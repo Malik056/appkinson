@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:async';
 import 'dart:convert';
 //import 'dart:html';
@@ -11,7 +13,6 @@ import 'package:appkinson/model/symptoms_form_patient_m.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/administrator/form_add_item.dart';
 import 'package:appkinson/views/alarms_and_medicine/alarm_and_medicine_page.dart';
-import 'package:appkinson/views/Medicines/alarm.dart';
 import 'package:appkinson/views/relation_request/request.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -178,22 +179,22 @@ class EndPoints {
     String token = await Utils().getToken();
     debugPrint("elimino");
     debugPrint(index.toString());
-    final request = http.delete(endpointBack + '/api/admin/toolbox/item/$index',
+    final _ = http.delete(endpointBack + '/api/admin/toolbox/item/$index',
         headers: {HttpHeaders.authorizationHeader: jwtkey + token});
 
     return i;
   }
 
   //
-  Future<String> linkUser(String emailUser, var token_type, var token) async {
+  Future<String> linkUser(String emailUser, var tokenType, var token) async {
     Map data2 = {'Email': emailUser};
     //Map data2 = {'email': authUser.email, 'password': authUser.password};
     String type = "";
     debugPrint("relacionando usuarios");
     debugPrint(emailUser);
-    if (token_type == 'Cuidador') {
+    if (tokenType == 'Cuidador') {
       type = "/api/carer/relate";
-    } else if (token_type == 'Doctor') {
+    } else if (tokenType == 'Doctor') {
       type = "/api/doctor/relate";
     }
     http.Response added = await http.post(endpointBack + type,
@@ -248,17 +249,17 @@ class EndPoints {
     return i;
   }
 
-  Future<String> linkedUser(var token, var token_type) async {
+  Future<String> linkedUser(var token, var tokenType) async {
     //Map data2 = {'email': authUser.email, 'password': authUser.password};
     //var codeToken = json.decode(token);
     String type = "";
-    if (token_type == 'Cuidador') {
+    if (tokenType == 'Cuidador') {
       type = "/api/carer/patients/related";
-    } else if (token_type == 'Doctor') {
+    } else if (tokenType == 'Doctor') {
       type = "/api/doctor/patients/related";
     }
     debugPrint(token);
-    debugPrint(token_type);
+    debugPrint(tokenType);
     http.Response lista = await http.get(endpointBack + type,
         headers: {HttpHeaders.authorizationHeader: jwtkey + token});
     debugPrint("get related");

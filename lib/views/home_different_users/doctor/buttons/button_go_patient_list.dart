@@ -1,6 +1,5 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/services/end_points.dart';
-import 'package:appkinson/views/Medicines/medicines.dart';
 import 'package:flutter/material.dart';
 
 class ButtonGoPatientList extends StatelessWidget {
@@ -10,15 +9,17 @@ class ButtonGoPatientList extends StatelessWidget {
     return Container(
       height: 150,
       margin: EdgeInsets.symmetric(horizontal: 10),
-      child: RaisedButton(
-        shape: CircleBorder(),
+      child: ElevatedButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          horiztonalPadding: 30,
+          background: Colors.grey[50],
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
           //items = await EndPoints().getMedicinesAlarms( currentUser['id'].toString(), token);
           RoutesDoctor().toPatientList(context);
         },
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        color: Colors.grey[50],
         //textColor: Colors.white,
         child: Image.asset(
           "assets/images/15-PACIENTES.png",

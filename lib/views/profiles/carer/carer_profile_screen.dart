@@ -1,12 +1,12 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/model/user.dart';
 import 'package:appkinson/routes/routes_carer.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/home_initial/home_page.dart';
-import 'package:appkinson/views/login/login_page.dart';
-import 'package:appkinson/views/profiles/carer/profile_edition/profile_edition_carer.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'dart:io';
 
@@ -40,9 +40,9 @@ class CarerProfileScreen extends StatefulWidget {
 
 class DoctorProfileScreenP extends State<CarerProfileScreen> {
   openGallery(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
     this.setState(() {
-      imageFileCarer = picture;
+      imageFileCarer = File(picture.path);
     });
     var newUser = new User(photo: imageFileCarer);
     String id = await Utils().getFromToken('id');
@@ -52,9 +52,9 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
   }
 
   openCamera(BuildContext context) async {
-    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    var picture = await ImagePicker().getImage(source: ImageSource.camera);
     this.setState(() {
-      imageFileCarer = picture;
+      imageFileCarer = File(picture.path);
     });
     var newUser = new User(photo: imageFileCarer);
     String id = await Utils().getFromToken('id');
@@ -130,8 +130,13 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
                 child: Container(
                     height: 30,
                     width: 30,
-                    child: FlatButton(
-                      color: Colors.blue,
+                    child: TextButton(
+                      style: buildButtonStyle(
+                        background: Colors.blue,
+                        horiztonalPadding: 1,
+                        verticalPadding: 1,
+                        border: CircleBorder(),
+                      ),
                       child: Stack(
                         children: <Widget>[
                           Align(
@@ -147,8 +152,6 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
                       onPressed: () {
                         showChoiceDialog(context);
                       },
-                      padding: EdgeInsets.all(1),
-                      shape: CircleBorder(),
                     )),
               ),
             ],
@@ -167,44 +170,43 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
         Text(emailCarer, style: kCaptionTextStyle),
       ],
     ));
-    var header = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(
-            width: 10,
-          ),
-          FlatButton(
-            color: Colors.white,
-            child: Stack(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.center,
-                  child: Icon(
-                    LineAwesomeIcons.arrow_left,
-                    size: ScreenUtil().setSp(40),
-                  ),
-                )
-              ],
-            ),
-            onPressed: () {
-              RoutesGeneral().toPop(context);
-            },
-            // padding: EdgeInsets.all(1),
-            shape: CircleBorder(),
-          ),
-          profileInfo,
-          SizedBox(
-            width: 20,
-          ),
-          /*Icon(
+    var header = Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+      SizedBox(
+        width: 10,
+      ),
+      TextButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          background: Colors.white,
+        ),
+        child: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Icon(
+                LineAwesomeIcons.arrow_left,
+                size: ScreenUtil().setSp(40),
+              ),
+            )
+          ],
+        ),
+        onPressed: () {
+          RoutesGeneral().toPop(context);
+        },
+        // padding: EdgeInsets.all(1),
+      ),
+      profileInfo,
+      SizedBox(
+        width: 20,
+      ),
+      /*Icon(
             LineAwesomeIcons.sun,
             size: ScreenUtil().setSp(40),
           ),*/
-          SizedBox(
-            width: 80,
-          ),
-        ]);
+      SizedBox(
+        width: 80,
+      ),
+    ]);
 
     return Scaffold(
         body: Container(
@@ -243,9 +245,7 @@ class ProfileListItem extends StatelessWidget {
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem(
-      {Key key, this.icon, this.text, this.hasNavigation = true})
-      : super(key: key);
+  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -259,10 +259,11 @@ class ProfileListItem extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 20,
         ),
-        child: FlatButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: Colors.grey[100],
+        child: TextButton(
+          style: buildButtonStyle(
+            border: roundedRadius30,
+            background: Colors.grey[100],
+          ),
           onPressed: () async {
             if (text == 'Editar') {
               RoutesCarer().toCarerEditProfile(context);
@@ -276,9 +277,7 @@ class ProfileListItem extends StatelessWidget {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs?.clear();
               await Utils().removeBackgroundTask();
-              Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => HomePage()),
-                  (Route<dynamic> route) => false);
+              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage()), (Route<dynamic> route) => false);
             }
           },
           child: Row(

@@ -1,3 +1,4 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_admin.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
 import 'package:appkinson/services/end_points.dart';
@@ -35,8 +36,7 @@ class _ListNewsState extends State<ListNews> {
               child: AnimatedList(
                 key: key,
                 initialItemCount: news.length,
-                itemBuilder: (context, index, animation) =>
-                    buildItem(news[index], index, animation),
+                itemBuilder: (context, index, animation) => buildItem(news[index], index, animation),
               ),
             ),
             /* Container(
@@ -47,20 +47,19 @@ class _ListNewsState extends State<ListNews> {
         ),
       );
 
-  Widget buildItem(item, int index, Animation<double> animation) =>
-      ItemToolboxWidgetGeneral(
+  Widget buildItem(item, int index, Animation<double> animation) => ItemToolboxWidgetGeneral(
         item: item,
         animation: animation,
         onClicked: () => removeItem(index),
       );
 
-  Widget buildInsertButton() => RaisedButton(
+  Widget buildInsertButton() => ElevatedButton(
+        style: buttonStyleBackgroundWhite,
         child: Icon(
           Icons.add,
           size: 50,
           color: Colors.lightGreen,
         ),
-        color: Colors.white,
         onPressed: () {
           RoutesAdmin().toFormAddItem(context);
         },

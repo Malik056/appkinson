@@ -1,15 +1,11 @@
+// ignore_for_file: unused_field
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_admin.dart';
-import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/administrator/form_add_item.dart';
-import 'package:appkinson/views/administrator/item_widget_administrator.dart';
-import 'package:appkinson/views/alarms_and_medicine/alarm_and_medicine_page.dart';
 import 'package:appkinson/views/toolbox/item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:intl/intl.dart';
-import 'package:appkinson/main.dart';
 
 class ListExcercises extends StatefulWidget {
   @override
@@ -38,8 +34,7 @@ class _ListExcercisesState extends State<ListExcercises> {
               child: AnimatedList(
                 key: key,
                 initialItemCount: items.length,
-                itemBuilder: (context, index, animation) =>
-                    buildItem(items[index], index, animation),
+                itemBuilder: (context, index, animation) => buildItem(items[index], index, animation),
               ),
             ),
 
@@ -51,20 +46,19 @@ class _ListExcercisesState extends State<ListExcercises> {
         ),
       );
 
-  Widget buildItem(item, int index, Animation<double> animation) =>
-      ItemToolboxWidgetGeneral(
+  Widget buildItem(item, int index, Animation<double> animation) => ItemToolboxWidgetGeneral(
         item: item,
         animation: animation,
         onClicked: () => removeItem(index),
       );
 
-  Widget buildInsertButton() => RaisedButton(
+  Widget buildInsertButton() => ElevatedButton(
+        style: buttonStyleBackgroundWhite,
         child: Icon(
           Icons.add,
           size: 50,
           color: Colors.lightGreen,
         ),
-        color: Colors.white,
         onPressed: () {
           RoutesAdmin().toFormAddItem(context);
         },

@@ -1,13 +1,15 @@
 import 'dart:io';
+import 'package:appkinson/constants/globals.dart';
+
 import '../symptoms_form_doctor/video_plugin.dart';
 import 'package:flutter/material.dart';
 
-class symptomsForm extends StatefulWidget {
+class SymptomsForm extends StatefulWidget {
   @override
-  _symptomsForm createState() => _symptomsForm();
+  _SymptomsForm createState() => _SymptomsForm();
 }
 
-class _symptomsForm extends State<symptomsForm> {
+class _SymptomsForm extends State<SymptomsForm> {
   File fileMedia;
   MediaSource source;
   int selectedStateRadio = 0;
@@ -54,35 +56,38 @@ class _symptomsForm extends State<symptomsForm> {
                   onChanged: onChangedDyskinesiaValue,
                 ),
                 Expanded(
-                  child: fileMedia == null
-                      ? Icon(Icons.play_circle_outline, size: 120)
-                      : (source == MediaSource.image
-                          ? Image.file(fileMedia)
-                          : VideoWidget(fileMedia)),
+                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 120) : (source == MediaSource.image ? Image.file(fileMedia) : VideoWidget(fileMedia)),
                 ),
                 const SizedBox(height: 24),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Capturar video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => capture(MediaSource.video),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Eliminar video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => delete(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Guardar registro'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   //onPressed: () => save(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white, onPressed: () {},
+                  onPressed: () {},
                 ),
               ],
             ),

@@ -1,4 +1,4 @@
-import 'package:appkinson/routes/routes_general.dart';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/views/login/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -8,17 +8,18 @@ class ButtonGoLogin extends StatelessWidget {
     return Container(
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 40),
-      child: FlatButton(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+      child: TextButton(
+        style: buildButtonStyle(
+          border: roundedRadius18,
+          horiztonalPadding: 50,
+          forground: Colors.blue,
+          background: Colors.white,
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () {
           Route route = MaterialPageRoute(builder: (context) => LoginPage());
           Navigator.pushReplacement(context, route);
         },
-        padding: EdgeInsets.symmetric(horizontal: 50),
-        color: Colors.white,
-        textColor: Colors.blue,
         child: Text("¿Ya Tiene una Cuenta? ", style: TextStyle(fontSize: 13)),
       ),
     );

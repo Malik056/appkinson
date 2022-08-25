@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/model/symptoms_form_patient_m.dart';
 import 'package:appkinson/routes/routes_general.dart';
-import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 //import 'package:appkinson/views/login/buttonsbutton_login.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q5_on.dart';
 import 'package:appkinson/views/video_screen/video_screen_carer.dart';
-import 'package:appkinson/views/video_screen/video_screen_doctor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +26,7 @@ String state = 'on';
 var color = Colors.green;
 //File fileMedia;
 
-List<Meeting> meetingsCarer = new List<Meeting>();
+List<Meeting> meetingsCarer = <Meeting>[];
 String listPacientes;
 var conta = 0;
 int hora = 0;
@@ -94,7 +92,7 @@ class _Calendar extends State<CalendarScreenView2Carer> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
         appBar: AppBar(
           actions: <Widget>[
@@ -182,14 +180,28 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                         content: Form(
                             child: Column(mainAxisSize: MainAxisSize.min, children: [
                           Row(
-                            children: [Text('Disquinesias:', style: TextStyle(fontWeight: FontWeight.bold)), IconButton(onPressed: null, icon: Icon(Icons.help_outlined, color: Colors.grey[500]), tooltip: 'Son trastornos del movimiento que se caracterizan por un exceso de movimientos o por movimientos anormales e involuntarios')],
+                            children: [
+                              Text('Disquinesias:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              IconButton(
+                                onPressed: null,
+                                icon: Icon(Icons.help_outlined, color: Colors.grey[500]),
+                                tooltip: 'Son trastornos del movimiento que se caracterizan por un exceso de movimientos o por movimientos anormales e involuntarios',
+                              ),
+                            ],
                           ),
                           Text(q2),
                           Divider(
                             thickness: 1,
                           ),
                           Row(
-                            children: [Text('Desfase:', style: TextStyle(fontWeight: FontWeight.bold)), IconButton(icon: Icon(Icons.help_outlined, color: Colors.grey[500]), tooltip: 'Esta opción es para escoger cuánto tiempo después de la hora indicada se tomó el medicamento. Si fue a la hora establecida, puede continuar sin escoger nada.')],
+                            children: [
+                              Text('Desfase:', style: TextStyle(fontWeight: FontWeight.bold)),
+                              IconButton(
+                                onPressed: null,
+                                icon: Icon(Icons.help_outlined, color: Colors.grey[500]),
+                                tooltip: 'Esta opción es para escoger cuánto tiempo después de la hora indicada se tomó el medicamento. Si fue a la hora establecida, puede continuar sin escoger nada.',
+                              ),
+                            ],
                           ),
                           Text(desface.toString() + ' minutos de desfase en la toma de medicamento'),
                           Divider(
@@ -198,12 +210,14 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                           SizedBox(
                             height: 20,
                           ),
-                          FlatButton(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                          TextButton(
+                            style: buildButtonStyle(
+                              border: roundedRadius18,
+                              background: Colors.blue[500],
+                              forground: Colors.white,
+                              horiztonalPadding: 30,
+                            ),
                             //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-
-                            padding: EdgeInsets.symmetric(horizontal: 30),
-
                             //onPressed: _incrementColorIndex,
                             onPressed: () async {
                               String token = await Utils().getToken();
@@ -213,9 +227,6 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                               });
                               Navigator.push(context, new MaterialPageRoute(builder: (context) => VideoScreenCarer()));
                             },
-
-                            color: Colors.blue[500],
-                            textColor: Colors.white,
                             child: Text('Ver Video'),
                             /*() => {
                         //print(cont);
@@ -225,7 +236,7 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                           ),
                         ])),
                         actions: <Widget>[
-                          FlatButton(
+                          TextButton(
                               onPressed: () async {
                                 SymptomsFormPatientM patientForm = new SymptomsFormPatientM();
 
@@ -274,24 +285,30 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                             child: SingleChildScrollView(
                           child: Column(mainAxisSize: MainAxisSize.min, children: [
                             Row(
-                              children: [Text('Estado:', style: TextStyle(fontWeight: FontWeight.bold)), IconButton(icon: Icon(Icons.help_outlined, color: Colors.grey[500]), tooltip: 'Son cambios del estado del paciente a lo largo del día. En fase o periodo ON hay un control satisfactorio de los síntomas y es posible una actividad motora normal. En cambio, en las fases OFF reaparecen los síntomas con una función motora alterada.')],
+                              children: [
+                                Text('Estado:', style: TextStyle(fontWeight: FontWeight.bold)),
+                                IconButton(
+                                  onPressed: null,
+                                  icon: Icon(Icons.help_outlined, color: Colors.grey[500]),
+                                  tooltip: 'Son cambios del estado del paciente a lo largo del día. En fase o periodo ON hay un control satisfactorio de los síntomas y es posible una actividad motora normal. En cambio, en las fases OFF reaparecen los síntomas con una función motora alterada.',
+                                ),
+                              ],
                             ),
-                            FlatButton(
-                              height: 35,
-                              minWidth: 220,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                            TextButton(
+                              style: buildButtonStyle(
+                                border: roundedRadius18,
+                                background: _colors[cont],
+                                horiztonalPadding: 30,
+                                minWidth: 220,
+                                height: 35,
+                              ),
                               //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-
-                              padding: EdgeInsets.symmetric(horizontal: 30),
-
                               //onPressed: _incrementColorIndex,
                               onPressed: () {
                                 setState(() {
                                   _incrementColorIndex();
                                 });
                               },
-
-                              color: _colors[cont],
                               //textColor: Colors.white,
                               child: Text(_onOff[cont]),
                               /*() => {
@@ -302,7 +319,14 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                             ),
                             Divider(thickness: 1),
                             Row(
-                              children: [Text('Disquinesias:', style: TextStyle(fontWeight: FontWeight.bold)), IconButton(icon: Icon(Icons.help_outlined, color: Colors.grey[500]), tooltip: 'son trastornos del movimiento que se caracterizan por un exceso de movimientos o por movimientos anormales e involuntarios')],
+                              children: [
+                                Text('Disquinesias:', style: TextStyle(fontWeight: FontWeight.bold)),
+                                IconButton(
+                                  onPressed: null,
+                                  icon: Icon(Icons.help_outlined, color: Colors.grey[500]),
+                                  tooltip: 'son trastornos del movimiento que se caracterizan por un exceso de movimientos o por movimientos anormales e involuntarios',
+                                ),
+                              ],
                             ),
                             TextFormField(
                               controller: _disqui,
@@ -312,18 +336,19 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                               decoration: InputDecoration(hintText: "Ej:'Movimento anormal en la mano'"),
                             ),
                             Divider(thickness: 1),
-                            FlatButton(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                            TextButton(
+                              style: buildButtonStyle(
+                                border: roundedRadius18,
+                                background: Colors.blue[500],
+                                horiztonalPadding: 30,
+                                minWidth: 220,
+                              ),
                               //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-
-                              padding: EdgeInsets.symmetric(horizontal: 30),
 
                               //onPressed: _incrementColorIndex,
                               onPressed: () {
                                 Navigator.push(context, new MaterialPageRoute(builder: (context) => SymptomsFormPatientQ5ON()));
                               },
-                              minWidth: 220,
-                              color: Colors.blue[500],
                               //textColor: Colors.white,
                               child: Text('Hacer Video(Opcional)'),
                               /*() => {
@@ -332,13 +357,14 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                       },*/
                               // Text("Registrarse ", style:  TextStyle(fontSize: 15)),
                             ),
-                            FlatButton(
-                              minWidth: 225,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                            TextButton(
+                              style: buildButtonStyle(
+                                border: roundedRadius18,
+                                background: Colors.blue[500],
+                                horiztonalPadding: 50,
+                                minWidth: 225,
+                              ),
                               //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-
-                              padding: EdgeInsets.symmetric(horizontal: 50),
-
                               //onPressed: _incrementColorIndex,
                               onPressed: () {
                                 valueHour = '0';
@@ -364,28 +390,25 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                                                       },
                                                     ),
                                                   ),
-                                                  FlatButton(
-                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+                                                  TextButton(
+                                                    style: buildButtonStyle(
+                                                      border: roundedRadius18,
+                                                      background: Colors.blue[500],
+                                                      horiztonalPadding: 30,
+                                                      forground: Colors.white,
+                                                    ),
                                                     //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
-
-                                                    padding: EdgeInsets.symmetric(horizontal: 30),
-
                                                     //onPressed: _incrementColorIndex,
                                                     onPressed: () {
                                                       print(this.valueHour);
                                                       RoutesGeneral().toPop(context);
                                                     },
-
-                                                    color: Colors.blue[500],
-                                                    textColor: Colors.white,
                                                     child: Text('Listo'),
                                                   ),
                                                 ])));
                                       });
                                     });
                               },
-
-                              color: Colors.blue[500],
                               //textColor: Colors.white,
                               child: Text('      Toma de Levodopa        '),
                               /*() => {
@@ -394,12 +417,16 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                       },*/
                               // Text("Registrarse ", style:  TextStyle(fontSize: 15)),
                             ),
-                            IconButton(icon: Icon(Icons.help_outlined, color: Colors.grey[500]), tooltip: 'Esta opción es para escoger cuánto tiempo depués de la hora indicada se tomó el medicamento. Si fue a la hora establecida, puede continuar sin escoger nada.')
+                            IconButton(
+                              onPressed: null,
+                              icon: Icon(Icons.help_outlined, color: Colors.grey[500]),
+                              tooltip: 'Esta opción es para escoger cuánto tiempo depués de la hora indicada se tomó el medicamento. Si fue a la hora establecida, puede continuar sin escoger nada.',
+                            )
                           ]),
                         )),
                         actions: <Widget>[
                           !isLoading
-                              ? FlatButton(
+                              ? TextButton(
                                   onPressed: () async {
                                     SymptomsFormPatientM patientForm = new SymptomsFormPatientM();
 
@@ -462,6 +489,7 @@ class _Calendar extends State<CalendarScreenView2Carer> {
         ));
   }
 
+  // ignore: unused_element
   List<Meeting> _getDataSource() {
     meetingsCarer = <Meeting>[];
 

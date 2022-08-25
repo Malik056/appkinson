@@ -11,47 +11,47 @@ import 'package:flutter/material.dart';
 
 class RoutesGeneral {
   //ruta para registrar un nuevo usuario
-  toRegister(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => RegisterPage()));
+  Future<T> toRegister<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => RegisterPage()));
   }
- //ruta hacia la pantalla de "acerca de nosotros"
-  toAboutUs(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => HelpSupport()));
+
+  //ruta hacia la pantalla de "acerca de nosotros"
+  Future<T> toAboutUs<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => HelpSupport()));
   }
+
 //ruta para el logueo de un usuario nuevo
-  toLogin(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => LoginPage()));
+  Future<T> toLogin<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => LoginPage()));
   }
+
 //ruta para regresar al contexto anterior
-  toPop(BuildContext context) {
-    Navigator.pop(context);
+  void toPop<T>(BuildContext context) {
+    Navigator.pop<T>(context);
   }
+
 //ruta para los items de comida
-  toListFood(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => ListFood()));
+  Future<T> toListFood<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ListFood()));
   }
+
 //rutas para listar los ejercicios
-  toListExcercises(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => ListExcercises()));
+  Future<T> toListExcercises<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ListExcercises()));
   }
+
 //ruta para listar las noticias
-  toListNews(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => ListNews()));
+  Future<T> toListNews<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ListNews()));
   }
+
 //ruta hacia cambiar la contraseña
-  toChangePassword(BuildContext context) {
-    Navigator.push(
-        context, new MaterialPageRoute(builder: (context) => PasswordChange()));
+  Future<T> toChangePassword<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PasswordChange()));
   }
+
 // ruta para la generación de la otm
-  toChangePasswordOtm(BuildContext context) {
-    Navigator.push(context,
-        new MaterialPageRoute(builder: (context) => PasswordChangeOtm()));
+  Future<T> toChangePasswordOtm<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PasswordChangeOtm()));
   }
 }

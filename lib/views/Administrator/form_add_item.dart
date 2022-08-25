@@ -1,6 +1,6 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
-import 'package:appkinson/views/register/input_field_register.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -10,8 +10,7 @@ class ItemToolbox {
   String descripcion;
   String enlace;
   String type;
-  ItemToolbox(
-      {this.idItem, this.titulo, this.descripcion, this.enlace, this.type});
+  ItemToolbox({this.idItem, this.titulo, this.descripcion, this.enlace, this.type});
 }
 
 class FormItemToolboxPage extends StatefulWidget {
@@ -30,22 +29,16 @@ class _FormItemToolboxPageState extends State {
   }
 
   final _formKey = GlobalKey();
-  final _ItemToolbox = ItemToolbox();
+  // ignore: unused_field
+  final _itemToolbox = ItemToolbox();
   String dropdownValue = 'EJERCICIO';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Agregar ítem'
-        )
-      ),
+      appBar: AppBar(title: Text('Agregar ítem')),
       body: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16.0, 
-          horizontal: 16.0
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: SingleChildScrollView(
           child: Builder(
             builder: (context) => Form(
@@ -58,17 +51,12 @@ class _FormItemToolboxPageState extends State {
                   ),
                   TextFormField(
                     controller: titleController,
-                    decoration: new InputDecoration(
-                      labelText: "Título",
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10
-                      ),
-                      border: OutlineInputBorder()
-                    ),
+                    decoration: new InputDecoration(labelText: "Título", contentPadding: EdgeInsets.symmetric(horizontal: 10), border: OutlineInputBorder()),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Por favor ingrese un título';
                       }
+                      return null;
                     },
                   ),
                   SizedBox(
@@ -76,17 +64,12 @@ class _FormItemToolboxPageState extends State {
                   ),
                   TextFormField(
                     controller: linkController,
-                    decoration: new InputDecoration(
-                      labelText: "Enlace",
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10
-                      ),
-                      border: OutlineInputBorder()
-                    ),
+                    decoration: new InputDecoration(labelText: "Enlace", contentPadding: EdgeInsets.symmetric(horizontal: 10), border: OutlineInputBorder()),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Por favor ingrese el enlace del ítem';
                       }
+                      return null;
                     },
                   ),
                   SizedBox(
@@ -94,36 +77,27 @@ class _FormItemToolboxPageState extends State {
                   ),
                   TextFormField(
                     controller: descripController,
-                    decoration: new InputDecoration(
-                      labelText: "Descripción",
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10
-                      ),
-                      border: OutlineInputBorder()),
+                    decoration: new InputDecoration(labelText: "Descripción", contentPadding: EdgeInsets.symmetric(horizontal: 10), border: OutlineInputBorder()),
                     validator: (value) {
                       if (value.isEmpty) {
                         return 'Por favor ingrese una breve descripción';
                       }
+                      return null;
                     },
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.fromLTRB(0, 50, 0, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),
                     child: Text(
                       'Tipo de Ítem a Agregar: ',
                     ),
                   ),
                   DropdownButton<String>(
                     value: dropdownValue,
-                    icon: const Icon(
-                      Icons.arrow_downward
-                    ),
+                    icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
                     elevation: 16,
                     isExpanded: true,
-                    style: const TextStyle(
-                      color: Colors.blue
-                    ),
+                    style: const TextStyle(color: Colors.blue),
                     underline: Container(
                       height: 2,
                       color: Colors.blue[500],
@@ -133,11 +107,7 @@ class _FormItemToolboxPageState extends State {
                         dropdownValue = newValue;
                       });
                     },
-                    items: <String>[
-                      'EJERCICIO',
-                      'NOTICIA',
-                      'ALIMENTACION'
-                    ].map<DropdownMenuItem<String>>((String value) {
+                    items: <String>['EJERCICIO', 'NOTICIA', 'ALIMENTACION'].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -145,49 +115,35 @@ class _FormItemToolboxPageState extends State {
                     }).toList(),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, 
-                      horizontal: 16.0
-                    ),
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0)
-                      ),
-                      onPressed: () async {
-                        if (await canLaunch(linkController.text)) {
-                          String token = await Utils().getToken();
-                          EndPoints().sendItemToolbox(
-                            titleController.text.toString(),
-                            descripController.text.toString(),
-                            linkController.text.toString(),
-                            dropdownValue,
-                            token
-                          );
-                          cleanData();
-                          Navigator.pop(context);
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                _buildPopupDialog(context),
-                          );
-                        }
-                      },
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      child: Text('Guardar')
-                    )
-                  ),
-                ]
-              )
-            )
-          )
-        )
-      )
+                      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                      child: ElevatedButton(
+                          style: getButtonStyleRounded(18.0, Colors.blue, Colors.white),
+                          onPressed: () async {
+                            if (await canLaunch(linkController.text)) {
+                              String token = await Utils().getToken();
+                              EndPoints().sendItemToolbox(titleController.text.toString(), descripController.text.toString(), linkController.text.toString(), dropdownValue, token);
+                              cleanData();
+                              Navigator.pop(context);
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupDialog(context),
+                              );
+                            }
+                          },
+                          child: Text('Guardar'))),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
-  _showDialog(BuildContext context) {
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Agregando Ítem')));
+
+  // ignore: unused_element
+  void _showDialog(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Agregando Ítem')));
   }
 }
 
@@ -199,18 +155,14 @@ cleanData() {
 
 Widget _buildPopupDialog(BuildContext context) {
   return new AlertDialog(
-    title: Text(
-      "Enlace Invalido"
-    ),
+    title: Text("Enlace Invalido"),
     actions: <Widget>[
-      new FlatButton(
+      new TextButton(
+        style: ButtonStyle(foregroundColor: MaterialStateProperty.all(Theme.of(context).primaryColor)),
         onPressed: () {
           Navigator.of(context).pop();
         },
-        textColor: Theme.of(context).primaryColor,
-        child: const Text(
-          'Cancelar'
-        ),
+        child: const Text('Cancelar'),
       ),
     ],
   );

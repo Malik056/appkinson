@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/views/calendar/calendar_screen_view2.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q1.dart';
@@ -38,42 +39,40 @@ class _symptomsFormQ29 extends State<SymptomsFormPatientQ5ON> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(width: 2, color: Colors.grey[350]),
-                          bottom:
-                              BorderSide(width: 1, color: Colors.grey[350])),
+                      border: Border(top: BorderSide(width: 2, color: Colors.grey[350]), bottom: BorderSide(width: 1, color: Colors.grey[350])),
                     ),
-                    child: fileMedia == null
-                        ? Icon(Icons.play_circle_outline, size: 240)
-                        : (source == MediaSource.image
-                            ? Image.file(fileMedia)
-                            : VideoWidget(fileMedia)),
+                    child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMedia) : VideoWidget(fileMedia)),
                   ),
                 ),
                 const SizedBox(height: 24),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Capturar Video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => capture(MediaSource.video),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('Eliminar Video'),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   onPressed: () => delete(),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                 ),
                 const SizedBox(height: 12),
-                RaisedButton(
+                ElevatedButton(
                   child: Text('        Volver        '),
-                  shape: StadiumBorder(),
+                  style: buildButtonStyle(
+                    border: StadiumBorder(),
+                    background: Theme.of(context).primaryColor,
+                    forground: Colors.white,
+                  ),
                   //onPressed: () => save(),
-
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
                   onPressed: () async {
                     /*
                     SymptomsFormPatientM patientForm =

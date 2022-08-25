@@ -1,12 +1,12 @@
+// ignore_for_file: unused_element
+
 import 'package:appkinson/utils/utils.dart';
-import 'package:appkinson/views/alarms_and_medicine/alarm_and_medicine_page.dart';
 import 'package:appkinson/views/home_different_users/patient/buttons/button_go_no_motor_symptoms.dart';
 import 'package:appkinson/views/relations/buttons/button_go_reporter.dart';
 import 'package:flutter/material.dart';
 import 'buttons/button_go_calendar.dart';
 import 'buttons/button_go_profile.dart';
 import 'buttons/button_go_relations_request.dart';
-import 'buttons/Button_go_reminder.dart';
 import 'buttons/button_go_medicines_schedule.dart';
 import 'buttons/button_go_toolbox.dart';
 import 'buttons/button_go_weekly_form.dart';
@@ -26,7 +26,7 @@ class _PatientHomePage extends State<PatientHomePage> {
     super.initState();
   }
 
-  _obtenerToken() async {
+  Future<void> _obtenerToken() async {
     token = await Utils().getToken();
     this.id = await Utils().getFromToken('id');
     print("iddddd:" + id.toString());

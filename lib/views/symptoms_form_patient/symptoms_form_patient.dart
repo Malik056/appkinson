@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient2.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient3.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q2_off.dart';
@@ -12,14 +12,15 @@ import 'symptoms_form_patient_q2.dart';
 
 class SymptomsFormPatient extends StatefulWidget {
   @override
-  _symptomsForm createState() => _symptomsForm();
+  _SymptomsForm createState() => _SymptomsForm();
 }
 
-class _symptomsForm extends State<SymptomsFormPatient> {
+class _SymptomsForm extends State<SymptomsFormPatient> {
   final controller = PageController(
     initialPage: 0,
   );
 
+  // ignore: unused_field
   int _current = 0;
 
   Widget decideForm() {
@@ -54,27 +55,21 @@ class _symptomsForm extends State<SymptomsFormPatient> {
         children: [
           SymptomsFormPatientQ1(),
           SymptomsFormPatientQ2(),
-          RaisedButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(18.0)),
-            //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
+          ElevatedButton(
+            style: buildButtonStyle(
+              border: roundedRadius18,
+              background: Color.fromRGBO(0, 160, 227, 1),
+              forground: Colors.white,
+              horiztonalPadding: 50,
+            ),
             onPressed: () async {
               // addUsers('jorge', '1234');
               if (BringAnswerPatient2().send().toString() == 'ON') {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => SymptomsFormPatient2()));
+                Navigator.push(context, new MaterialPageRoute(builder: (context) => SymptomsFormPatient2()));
               } else {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) => SymptomsFormPatient3()));
+                Navigator.push(context, new MaterialPageRoute(builder: (context) => SymptomsFormPatient3()));
               }
             },
-            padding: EdgeInsets.symmetric(horizontal: 50),
-            color: Color.fromRGBO(0, 160, 227, 1),
-            textColor: Colors.white,
             child: Text("Pulsa para continuar", style: TextStyle(fontSize: 15)),
           ),
           //debugPrint('hola');

@@ -1,3 +1,4 @@
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_admin.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
@@ -11,8 +12,12 @@ class ButtonGoCheckItems extends StatelessWidget {
     return Container(
       height: 150,
       margin: EdgeInsets.symmetric(horizontal: 7),
-      child: RaisedButton(
-        shape: CircleBorder(),
+      child: ElevatedButton(
+        style: buildButtonStyle(
+          border: CircleBorder(),
+          horiztonalPadding: 10,
+          background: Colors.grey[50],
+        ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
           String id = await Utils().getFromToken('id');
@@ -20,8 +25,6 @@ class ButtonGoCheckItems extends StatelessWidget {
           items = await EndPoints().getItemsToolbox(id, token);
           RoutesAdmin().toListItems(context);
         },
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        color: Colors.grey[50],
         //textColor: Colors.white,
         child: Image.asset(
           "assets/images/14-LISTA.png",

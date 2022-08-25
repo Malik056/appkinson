@@ -1,14 +1,11 @@
-import 'package:appkinson/routes/routes_general.dart';
-import 'package:appkinson/routes/routes_patient.dart';
+// ignore_for_file: unused_field
+
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/relation_request/request.dart';
 import 'package:appkinson/views/relation_request/request_item_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:appkinson/services/end_points.dart';
 
-import 'package:foldable_sidebar/foldable_sidebar.dart';
-import '../side_menus/custom_drawer_menu.dart';
 
 /*
 class RelationsRequest extends StatefulWidget {

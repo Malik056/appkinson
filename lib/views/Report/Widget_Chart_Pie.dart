@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WidgetChartPie extends StatefulWidget {
-  var dataPie;
-  String id;
-  String tituloGrafica;
-  String descripcion;
+  final List<DataPieChart> dataPie;
+  final String id;
+  final String tituloGrafica;
+  final String descripcion;
   WidgetChartPie(
       {Key key,
       @required this.dataPie,
@@ -18,19 +17,19 @@ class WidgetChartPie extends StatefulWidget {
       this.dataPie, this.id, this.tituloGrafica, this.descripcion);
 }
 
-var datapie;
+// var datapie;
 
 class _WidgetChartPieState extends State<WidgetChartPie> {
   List<charts.Series<DataPieChart, String>> _seriesPieData;
 
   _WidgetChartPieState(
       this.dataPie, this.id, this.tituloGrafica, this.descripcion);
-  var dataPie;
+  List<DataPieChart> dataPie;
   String id;
   String tituloGrafica;
   String descripcion;
   String dataDescriptionBuild;
-  _buildDataDescription(var dataPie) {
+  _buildDataDescription(List<DataPieChart> dataPie) {
     String finalData = "";
     for (int i = 0; i < dataPie.length; i++) {
       finalData = finalData +
@@ -42,7 +41,7 @@ class _WidgetChartPieState extends State<WidgetChartPie> {
     return finalData;
   }
 
-  _generateData(String id, var dataPie) {
+  _generateData(String id, List<DataPieChart> dataPie) {
     _seriesPieData.add(
       charts.Series(
         domainFn: (DataPieChart dataPieChart, _) =>
@@ -62,7 +61,7 @@ class _WidgetChartPieState extends State<WidgetChartPie> {
     // TODO: implement initState
     super.initState();
     _seriesPieData = List<charts.Series<DataPieChart, String>>();
-    _generateData("idquemado", datapie);
+    _generateData("idquemado", dataPie);
   }
 
   @override

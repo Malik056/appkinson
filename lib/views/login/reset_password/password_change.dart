@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +36,7 @@ class _LoginPageState extends State<PasswordChange> {
             TextField(
               textInputAction: TextInputAction.done,
               controller: emailRecoverController,
-              decoration: InputDecoration(
-                  hintText: "Ingrese su Correo Eléctronico",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder()),
+              decoration: InputDecoration(hintText: "Ingrese su Correo Eléctronico", hintStyle: TextStyle(color: Colors.grey), border: OutlineInputBorder()),
             ),
             SizedBox(
               height: 30,
@@ -51,8 +46,7 @@ class _LoginPageState extends State<PasswordChange> {
                     textStyle: TextStyle(
                       fontSize: 20,
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100.0))),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.0))),
                 onPressed: () {
                   print('hey');
                   EndPoints().passwordRecover(emailRecoverController.text);

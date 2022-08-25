@@ -1,4 +1,5 @@
-import 'package:appkinson/views/register/input_field_register.dart';
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import '../../model/user.dart';
 
@@ -70,7 +71,7 @@ class __FormInputFieldLogin extends State<InputFieldLogin> {
   }
 }
 
-class metod {
+class Method {
   Future<User> send() async {
     var newUser =
         new User(email: emailController.text, password: password.text);

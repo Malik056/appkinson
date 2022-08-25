@@ -1,6 +1,8 @@
+// ignore_for_file: unused_local_variable
+
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
 import 'package:appkinson/utils/utils.dart';
-import 'package:appkinson/views/toolbox/about_food/food_list.dart';
 import 'package:flutter/material.dart';
 import '../../model/no_motor_symptoms_form.dart';
 import '../../services/end_points.dart';
@@ -118,13 +120,10 @@ class _NoMotorSymptomsFormQ30 extends State<NoMotorSymptomsFormQ30> {
               Divider(
                 height: 50,
               ),
-              RaisedButton(
+              ElevatedButton(
                 child: Text("Guardar registro", style: TextStyle(fontSize: 20)),
-                shape: StadiumBorder(),
-                padding: EdgeInsets.symmetric(horizontal: 50),
+                style: buttonStyleStadiumPaddingH50PrimaryWhite(context),
                 //onPressed: () => save(),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
                 onPressed: () async {
                   NoMotorSymptomsForm patientForm = new NoMotorSymptomsForm();
                   patientForm.q1 = BringAnswer1().send();

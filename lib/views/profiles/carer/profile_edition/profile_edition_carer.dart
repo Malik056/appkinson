@@ -1,4 +1,4 @@
-import 'dart:convert';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/model/user.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
@@ -27,25 +27,25 @@ class __ProfileEdition extends State<ProfileEditionCarer> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1)),
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey, width: 1)),
               child: TextField(
                 controller: nameControllerCarer,
-                decoration: InputDecoration(
-                    hintText: "Ingrese su Nombre",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none),
+                decoration: InputDecoration(hintText: "Ingrese su Nombre", hintStyle: TextStyle(color: Colors.grey), border: InputBorder.none),
               ),
             ),
             SizedBox(
               height: 30,
             ),
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0)),
+            TextButton(
+              style: buildButtonStyle(
+                border: roundedRadius18,
+                background: Colors.blue,
+                forground: Colors.white,
+                horiztonalPadding: 50,
+              ),
               //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
               onPressed: () async {
-                var m = new metod2();
+                var m = new Metod2();
                 var user = await m.send();
 
                 setState(() {
@@ -67,9 +67,6 @@ class __ProfileEdition extends State<ProfileEditionCarer> {
 
                 Navigator.pop(context);
               },
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              color: Colors.blue,
-              textColor: Colors.white,
               child: Text("Confirmar cambios", style: TextStyle(fontSize: 13)),
             ),
           ]),
@@ -77,7 +74,7 @@ class __ProfileEdition extends State<ProfileEditionCarer> {
   }
 }
 
-class metod2 {
+class Metod2 {
   Future<User> send() async {
     var newUser = new User(name: nameControllerCarer.text);
     debugPrint(newUser.name);

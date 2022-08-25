@@ -1,14 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:appkinson/main.dart';
-import 'package:appkinson/services/end_points.dart';
-import 'package:appkinson/views/alarms_and_medicine/alarm_and_medicine_page.dart';
 import 'package:flutter/material.dart';
-import 'package:nova_alarm_plugin/nova_alarm_plugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
-import 'package:http/http.dart' as http;
 import 'package:appkinson/constants/constant.dart';
 
 const TOKEN_KEY = 'token';
@@ -92,7 +87,7 @@ class Utils {
     }
   }
 
-  void initWorkmanager() {
+  Future<void> initWorkmanager() async {
     Workmanager.initialize(
         callbackDispatcher, // The top level function, aka callbackDispatcher
         isInDebugMode:
