@@ -1,15 +1,7 @@
 import 'dart:io';
+import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
-import 'package:appkinson/views/calendar/calendar_screen_view2.dart';
-import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q1.dart';
-import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q2.dart';
-import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q2_on.dart';
-import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q3.dart';
-import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q4.dart';
-import 'package:appkinson/model/symptoms_form_patient_m.dart';
 
-import 'package:appkinson/routes/routes_patient.dart';
-import 'package:appkinson/services/end_points.dart';
 
 import 'package:appkinson/views/symptoms_form_doctor/video_plugin.dart';
 
@@ -17,12 +9,12 @@ import 'package:flutter/material.dart';
 
 class VideoScreenCarer extends StatefulWidget {
   @override
-  _symptomsFormQ29 createState() => _symptomsFormQ29();
+  _SymptomsFormQ29 createState() => _SymptomsFormQ29();
 }
 
 File fileMediaCarer;
 
-class _symptomsFormQ29 extends State<VideoScreenCarer> {
+class _SymptomsFormQ29 extends State<VideoScreenCarer> {
   MediaSource source;
   int selectedStateRadio = 0;
   int selectedDyskinesiaRadio = 0;
@@ -39,15 +31,9 @@ class _symptomsFormQ29 extends State<VideoScreenCarer> {
                     child: Container(
                   decoration: BoxDecoration(
                     color: Colors.grey[350],
-                    border: Border(
-                        top: BorderSide(width: 2, color: Colors.grey),
-                        bottom: BorderSide(width: 1, color: Colors.grey)),
+                    border: Border(top: BorderSide(width: 2, color: Colors.grey), bottom: BorderSide(width: 1, color: Colors.grey)),
                   ),
-                  child: fileMediaCarer == null
-                      ? Icon(Icons.play_circle_outline, size: 240)
-                      : (source == MediaSource.image
-                          ? Image.file(fileMediaCarer)
-                          : VideoWidget(fileMediaCarer)),
+                  child: fileMediaCarer == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMediaCarer) : VideoWidget(fileMediaCarer)),
                 )),
                 const SizedBox(height: 24),
                 const SizedBox(height: 12),
@@ -55,12 +41,14 @@ class _symptomsFormQ29 extends State<VideoScreenCarer> {
                 ButtonTheme(
                   minWidth: 120.0,
                   height: 50.0,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text('Volver'),
-                    shape: StadiumBorder(),
+                    style: buildButtonStyle(
+                      border: StadiumBorder(),
+                      background: Theme.of(context).primaryColor,
+                      forground: Colors.white,
+                    ),
                     //onPressed: () => save(),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
                     onPressed: () async {
                       /*
                       SymptomsFormPatientM patientForm =
