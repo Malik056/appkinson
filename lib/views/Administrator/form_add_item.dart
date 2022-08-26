@@ -119,7 +119,7 @@ class _FormItemToolboxPageState extends State {
                       child: ElevatedButton(
                           style: getButtonStyleRounded(18.0, Colors.blue, Colors.white),
                           onPressed: () async {
-                            if (await canLaunch(linkController.text)) {
+                            if (await canLaunchUrl(Uri.parse(linkController.text))) {
                               String? token = await Utils().getToken();
                               if (token == null) {
                                 return;

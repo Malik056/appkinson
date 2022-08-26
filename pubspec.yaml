@@ -24,14 +24,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: 
+  flutter_svg: ^1.1.4
   dropdownfield: ^1.0.3
   cupertino_icons: ^1.0.5
   dio: ^4.0.6
   table_calendar: ^3.0.6
   google_fonts:
   font_awesome_flutter: ^10.1.0
-  flutter_downloader: ^1.5.2
+  # flutter_downloader: ^1.5.2
   #permission_handler: ^5.0.1
   network_to_file_image: ^4.0.1
   sqflite: ^2.0.3+1
