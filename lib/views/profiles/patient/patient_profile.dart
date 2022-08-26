@@ -3,10 +3,8 @@ import 'package:appkinson/views/home_different_users/patient/patient_home_page.d
 import 'package:appkinson/views/profiles/patient/patient_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
-import 'package:swipedetector/swipedetector.dart';
 
 const bla = Colors.white;
 const kSpacingUnit = 10;
@@ -28,36 +26,42 @@ class MyHomePage1 extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage1> {
-  FSBStatus drawerStatus;
+  // FSBStatus drawerStatus;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SwipeDetector(
-          onSwipeRight: () {
-            setState(() {
-              drawerStatus = FSBStatus.FSB_OPEN;
-            });
-          },
-          onSwipeLeft: () {
-            setState(() {
-              drawerStatus = FSBStatus.FSB_CLOSE;
-            });
-          },
-          child: FoldableSidebarBuilder(
-            drawerBackgroundColor: Colors.blue[800],
-            drawer: CustomDrawer(
-              closeDrawer: () {
-                setState(() {
-                  drawerStatus = FSBStatus.FSB_CLOSE;
-                });
-              },
-            ),
-            screenContents: PatientProfileScreen(),
-            status: drawerStatus,
-          ),
+        drawer: Container(
+          color: Colors.blue[800],
+          child: CustomDrawer(),
         ),
+        body: PatientProfileScreen(),
+        //TODO: Update Drawer (TAHA)
+        // SwipeDetector(
+        //   onSwipeRight: () {
+        //     setState(() {
+        //       drawerStatus = FSBStatus.FSB_OPEN;
+        //     });
+        //   },
+        //   onSwipeLeft: () {
+        //     setState(() {
+        //       drawerStatus = FSBStatus.FSB_CLOSE;
+        //     });
+        //   },
+        //   child: FoldableSidebarBuilder(
+        //     drawerBackgroundColor: Colors.blue[800],
+        //     drawer: CustomDrawer(
+        //       closeDrawer: () {
+        //         setState(() {
+        //           drawerStatus = FSBStatus.FSB_CLOSE;
+        //         });
+        //       },
+        //     ),
+        //     screenContents: PatientProfileScreen(),
+        //     status: drawerStatus,
+        //   ),
+        // ),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue[800],
             child: Icon(
@@ -65,9 +69,14 @@ class _MyHomePageState extends State<MyHomePage1> {
               color: Colors.white,
             ),
             onPressed: () {
-              setState(() {
-                drawerStatus = drawerStatus == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
-              });
+              if (Scaffold.of(context).isDrawerOpen) {
+                Scaffold.of(context).closeDrawer();
+              } else {
+                Scaffold.of(context).openDrawer();
+              }
+              // setState(() {
+              // drawerStatus = drawerStatus == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
+              // });
             }),
       ),
     );
@@ -75,9 +84,9 @@ class _MyHomePageState extends State<MyHomePage1> {
 }
 
 class CustomDrawer extends StatelessWidget {
-  final Function closeDrawer;
+  final Function? closeDrawer;
 
-  const CustomDrawer({Key key, this.closeDrawer}) : super(key: key);
+  const CustomDrawer({Key? key, this.closeDrawer}) : super(key: key);
 
   Widget decideImage() {
     if (imageFilePatient == null) {
@@ -88,7 +97,7 @@ class CustomDrawer extends StatelessWidget {
       );
     } else {
       return Image.file(
-        imageFilePatient,
+        imageFilePatient!,
         fit: BoxFit.cover,
         height: 100,
         width: 100,
@@ -357,11 +366,11 @@ class CustomDrawer extends StatelessWidget {
 }*/
 
 class ProfileListItem extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
+  const ProfileListItem({Key? key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

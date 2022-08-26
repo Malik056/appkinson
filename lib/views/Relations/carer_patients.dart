@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'dart:convert';
 
 import 'package:appkinson/constants/globals.dart';
@@ -16,8 +18,7 @@ class CarerPatients extends StatefulWidget {
 var codeListPatients;
 
 class CarerPatientsCustom extends State<CarerPatients> {
-  final TextEditingController addPatientController =
-      new TextEditingController();
+  final TextEditingController addPatientController = new TextEditingController();
   final TextEditingController editingController = new TextEditingController();
   final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
   TextEditingController editingController2 = TextEditingController();
@@ -54,9 +55,9 @@ class CarerPatientsCustom extends State<CarerPatients> {
     List<User> _patients = [];
     User patient;
     //Pedir lista de pacientes relacionados
-    String tipe = await Utils().getFromToken('type');
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? tipe = await Utils().getFromToken('type');
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
     debugPrint("pidiendo pacientes");
     debugPrint(id);
     debugPrint(tipe);
@@ -99,12 +100,12 @@ class CarerPatientsCustom extends State<CarerPatients> {
   }
 
   void filterSearchResults(String query) {
-    List<User> dummySearchList = List<User>();
+    List<User> dummySearchList = [];
     dummySearchList.addAll(patientsAdd);
     if (query.isNotEmpty) {
-      List<User> dummyListData = List<User>();
+      List<User> dummyListData = [];
       dummySearchList.forEach((item) {
-        if (item.email.contains(query)) {
+        if (item.email?.contains(query) ?? false) {
           dummyListData.add(item);
         }
       });
@@ -140,8 +141,7 @@ class CarerPatientsCustom extends State<CarerPatients> {
                       borderSide: BorderSide(color: Colors.white, width: 3.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey[400], width: 2.0),
+                      borderSide: BorderSide(color: Colors.grey[400]!, width: 2.0),
                     ),
                   ),
                 ),
@@ -188,9 +188,8 @@ class CarerPatientsCustom extends State<CarerPatients> {
                           selectId = codeListPatients[a]['ID_USER'].toString();
                         }
                       } */
-                    String token = await Utils().getToken();
-                    String m = await EndPoints()
-                        .getSymptomsFormPatient(token, selectId);
+                    String? token = await Utils().getToken();
+                    String m = await EndPoints().getSymptomsFormPatient(token, selectId);
                     //final DateTime today = DateTime.now();
                     listPacientes = m;
 
@@ -199,61 +198,48 @@ class CarerPatientsCustom extends State<CarerPatients> {
                     for (var a = 0; a < codeList.length; a++) {
                       //patients.add(codeList[a]['EMAIL']);
                       DateTime dateBd = DateTime.parse(codeList[a]['formdate']);
-                      final DateTime startTime = DateTime(dateBd.year,
-                          dateBd.month, dateBd.day, dateBd.hour, 0, 0);
-                      final DateTime endTime =
-                          startTime.add(const Duration(hours: 1));
-                      if (codeList[a]['Q1'] == 'on' ||
-                          codeList[a]['Q1'] == 'ON' ||
-                          codeList[a]['Q1'] == 'ON Bueno') {
+                      final DateTime startTime = DateTime(dateBd.year, dateBd.month, dateBd.day, dateBd.hour, 0, 0);
+                      final DateTime endTime = startTime.add(const Duration(hours: 1));
+                      if (codeList[a]['Q1'] == 'on' || codeList[a]['Q1'] == 'ON' || codeList[a]['Q1'] == 'ON Bueno') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsCarer.add(Meeting('ON Bueno👋', startTime,
-                              endTime, Colors.green, false));
+                          meetingsCarer.add(Meeting('ON Bueno👋', startTime, endTime, Colors.green, false));
                         } else {
-                          meetingsCarer.add(Meeting('ON Bueno', startTime,
-                              endTime, Colors.green, false));
+                          meetingsCarer.add(Meeting('ON Bueno', startTime, endTime, Colors.green, false));
                         }
                       }
-                      if (codeList[a]['Q1'] == 'off' ||
-                          codeList[a]['Q1'] == 'OFF' ||
-                          codeList[a]['Q1'] == 'OFF Malo') {
+                      if (codeList[a]['Q1'] == 'off' || codeList[a]['Q1'] == 'OFF' || codeList[a]['Q1'] == 'OFF Malo') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsCarer.add(Meeting('OFF Malo👋', startTime,
-                              endTime, Colors.red, false));
+                          meetingsCarer.add(Meeting('OFF Malo👋', startTime, endTime, Colors.red, false));
                         } else {
-                          meetingsCarer.add(Meeting('OFF Malo', startTime,
-                              endTime, Colors.red, false));
+                          meetingsCarer.add(Meeting('OFF Malo', startTime, endTime, Colors.red, false));
                         }
                       }
-                      if (codeList[a]['Q1'] == 'on bueno' ||
-                          codeList[a]['Q1'] == 'ON Muy Bueno') {
+                      if (codeList[a]['Q1'] == 'on bueno' || codeList[a]['Q1'] == 'ON Muy Bueno') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsCarer.add(Meeting('ON Muy Bueno👋', startTime,
-                              endTime, Colors.green[700], false));
+                          meetingsCarer.add(Meeting('ON Muy Bueno👋', startTime, endTime, Colors.green[700]!, false));
                         } else {
-                          meetingsCarer.add(Meeting('ON Muy Bueno', startTime,
-                              endTime, Colors.green[700], false));
+                          meetingsCarer.add(Meeting('ON Muy Bueno', startTime, endTime, Colors.green[700]!, false));
                         }
                       }
-                      if (codeList[a]['Q1'] == 'off malo' ||
-                          codeList[a]['Q1'] == 'OFF Muy Malo') {
+                      if (codeList[a]['Q1'] == 'off malo' || codeList[a]['Q1'] == 'OFF Muy Malo') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsCarer.add(Meeting('OFF Muy Malo👋', startTime,
-                              endTime, Colors.red[800], false));
+                          meetingsCarer.add(Meeting('OFF Muy Malo👋', startTime, endTime, Colors.red[800]!, false));
                         } else {
-                          meetingsCarer.add(Meeting('OFF Muy Malo', startTime,
-                              endTime, Colors.red[800], false));
+                          meetingsCarer.add(Meeting('OFF Muy Malo', startTime, endTime, Colors.red[800]!, false));
                         }
                       }
                     }
-                    RoutesCarer()
-                        .toInteractionCarerPatient(context, patient.id);
+                    if (patient.id == null) {
+                      //TODO: Handle null (TAHA)
+                      return;
+                    }
+                    RoutesCarer().toInteractionCarerPatient(context, patient.id!);
                     //RoutesCarer().toCalendarCarer(context);
                   },
-                  title: Text(patient.email,
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .apply(fontSizeFactor: 1.5)),
+                  title: Text(
+                    patient.email ?? '',
+                    style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5),
+                  ),
                   //subtitle: Text(user.email),
                   leading: CircleAvatar(
                     child: Icon(Icons.account_circle_outlined),
@@ -268,24 +254,18 @@ class CarerPatientsCustom extends State<CarerPatients> {
                     },
                     child: Icon(Icons.delete, size: 40),
                   ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                   dense: true,
                 );
               },
               separatorBuilder: (context, index) {
-                return Divider(
-                    thickness: 1,
-                    color: Colors.grey[350],
-                    indent: 10,
-                    endIndent: 10);
+                return Divider(thickness: 1, color: Colors.grey[350], indent: 10, endIndent: 10);
               },
             ),
           ],
         )),
         floatingActionButton: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0)),
+          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
           backgroundColor: Colors.blue[800],
           child: Icon(
@@ -393,22 +373,24 @@ class CarerPatientsCustom extends State<CarerPatients> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-              "¡Hola! Para poder ver a tu paciente, es necesario mandarle la soliitud de relación ¿Deseas continuar? "),
+          Text("¡Hola! Para poder ver a tu paciente, es necesario mandarle la soliitud de relación ¿Deseas continuar? "),
         ],
       ),
       actions: <Widget>[
         new TextButton(
           style: buildButtonStyle(forground: Theme.of(context).primaryColor),
           onPressed: () async {
-            if (_keyDialogForm.currentState.validate()) {
-              _keyDialogForm.currentState.save();
+            if (_keyDialogForm.currentState?.validate() ?? false) {
+              _keyDialogForm.currentState?.save();
               debugPrint(addPatientController.text);
-              String token = await Utils().getToken();
-              String id = await Utils().getFromToken('id');
+              String? token = await Utils().getToken();
+              String? id = await Utils().getFromToken('id');
               // debugPrint(currentUser['id'].toString());
-              var listaUsuarios = await EndPoints()
-                  .linkUser(addPatientController.text, id, token);
+              if (id == null || token == null) {
+                //TODO: Handle null (TAHA)
+                return;
+              }
+              var listaUsuarios = await EndPoints().linkUser(addPatientController.text, id, token);
               debugPrint(listaUsuarios.toString());
               //getPatients();
               Navigator.pop(context);
@@ -429,7 +411,7 @@ class CarerPatientsCustom extends State<CarerPatients> {
 }
 
 class PatientsList extends StatelessWidget {
-  List<User> _patients;
+  final List<User> _patients;
 
   PatientsList(this._patients);
 
@@ -442,7 +424,7 @@ class PatientsList extends StatelessWidget {
   }
 
   List<PatientsListItem> _buildPatiensList() {
-    return _patients.map((User) => PatientsListItem(User)).toList();
+    return _patients.map((user) => PatientsListItem(user)).toList();
   }
 }
 

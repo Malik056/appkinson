@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 String enlace = "https://www.fleni.org.ar/novedades/parkinson-ejercicios-para-todos-los-dias/";
 
-bool isExercise;
+bool? isExercise;
 
 class ItemToolboxWidgetGeneral extends StatelessWidget {
   final ItemToolbox item;
@@ -12,48 +12,42 @@ class ItemToolboxWidgetGeneral extends StatelessWidget {
   final VoidCallback onClicked;
 
   const ItemToolboxWidgetGeneral({
-    @required this.item,
-    @required this.animation,
-    @required this.onClicked,
-    Key key,
+    required this.item,
+    required this.animation,
+    required this.onClicked,
+    Key? key,
   }) : super(key: key);
 
-
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: Colors.white,
-        border: Border.all(
-          color: Colors.blue
-        )
-      ),
-      child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Image.asset(
-              _tipe(item.type),
-              fit: BoxFit.scaleDown,
-            ),
+        margin: EdgeInsets.all(12),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.white, border: Border.all(color: Colors.blue)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: item.type == null
+                    ? SizedBox() //TODO: Manage null (TAHA)
+                    : Image.asset(
+                        _tipe(item.type!),
+                        fit: BoxFit.scaleDown,
+                      ),
+              ),
+              Expanded(
+                flex: 3,
+                child: _Body(
+                  title: item.titulo ?? '',
+                  description: item.descripcion?? '',
+                  link: item.enlace ?? '',
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 3,
-            child: _Body(
-              title: item.titulo,
-              description: item.descripcion,
-              link: item.enlace,
-            ),
-          ),
-        ],
-      ),
-      )
-    );
+        ));
     /*ScaleTransition(
     scale: animation,
     child: Container(
@@ -84,22 +78,21 @@ class ItemToolboxWidgetGeneral extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget{
+class _Body extends StatelessWidget {
   final String title;
   final String description;
   final String link;
 
   const _Body({
-    @required this.title,
-    @required this.description,
-    @required this.link,
-    Key key,
+    required this.title,
+    required this.description,
+    required this.link,
+    Key? key,
   }) : super(key: key);
 
-
   @override
-  Widget build(BuildContext context) { 
-      return Padding(
+  Widget build(BuildContext context) {
+    return Padding(
       padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,7 +107,9 @@ class _Body extends StatelessWidget{
           const Padding(padding: EdgeInsets.all(5.0)),
           Text(
             description,
-            style: const TextStyle(fontSize: 15.0,),
+            style: const TextStyle(
+              fontSize: 15.0,
+            ),
           ),
           const Padding(padding: EdgeInsets.all(5.0)),
           InkWell(
@@ -130,23 +125,23 @@ class _Body extends StatelessWidget{
   }
 }
 
-String _tipe(String tipo){
-  if(tipo.compareTo('EJERCICIO') == 0){
+String _tipe(String tipo) {
+  if (tipo.compareTo('EJERCICIO') == 0) {
     return "assets/images/12-EJERCICIOS.png";
   }
-  if(tipo.compareTo('ALIMENTACION') == 0){
+  if (tipo.compareTo('ALIMENTACION') == 0) {
     return "assets/images/8-COMIDA.png";
   }
-  if(tipo.compareTo('NOTICIA') == 0){
+  if (tipo.compareTo('NOTICIA') == 0) {
     return "assets/images/10-NOTICIAS.png";
   }
   return " ";
 }
 
-void _launchURL(String enlace) async{
-  if(await canLaunch(enlace)){
-    await launch(enlace);
-  }else{
-      throw 'no se pudo cargar el enlace';
+void _launchURL(String enlace) async {
+  if (await canLaunchUrl(Uri.parse(enlace))) {
+    await launchUrl(Uri.parse(enlace));
+  } else {
+    throw 'no se pudo cargar el enlace';
   }
 }

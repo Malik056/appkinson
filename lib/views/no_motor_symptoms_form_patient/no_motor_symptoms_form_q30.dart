@@ -1,11 +1,11 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:appkinson/constants/globals.dart';
+import 'package:appkinson/model/no_motor_symptoms_form.dart';
 import 'package:appkinson/routes/routes_general.dart';
+import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:flutter/material.dart';
-import '../../model/no_motor_symptoms_form.dart';
-import '../../services/end_points.dart';
 import 'no_motor_symptoms_form_q1.dart';
 import 'no_motor_symptoms_form_q2.dart';
 import 'no_motor_symptoms_form_q3.dart';
@@ -37,19 +37,20 @@ import 'no_motor_symptoms_form_q28.dart';
 import 'no_motor_symptoms_form_q29.dart';
 
 class NoMotorSymptomsFormQ30 extends StatefulWidget {
-  final int idPatient;
+  final int? idPatient;
 
-  NoMotorSymptomsFormQ30({Key key, this.idPatient}) : super(key: key);
+  NoMotorSymptomsFormQ30({Key? key, this.idPatient}) : super(key: key);
   @override
-  _NoMotorSymptomsFormQ30 createState() =>_NoMotorSymptomsFormQ30(this.idPatient);
+  _NoMotorSymptomsFormQ30 createState() => _NoMotorSymptomsFormQ30(this.idPatient);
 }
 
 enum SigningCharacter { Si, No, Nada }
-SigningCharacter _character30;
+
+SigningCharacter? _character30;
 int selectedStateRadioQ30 = 0;
 
 class _NoMotorSymptomsFormQ30 extends State<NoMotorSymptomsFormQ30> {
-  final int idPatient;
+  final int? idPatient;
   _NoMotorSymptomsFormQ30(this.idPatient);
   void initState() {
     super.initState();
@@ -91,7 +92,7 @@ class _NoMotorSymptomsFormQ30 extends State<NoMotorSymptomsFormQ30> {
                 ),
                 value: SigningCharacter.Si,
                 groupValue: _character30,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character30 = value;
                     selectedStateRadioQ30 = 1;
@@ -110,7 +111,7 @@ class _NoMotorSymptomsFormQ30 extends State<NoMotorSymptomsFormQ30> {
                 ),
                 value: SigningCharacter.No,
                 groupValue: _character30,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character30 = value;
                     selectedStateRadioQ30 = 0;
@@ -157,11 +158,15 @@ class _NoMotorSymptomsFormQ30 extends State<NoMotorSymptomsFormQ30> {
                   patientForm.q29 = BringAnswer29().send();
                   patientForm.q30 = BringAnswer30().send();
                   patientForm.date = new DateTime.now();
-                  
-                  String id = await Utils().getFromToken('id');
-                  String token = await Utils().getToken();
+
+                  String? id = await Utils().getFromToken('id');
+                  String? token = await Utils().getToken();
+                  if (token == null) {
+                    //TODO: Handle NULL (TAHA)
+                    return;
+                  }
                   var savedEmotional = await EndPoints().registerNoMotorSymptomsForm(patientForm, idPatient, token);
-                  int acumulative = patientForm.q1 + patientForm.q2 + patientForm.q3 + patientForm.q4 + patientForm.q5 + patientForm.q6 + patientForm.q7 + patientForm.q8 + patientForm.q9 + patientForm.q10 + patientForm.q11 + patientForm.q12 + patientForm.q13 + patientForm.q14 + patientForm.q15 + patientForm.q16 + patientForm.q17 + patientForm.q18 + patientForm.q19 + patientForm.q20 + patientForm.q21 + patientForm.q22 + patientForm.q23 + patientForm.q24 + patientForm.q25 + patientForm.q26 + patientForm.q27 + patientForm.q28 + patientForm.q29 + patientForm.q30;
+                  int acumulative = patientForm.q1! + patientForm.q2! + patientForm.q3! + patientForm.q4! + patientForm.q5! + patientForm.q6! + patientForm.q7! + patientForm.q8! + patientForm.q9! + patientForm.q10! + patientForm.q11! + patientForm.q12! + patientForm.q13! + patientForm.q14! + patientForm.q15! + patientForm.q16! + patientForm.q17! + patientForm.q18! + patientForm.q19! + patientForm.q20! + patientForm.q21! + patientForm.q22! + patientForm.q23! + patientForm.q24! + patientForm.q25! + patientForm.q26! + patientForm.q27! + patientForm.q28! + patientForm.q29! + patientForm.q30!;
                   RestartQ1().setTile();
                   RestartQ2().setTile();
                   RestartQ3().setTile();
@@ -206,23 +211,21 @@ class _NoMotorSymptomsFormQ30 extends State<NoMotorSymptomsFormQ30> {
       ),
     );
   }
-  total(int result){
-    debugPrint(result.toString());
-    showDialog(
-    context: context,
-    builder:(BuildContext context) => const AlertDialog(title: Text('Material Alert!')));
-  }
-  
-}
 
+  total(int result) {
+    debugPrint(result.toString());
+    showDialog(context: context, builder: (BuildContext context) => const AlertDialog(title: Text('Material Alert!')));
+  }
+}
 
 class BringAnswer30 {
   int send() {
     return selectedStateRadioQ30;
   }
 }
+
 class RestartQ30 {
-  void setTile(){
+  void setTile() {
     _character30 = SigningCharacter.Nada;
   }
 }

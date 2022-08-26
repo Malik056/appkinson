@@ -1,7 +1,7 @@
+// ignore_for_file: unused_field
+
 import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_admin.dart';
-import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/administrator/form_add_item.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +17,10 @@ List<ItemToolbox> news = [];
 var id = 0;
 
 class _ListNewsState extends State<ListNews> {
-  @override
   final key = GlobalKey<AnimatedListState>();
   //List<AlarmInfo> news;
-  DateTime _alarmTime;
-  String _alarmTimeString;
+  DateTime? _alarmTime;
+  String? _alarmTimeString;
 
   //AlarmInfo alarm;
   @override
@@ -75,7 +74,7 @@ class _ListNewsState extends State<ListNews> {
     //EndPoints().deleteAlarm(index.toString(), getToken(), getId());
     final item = news.removeAt(index);
 
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );
@@ -83,11 +82,11 @@ class _ListNewsState extends State<ListNews> {
 }
 
 getId() async {
-  String id = await Utils().getFromToken('id');
+  String? id = await Utils().getFromToken('id');
   return id;
 }
 
 getToken() async {
-  String token = await Utils().getToken();
+  String? token = await Utils().getToken();
   return token;
 }

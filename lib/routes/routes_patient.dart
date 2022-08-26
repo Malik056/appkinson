@@ -18,17 +18,17 @@ import 'package:flutter/material.dart';
 
 class RoutesPatient {
   //ruta para ir al home de un paciente
-  Future<T> toPatientHome<T>(BuildContext context) {
+  Future<T?> toPatientHome<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PatientHomePage()));
   }
 
 //ruta para entrar a calendario de síntomas
-  Future<T> toCalendar<T>(BuildContext context) {
+  Future<T?> toCalendar<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CalendarScreenView2()));
   }
 
 //ruta para entrar al formulario de sintomas no motores
-  Future<T> toNoMotorSymptoms<T>(BuildContext context, int idPatient) {
+  Future<T?> toNoMotorSymptoms<T>(BuildContext context, int idPatient) {
     return Navigator.push<T>(
         context,
         new MaterialPageRoute<T>(
@@ -38,7 +38,7 @@ class RoutesPatient {
   }
 
 //ruta para entrar al formulario emocional
-  Future<T> toFeelsForm<T>(BuildContext context, int idPatient) {
+  Future<T?> toFeelsForm<T>(BuildContext context, int idPatient) {
     return Navigator.push<T>(
         context,
         new MaterialPageRoute<T>(
@@ -48,7 +48,7 @@ class RoutesPatient {
   }
 
 //ruta pare entrar a la página de listado de medicinas
-  Future<T> toScheduleMedicines<T>(BuildContext context, int idPatient) {
+  Future<T?> toScheduleMedicines<T>(BuildContext context, int idPatient) {
     return Navigator.push<T>(
         context,
         new MaterialPageRoute(
@@ -58,46 +58,46 @@ class RoutesPatient {
   }
 
 //ruta para entrar a la pantalla de notificaciones
-  Future<T> toNotifications<T>(BuildContext context) {
+  Future<T?> toNotifications<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PatientNotifications()));
   }
 
 //ruta para entrar a la pantalla de notificaciones remotas
-  Future<T> toRelationsRequest<T>(BuildContext context) {
+  Future<T?> toRelationsRequest<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => RelationsRequest()));
   }
 
 //ruta para entrar a ver el perfil de un paciente
-  Future<T> toPatientProfile<T>(BuildContext context) {
+  Future<T?> toPatientProfile<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => MyHomePage1()));
   }
 
 //ruta para ver información sobre el parkinson
-  Future<T> toAboutParkinson<T>(BuildContext context) {
+  Future<T?> toAboutParkinson<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => Information()));
   }
 
 //ruta para la edición del perfil
-  Future<T> toPatientEditProfile<T>(BuildContext context) {
+  Future<T?> toPatientEditProfile<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ProfileEditionPatient()));
   }
 
-  Future<T> toSymptomsForm<T>(BuildContext context) {
-    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => symptomsFormQ()));
+  Future<T?> toSymptomsForm<T>(BuildContext context) {
+    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => SymptomsFormQ()));
   }
 
 //ruta para el formulario de sintomas no motores
-  Future<T> toSymptomsFormPatient<T>(BuildContext context) {
+  Future<T?> toSymptomsFormPatient<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => SymptomsFormPatient()));
   }
 
 //ruta para entrar a activiades y juegos
-  Future<T> toToolbox<T>(BuildContext context) {
+  Future<T?> toToolbox<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => Toolbox()));
   }
 
 //ruta para entrar al juego
-  Future<T> toGame<T>(BuildContext context) {
+  Future<T?> toGame<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CountDownTimer()));
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
@@ -11,27 +13,16 @@ import '../symptoms_form_doctor/symptoms_form_q2.dart';
 import '../symptoms_form_doctor/symptoms_form_q3.dart';
 import '../symptoms_form_doctor/symptoms_form_q4.dart';
 import '../symptoms_form_doctor/symptoms_form_q5.dart';
-import '../symptoms_form_doctor/symptoms_form_q6.dart';
-import '../symptoms_form_doctor/symptoms_form_q7.dart';
-import '../symptoms_form_doctor/symptoms_form_q8.dart';
-import '../symptoms_form_doctor/symptoms_form_q9.dart';
-import '../symptoms_form_doctor/symptoms_form_q10.dart';
-import '../symptoms_form_doctor/symptoms_form_q11.dart';
-import '../symptoms_form_doctor/symptoms_form_q12.dart';
-import '../symptoms_form_doctor/symptoms_form_q13.dart';
-import '../symptoms_form_doctor/symptoms_form_q14.dart';
-import '../symptoms_form_doctor/symptoms_form_q15.dart';
-import '../symptoms_form_doctor/symptoms_form_q16.dart';
 import '../calendar/calendar_screen.dart';
 
-class symptomsFormQ29 extends StatefulWidget {
+class SymptomsFormQ29 extends StatefulWidget {
   @override
-  _symptomsFormQ29 createState() => _symptomsFormQ29();
+  _SymptomsFormQ29 createState() => _SymptomsFormQ29();
 }
 
-class _symptomsFormQ29 extends State<symptomsFormQ29> {
-  File fileMedia;
-  MediaSource source;
+class _SymptomsFormQ29 extends State<SymptomsFormQ29> {
+  File? fileMedia;
+  MediaSource? source;
   int selectedStateRadio = 0;
   int selectedDyskinesiaRadio = 0;
 
@@ -44,7 +35,7 @@ class _symptomsFormQ29 extends State<symptomsFormQ29> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Expanded(
-                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMedia) : VideoWidget(fileMedia)),
+                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMedia!) : VideoWidget(fileMedia!)),
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
@@ -97,7 +88,7 @@ class _symptomsFormQ29 extends State<symptomsFormQ29> {
                     */
                     patientForm.video = fileMedia;
                     patientForm.date = tempDate;
-                    var savedDone = await EndPoints().registerSymptomsForm(patientForm, currentUser['id'].toString(), token);
+                    var savedDone = await EndPoints().registerSymptomsForm(patientForm, currentUser?['id'].toString(), token);
 
                     RoutesGeneral().toPop(context);
                   },
@@ -140,13 +131,13 @@ class _symptomsFormQ29 extends State<symptomsFormQ29> {
 
   Future save() async {}
 
-  void onChangedStateValue(Object value) {
+  void onChangedStateValue(int value) {
     setState(() {
       selectedStateRadio = value;
     });
   }
 
-  void onChangedDyskinesiaValue(Object value) {
+  void onChangedDyskinesiaValue(int value) {
     setState(() {
       selectedDyskinesiaRadio = value;
     });

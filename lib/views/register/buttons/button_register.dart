@@ -42,9 +42,9 @@ class ButtonRegisterCustom extends State<ButtonRegister> {
           var character = '';
           bool hasUppercase = false;
           bool hasSpecialCharacters = false;
-          debugPrint(user.password.length.toString());
+          debugPrint(user.password?.length.toString());
           debugPrint("Validando condiciones");
-          if (EmailValidator.validate(user.email)) {
+          if (EmailValidator.validate(user.email??'')) {
             debugPrint("correo valido");
             if (/*mas de 8 char*/ user.password.toString().length > 7) {
               if (user.passwordVerify.toString() == user.password.toString()) {
@@ -83,7 +83,7 @@ class ButtonRegisterCustom extends State<ButtonRegister> {
 
 invalid(int reason, context) {
   debugPrint("invalidez");
-  String invalidReason;
+  String invalidReason = '';
   if (reason == 0) {
     invalidReason = "El email no es un correo valido";
   }

@@ -2,13 +2,12 @@ import 'package:appkinson/views/relations/buttons/button_go_calendar_from_carer.
 import 'package:appkinson/views/relations/buttons/button_go_form_feels_from_carer.dart';
 import 'package:appkinson/views/relations/buttons/button_go_form_no_motores_from_carer.dart';
 import 'package:appkinson/views/relations/buttons/button_go_medicines_from_carer.dart';
-import 'package:appkinson/views/relations/buttons/button_go_reporter.dart';
 import 'package:flutter/material.dart';
 
 class InteractionCarerPatient extends StatelessWidget {
   final int idPatient;
 
-  const InteractionCarerPatient({Key key, this.idPatient}) : super(key: key);
+  const InteractionCarerPatient({Key? key, required this.idPatient}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     //print('patient pantalla intermedia ${idPatient.toString()}');
@@ -26,7 +25,7 @@ class InteractionCarerPatient extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [Colors.blue[400], Colors.blue[900]],
+                      colors: [Colors.blue[400]!, Colors.blue[900]!],
                     ),
                     image: DecorationImage(
                       image: AssetImage("assets/images/starsBackGround.png"),

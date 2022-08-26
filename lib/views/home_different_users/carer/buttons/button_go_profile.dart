@@ -29,18 +29,18 @@ class _ButtonGoProfileState extends State<ButtonGoProfile> {
         ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
           print(token);
           var patientPhoto = await EndPoints().getUserName(token);
           // ignore: unused_local_variable
           var patient = await Utils().getFromToken('nombre');
-          var email = await Utils().getFromToken('email');
+          String? email = await Utils().getFromToken('email');
 
           var codeList = json.decode(patientPhoto);
           //namePatient
           //print('hey' + codeList[0]['NAME']);
           nameCarer = codeList[0]['NAME'];
-          emailCarer = email;
+          emailCarer = email??'';
 
           var res = await EndPoints().getPhotoUser(token, codeList[0]['PHOTOPATH']);
           this.setState(() {

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ7 extends StatefulWidget {
+class SymptomsFormQ7 extends StatefulWidget {
   @override
-  _symptomsFormQ7 createState() => _symptomsFormQ7();
+  _SymptomsFormQ7 createState() => _SymptomsFormQ7();
 }
 
 enum SigningCharacter { Ausente, Discreto, Moderada, Intensa, MuyIntensa }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ7 = 0;
 
-class _symptomsFormQ7 extends State<symptomsFormQ7> {
+class _SymptomsFormQ7 extends State<SymptomsFormQ7> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _symptomsFormQ7 extends State<symptomsFormQ7> {
                   title: const Text('Ausente'),
                   value: SigningCharacter.Ausente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ7 = 0;
@@ -54,7 +54,7 @@ class _symptomsFormQ7 extends State<symptomsFormQ7> {
                       'Discreto, detectable solamente cuando hay sacudidas involuntarias'),
                   value: SigningCharacter.Discreto,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ7 = 1;
@@ -68,7 +68,7 @@ class _symptomsFormQ7 extends State<symptomsFormQ7> {
                   title: const Text('Discreto a moderado'),
                   value: SigningCharacter.Moderada,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ7 = 2;
@@ -83,7 +83,7 @@ class _symptomsFormQ7 extends State<symptomsFormQ7> {
                       'Intensa pero no impide movimientos en toda su amplitud'),
                   value: SigningCharacter.Intensa,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ7 = 3;
@@ -98,7 +98,7 @@ class _symptomsFormQ7 extends State<symptomsFormQ7> {
                       'Muy intensa, dificulta movimientos en toda su amplitud'),
                   value: SigningCharacter.MuyIntensa,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ7 = 4;

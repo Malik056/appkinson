@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 
 class RequestItemWidget extends StatelessWidget {
   final RelationRequest item;
-  final Animation animation;
+  final Animation<double> animation;
   final VoidCallback onClicked;
   final VoidCallback onClicked2;
 
   const RequestItemWidget({
-    @required this.item,
-    @required this.animation,
-    @required this.onClicked,
-    @required this.onClicked2,
-    Key key,
+    required this.item,
+    required this.animation,
+    required this.onClicked,
+    required this.onClicked2,
+    Key? key,
   }) : super(key: key);
 //hola
   @override
@@ -32,7 +32,7 @@ class RequestItemWidget extends StatelessWidget {
               radius: 32,
               child: Icon(Icons.account_circle_rounded, color: Colors.lightBlueAccent, size: 45),
             ),
-            title: Text(item.message, style: TextStyle(fontSize: 15)),
+            title: Text(item.message??'', style: TextStyle(fontSize: 15)),
             trailing: IconButton(
               alignment: Alignment.bottomLeft,
               icon: Icon(Icons.delete, color: Colors.red, size: 32),

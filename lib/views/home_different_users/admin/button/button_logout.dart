@@ -21,7 +21,7 @@ class ButtonLogout extends StatelessWidget {
         onPressed: () async {
           debugPrint("Tapped Log Out....");
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs?.clear();
+          prefs.clear();
           cleanLogin();
           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage()), (Route<dynamic> route) => false);
         },

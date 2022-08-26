@@ -11,7 +11,7 @@ DateTime selectedDate = DateTime.now();
 class ReportConfigPage extends StatefulWidget {
   final int idPatient;
 
-  const ReportConfigPage({Key key, this.idPatient}) : super(key: key);
+  const ReportConfigPage({Key? key, required this.idPatient}) : super(key: key);
   @override
   _ReportConfigPageState createState() => _ReportConfigPageState(idPatient);
 }
@@ -176,14 +176,20 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
                 style: buildButtonStyle(border: roundedRadius18, forground: Colors.white, background: Colors.blueAccent),
                 child: Text("Escoger fecha"),
                 onPressed: () {
-                  showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(DateTime.now().year - 100), lastDate: DateTime(DateTime.now().year + 1)).then((value) {
-                    selectedDate = value;
-                    if (picked.isNotEmpty) {
-                      picked.clear();
-                    }
-                    picked.add(new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 00, 00, 00));
-                    picked.add(new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59));
-                  });
+                  showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(DateTime.now().year - 100), lastDate: DateTime(DateTime.now().year + 1)).then(
+                    (value) {
+                      if (value == null) {
+                        //TODO: Handle Null (TAHA)
+                        return;
+                      }
+                      selectedDate = value;
+                      if (picked.isNotEmpty) {
+                        picked.clear();
+                      }
+                      picked.add(new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 00, 00, 00));
+                      picked.add(new DateTime(selectedDate.year, selectedDate.month, selectedDate.day, 23, 59, 59));
+                    },
+                  );
                   print("PRUEBAAA NUEVAAAAA");
                   print(selectedDate);
                   //if(picked.isNotEmpty){ picked.clear();}
@@ -251,7 +257,7 @@ class _ReportConfigPageState extends State<ReportConfigPage> {
   }
 
   _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate, // Refer step 1
       firstDate: DateTime(2000),
@@ -273,7 +279,7 @@ class MultiSelectChipOne extends StatefulWidget {
 
 class _MultiSelectChipStateOne extends State<MultiSelectChipOne> {
   _buildChoiceList() {
-    List<Widget> choices = List();
+    List<Widget> choices = [];
     widget.reportList.forEach((item) {
       choices.add(Container(
         padding: const EdgeInsets.all(2.0),
@@ -301,7 +307,7 @@ class _MultiSelectChipStateOne extends State<MultiSelectChipOne> {
 
 class MultiSelectChip extends StatefulWidget {
   final List<String> dataList;
-  final Function(List<String>) onSelectionChanged;
+  final Function(List<String>)? onSelectionChanged;
 
   MultiSelectChip(this.dataList, {this.onSelectionChanged});
 
@@ -311,10 +317,10 @@ class MultiSelectChip extends StatefulWidget {
 
 class _MultiSelectChipState extends State<MultiSelectChip> {
 // String selectedChoice = "";
-  List<String> selectedChoices = List();
+  List<String> selectedChoices = [];
 
   _buildChoiceList() {
-    List<Widget> choices = List();
+    List<Widget> choices = [];
 
     widget.dataList.forEach((item) {
       choices.add(Container(
@@ -325,7 +331,9 @@ class _MultiSelectChipState extends State<MultiSelectChip> {
           onSelected: (selected) {
             setState(() {
               selectedChoices.contains(item) ? selectedChoices.remove(item) : selectedChoices.add(item);
-              widget.onSelectionChanged(selectedChoices);
+              if (widget.onSelectionChanged != null) {
+                widget.onSelectionChanged!(selectedChoices);
+              }
             });
           },
         ),

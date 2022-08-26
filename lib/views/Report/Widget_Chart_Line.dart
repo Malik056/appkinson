@@ -1,25 +1,26 @@
+// ignore_for_file: unused_element, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:math' as math;
 
 class WidgetChartLine extends StatefulWidget {
-  var dataLine;
-  var id;
+  final List<List<DataLineSerie>> dataLine;
+  final String id;
   String titulo;
   String ejex;
   String ejey;
   String description;
   String dataDescription;
   WidgetChartLine(
-      {Key key,
-      @required this.dataLine,
-      @required this.id,
-      @required this.titulo,
-      @required this.ejex,
-      @required this.ejey,
-      @required this.description,
-      @required this.dataDescription})
+      {Key? key,
+      required this.dataLine,
+      required this.id,
+      required this.titulo,
+      required this.ejex,
+      required this.ejey,
+      required this.description,
+      required this.dataDescription})
       : super(key: key);
   _WidgetChartLineState createState() => _WidgetChartLineState(
       this.dataLine,
@@ -32,9 +33,9 @@ class WidgetChartLine extends StatefulWidget {
 }
 
 class _WidgetChartLineState extends State<WidgetChartLine> {
-  List<charts.Series<dataLineSerie, int>> _seriesLineData;
-  var dataLine;
-  var id;
+  List<charts.Series<DataLineSerie, int>> _seriesLineData = [];
+  List<List<DataLineSerie>> dataLine;
+  String id;
   String titulo;
   String ejex;
   String ejey;
@@ -42,9 +43,9 @@ class _WidgetChartLineState extends State<WidgetChartLine> {
   String dataDescription;
   _WidgetChartLineState(this.dataLine, this.id, this.titulo, this.ejex,
       this.ejey, this.description, this.dataDescription);
-  Color colors;
+  late Color colors;
 
-  _buildDataDescription(dataLine) {
+  String _buildDataDescription(dataLine) {
     String finalData = "";
     for (int i = 0; i < dataLine.length; i++) {
       for (int j = 0; j < dataLine[i].length; j++) {
@@ -75,8 +76,8 @@ class _WidgetChartLineState extends State<WidgetChartLine> {
           colorFn: (__, _) => charts.ColorUtil.fromDartColor(colors),
           id: id[0],
           data: dataLine[i],
-          domainFn: (dataLineSerie dataLineSerie, _) => dataLineSerie.yearval,
-          measureFn: (dataLineSerie dataLineSerie, _) =>
+          domainFn: (DataLineSerie dataLineSerie, _) => dataLineSerie.yearval,
+          measureFn: (DataLineSerie dataLineSerie, _) =>
               dataLineSerie.dataLineSerieval,
         ),
       );
@@ -86,7 +87,7 @@ class _WidgetChartLineState extends State<WidgetChartLine> {
   void initState() {
     super.initState();
     colors = _generateColor();
-    _seriesLineData = List<charts.Series<dataLineSerie, int>>();
+    _seriesLineData = <charts.Series<DataLineSerie, int>>[];
     _generateData();
   }
 
@@ -252,9 +253,9 @@ class _WidgetChartLineState extends State<WidgetChartLine> {
   }
 }
 
-class dataLineSerie {
+class DataLineSerie {
   int yearval;
   double dataLineSerieval;
 
-  dataLineSerie(this.yearval, this.dataLineSerieval);
+  DataLineSerie(this.yearval, this.dataLineSerieval);
 }

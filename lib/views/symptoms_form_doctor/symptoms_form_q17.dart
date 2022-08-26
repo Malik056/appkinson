@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ17 extends StatefulWidget {
+class SymptomsFormQ17 extends StatefulWidget {
   @override
-  _symptomsFormQ17 createState() => _symptomsFormQ17();
+  _SymptomsFormQ17 createState() => _SymptomsFormQ17();
 }
 
 enum SigningCharacter { Ausente, Infrecuente, Persistente, Mayoria, Presente }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ17 = 0;
 
-class _symptomsFormQ17 extends State<symptomsFormQ17> {
+class _SymptomsFormQ17 extends State<SymptomsFormQ17> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _symptomsFormQ17 extends State<symptomsFormQ17> {
                   title: const Text('Ausente'),
                   value: SigningCharacter.Ausente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ17 = 0;
@@ -53,7 +53,7 @@ class _symptomsFormQ17 extends State<symptomsFormQ17> {
                   title: const Text('Poca frecuencia'),
                   value: SigningCharacter.Infrecuente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ17 = 1;
@@ -67,7 +67,7 @@ class _symptomsFormQ17 extends State<symptomsFormQ17> {
                   title: const Text('Persistente'),
                   value: SigningCharacter.Persistente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ17 = 2;
@@ -82,7 +82,7 @@ class _symptomsFormQ17 extends State<symptomsFormQ17> {
                       'Presente la mayor parte del tiempo, temblor moderado'),
                   value: SigningCharacter.Mayoria,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ17 = 3;
@@ -97,7 +97,7 @@ class _symptomsFormQ17 extends State<symptomsFormQ17> {
                       'Presente la mayor parte del tiempo, temblor severo'),
                   value: SigningCharacter.Presente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ17 = 4;

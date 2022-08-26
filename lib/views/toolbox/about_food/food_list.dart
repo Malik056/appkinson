@@ -20,8 +20,8 @@ class _ListFoodState extends State<ListFood> {
 
   final key = GlobalKey<AnimatedListState>();
   //List<AlarmInfo> food;
-  DateTime _alarmTime;
-  String _alarmTimeString;
+  DateTime? _alarmTime;
+  String? _alarmTimeString;
 
   //AlarmInfo alarm;
   @override
@@ -75,7 +75,7 @@ class _ListFoodState extends State<ListFood> {
     //EndPoints().deleteAlarm(index.toString(), getToken(), getId());
     final item = food.removeAt(index);
 
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );
@@ -83,11 +83,11 @@ class _ListFoodState extends State<ListFood> {
 }
 
 getId() async {
-  String id = await Utils().getFromToken('id');
+  String? id = await Utils().getFromToken('id');
   return id;
 }
 
 getToken() async {
-  String token = await Utils().getToken();
+  String? token = await Utils().getToken();
   return token;
 }

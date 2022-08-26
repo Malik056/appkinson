@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SymptomsFormPatientQ1 extends StatefulWidget {
   @override
-  _symptomsFormPatientQ1 createState() => _symptomsFormPatientQ1();
+  _SymptomsFormPatientQ1 createState() => _SymptomsFormPatientQ1();
 }
 
 enum SigningCharacter {
@@ -12,10 +12,10 @@ enum SigningCharacter {
   Alterado,
   Ininteligible
 }
-SigningCharacter _character = SigningCharacter.Normal;
-String selectedStateRadioQ1 = null;
+SigningCharacter? _character = SigningCharacter.Normal;
+String? selectedStateRadioQ1;
 
-class _symptomsFormPatientQ1 extends State<SymptomsFormPatientQ1> {
+class _SymptomsFormPatientQ1 extends State<SymptomsFormPatientQ1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _symptomsFormPatientQ1 extends State<SymptomsFormPatientQ1> {
                   title: const Text('SI'),
                   value: SigningCharacter.Normal,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ1 = 'SI';
@@ -58,7 +58,7 @@ class _symptomsFormPatientQ1 extends State<SymptomsFormPatientQ1> {
                   title: const Text('NO'),
                   value: SigningCharacter.PerdidaDeExpresion,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ1 = 'NO';
@@ -78,7 +78,7 @@ class _symptomsFormPatientQ1 extends State<SymptomsFormPatientQ1> {
 }
 
 class BringAnswerPatient1 {
-  String send() {
+  String? send() {
     return selectedStateRadioQ1;
   }
 }

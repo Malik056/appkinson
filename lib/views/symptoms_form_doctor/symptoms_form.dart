@@ -10,8 +10,8 @@ class SymptomsForm extends StatefulWidget {
 }
 
 class _SymptomsForm extends State<SymptomsForm> {
-  File fileMedia;
-  MediaSource source;
+  File? fileMedia;
+  MediaSource? source;
   int selectedStateRadio = 0;
   int selectedDyskinesiaRadio = 0;
 
@@ -56,7 +56,7 @@ class _SymptomsForm extends State<SymptomsForm> {
                   onChanged: onChangedDyskinesiaValue,
                 ),
                 Expanded(
-                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 120) : (source == MediaSource.image ? Image.file(fileMedia) : VideoWidget(fileMedia)),
+                  child: fileMedia == null ? Icon(Icons.play_circle_outline, size: 120) : (source == MediaSource.image ? Image.file(fileMedia!) : VideoWidget(fileMedia!)),
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
@@ -127,15 +127,15 @@ class _SymptomsForm extends State<SymptomsForm> {
 
   Future save() async {}
 
-  void onChangedStateValue(Object value) {
+  void onChangedStateValue(int? value) {
     setState(() {
-      selectedStateRadio = value;
+      selectedStateRadio = value ?? selectedStateRadio;
     });
   }
 
-  void onChangedDyskinesiaValue(Object value) {
+  void onChangedDyskinesiaValue(int? value) {
     setState(() {
-      selectedDyskinesiaRadio = value;
+      selectedDyskinesiaRadio = value ?? selectedDyskinesiaRadio;
     });
   }
 }

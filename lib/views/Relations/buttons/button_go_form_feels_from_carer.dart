@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ButtonGoFormFeelsFromCarer extends StatelessWidget {
   final int idPatient;
 
-  ButtonGoFormFeelsFromCarer({@required this.idPatient});
+  ButtonGoFormFeelsFromCarer({required this.idPatient});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             body: Container(
               width: double.infinity,
-              decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, colors: [Colors.yellow[200], Colors.blue, Colors.blue[700]])),
+              decoration: BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, colors: [Colors.yellow[200]!, Colors.blue, Colors.blue[700]!])),
               child: Column(children: <Widget>[
                 SizedBox(
                   height: 80,

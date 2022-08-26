@@ -55,8 +55,11 @@ class __ProfileEdition extends State<ProfileEditionDoctor> {
                 var user = await m.send();
                 debugPrint(user.name);
 
-                String id = await Utils().getFromToken('id');
-                String token = await Utils().getToken();
+                String? id = await Utils().getFromToken('id');
+                String? token = await Utils().getToken();
+                if(id == null || token == null) { //TODO: Handle null (TAHA)
+                  return;
+                }
                 String save = await EndPoints().modifyUsers(user, id, token);
 
                 debugPrint(save);

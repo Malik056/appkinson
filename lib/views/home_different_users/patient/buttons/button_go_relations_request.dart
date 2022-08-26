@@ -20,7 +20,10 @@ class ButtonGoRelationsRequest extends StatelessWidget {
         //RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
+          if(token == null) {//TODO: Handle NULL (TAHA)
+            return;
+          }
           //items =  getListRelationsRequest();
           items = await EndPoints().getRelationRequest(token);
           debugPrint(items.length.toString());

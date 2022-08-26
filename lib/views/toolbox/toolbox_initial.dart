@@ -18,7 +18,7 @@ class Toolbox extends StatefulWidget {
   _Toolbox0 createState() => _Toolbox0();
 }
 
-bool show;
+bool? show;
 
 class _Toolbox0 extends State<Toolbox> {
   String muestrePasos = "0";
@@ -26,13 +26,13 @@ class _Toolbox0 extends State<Toolbox> {
   String _calories = "0";
 
   String _stepCountValue = '0';
-  StreamSubscription<int> _subscription;
+  StreamSubscription<int>? _subscription;
 
-  double numeroPasos;
-  double _convert;
-  double _kmx;
-  double burnedx;
-  double _porciento;
+  double? numeroPasos;
+  double? _convert;
+  double? _kmx;
+  double? burnedx;
+  double? _porciento;
   // double percent=0.1;
 
   @override
@@ -71,16 +71,16 @@ class _Toolbox0 extends State<Toolbox> {
     });
 
     var long3 = (numeroPasos);
-    long3 = num.parse(y.toStringAsFixed(2));
+    long3 = num.parse(y.toStringAsFixed(2)).toDouble();
     var long4 = (long3 / 10000);
 
     int decimals = 1;
-    int fac = pow(10, decimals);
+    int fac = pow(10, decimals).toInt();
     double d = long4;
     d = (d * fac).round() / fac;
     print("d: $d");
 
-    getDistanceRun(numeroPasos);
+    getDistanceRun(numeroPasos??0); // TODO: Manage null (TAHA)
 
     setState(() {
       _convert = d;
@@ -106,15 +106,15 @@ class _Toolbox0 extends State<Toolbox> {
 
   void getDistanceRun(double numeroPasos) {
     var distance = ((numeroPasos * 78) / 100000);
-    distance = num.parse(distance.toStringAsFixed(2));
+    distance = num.parse(distance.toStringAsFixed(2)).toDouble();
     var distancekmx = distance * 34;
-    distancekmx = num.parse(distancekmx.toStringAsFixed(2));
+    distancekmx = num.parse(distancekmx.toStringAsFixed(2)).toDouble();
     //print(distance.runtimeType);
     setState(() {
       _km = "$distance";
     });
     setState(() {
-      _kmx = num.parse(distancekmx.toStringAsFixed(2));
+      _kmx = num.parse(distancekmx.toStringAsFixed(2)).toDouble();
     });
   }
 
@@ -174,7 +174,7 @@ class _Toolbox0 extends State<Toolbox> {
                       child: Expanded(
                         child: ButtonGoGame(),
                       ),
-                      visible: show,
+                      visible: show ?? false, //TODO: Manage null (TAHA)
                     ),
                     Expanded(
                       child: ButtonGoAboutNews(),

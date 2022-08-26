@@ -32,7 +32,10 @@ class _ButtonGoProfileState extends State<ButtonGoProfile> {
         onPressed: () async {
           // var doctor = await EndPoints()
           // .getCarer(user, currentUser['id'].toString(), token);
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
+          if(token == null) { //TODO: Handle NULL (TAHA)
+            return;
+          }
           var patient = await EndPoints().getUserName(token);
 
           var codeList = json.decode(patient);

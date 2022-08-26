@@ -7,10 +7,10 @@ class AlarmItemWidget extends StatelessWidget {
   final VoidCallback onClicked;
 
   const AlarmItemWidget({
-    @required this.item,
-    @required this.animation,
-    @required this.onClicked,
-    Key key,
+    required this.item,
+    required this.animation,
+    required this.onClicked,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -41,10 +41,10 @@ class AlarmItemWidget extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 2,
-                  child: _Body(
-                    medicine: item.idMedicine,
-                    dose: item.dose,
-                    time: item.alarmTime,
+                  child: _Body( //TODO: Manage null (TAHA)
+                    medicine: item.idMedicine??'',
+                    dose: item.dose??'',
+                    time: item.alarmTime??TimeOfDay.now(),
                   ),
                 ),
                 Padding(
@@ -90,10 +90,10 @@ class _Body extends StatelessWidget {
   final TimeOfDay time;
 
   const _Body({
-    @required this.medicine,
-    @required this.dose,
-    @required this.time,
-    Key key,
+    required this.medicine,
+    required this.dose,
+    required this.time,
+    Key? key,
   }) : super(key: key);
 
   @override

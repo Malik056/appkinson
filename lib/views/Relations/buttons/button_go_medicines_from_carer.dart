@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class ButtonGoMedicinesFromCarer extends StatelessWidget {
   final int idPatient;
 
-  ButtonGoMedicinesFromCarer({@required this.idPatient});
+  ButtonGoMedicinesFromCarer({required this.idPatient});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,11 @@ class ButtonGoMedicinesFromCarer extends StatelessWidget {
         ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
+          if (token == null) {
+            //TODO: Handle null (TAHA)
+            return;
+          }
           items = await EndPoints().getMedicinesAlarms(idPatient, token);
           RoutesPatient().toScheduleMedicines(context, idPatient);
         },

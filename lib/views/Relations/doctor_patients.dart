@@ -1,13 +1,13 @@
+// ignore_for_file: unused_local_variable, unused_element
+
 import 'dart:convert';
 
 import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
 //import 'package:appkinson/views/calendar/calendar_screen_view2.dart';
 import 'package:appkinson/views/calendar/calendar_screen_view2_doctor.dart';
-import 'package:appkinson/views/toolbox/about_excercises/excercises_list.dart';
 import 'package:flutter/material.dart';
 import '../../model/user.dart';
 
@@ -19,8 +19,7 @@ class DoctorPatients extends StatefulWidget {
 var codeListPatients;
 
 class DoctorPatientsCustom extends State<DoctorPatients> {
-  final TextEditingController addPatientController =
-      new TextEditingController();
+  final TextEditingController addPatientController = new TextEditingController();
   final TextEditingController editingController = new TextEditingController();
   final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
   TextEditingController editingController2 = TextEditingController();
@@ -57,9 +56,9 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
     List<User> _patients = [];
     User patient;
     //Pedir lista de pacientes relacionados
-    String tipe = await Utils().getFromToken('type');
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? tipe = await Utils().getFromToken('type');
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
     debugPrint("pidiendo pacientes");
     debugPrint(id);
     debugPrint(tipe);
@@ -86,12 +85,12 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
   }
 
   void filterSearchResults(String query) {
-    List<User> dummySearchList = List<User>();
+    List<User> dummySearchList = [];
     dummySearchList.addAll(patientsAdd);
     if (query.isNotEmpty) {
-      List<User> dummyListData = List<User>();
+      List<User> dummyListData = [];
       dummySearchList.forEach((item) {
-        if (item.email.contains(query)) {
+        if (item.email?.contains(query) ?? false) {
           dummyListData.add(item);
         }
       });
@@ -127,8 +126,7 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                       borderSide: BorderSide(color: Colors.white, width: 3.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey[400], width: 2.0),
+                      borderSide: BorderSide(color: Colors.grey[400]!, width: 2.0),
                     ),
                   ),
                 ),
@@ -178,9 +176,8 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                         }
                       } */
 
-                    String token = await Utils().getToken();
-                    String m = await EndPoints()
-                        .getSymptomsFormPatient(token, selectId);
+                    String? token = await Utils().getToken();
+                    String m = await EndPoints().getSymptomsFormPatient(token, selectId);
                     //final DateTime today = DateTime.now();
                     listPacientes = m;
 
@@ -189,51 +186,35 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                     for (var a = 0; a < codeList.length; a++) {
                       //patients.add(codeList[a]['EMAIL']);
                       DateTime dateBd = DateTime.parse(codeList[a]['formdate']);
-                      final DateTime startTime = DateTime(dateBd.year,
-                          dateBd.month, dateBd.day, dateBd.hour, 0, 0);
-                      final DateTime endTime =
-                          startTime.add(const Duration(hours: 1));
-                      if (codeList[a]['Q1'] == 'on' ||
-                          codeList[a]['Q1'] == 'ON' ||
-                          codeList[a]['Q1'] == 'ON Bueno') {
+                      final DateTime startTime = DateTime(dateBd.year, dateBd.month, dateBd.day, dateBd.hour, 0, 0);
+                      final DateTime endTime = startTime.add(const Duration(hours: 1));
+                      if (codeList[a]['Q1'] == 'on' || codeList[a]['Q1'] == 'ON' || codeList[a]['Q1'] == 'ON Bueno') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsDoctor.add(Meeting('ON              👋',
-                              startTime, endTime, Colors.green, false));
+                          meetingsDoctor.add(Meeting('ON              👋', startTime, endTime, Colors.green, false));
                         } else {
-                          meetingsDoctor.add(Meeting(
-                              'ON', startTime, endTime, Colors.green, false));
+                          meetingsDoctor.add(Meeting('ON', startTime, endTime, Colors.green, false));
                         }
                       }
-                      if (codeList[a]['Q1'] == 'off' ||
-                          codeList[a]['Q1'] == 'OFF' ||
-                          codeList[a]['Q1'] == 'OFF Malo') {
+                      if (codeList[a]['Q1'] == 'off' || codeList[a]['Q1'] == 'OFF' || codeList[a]['Q1'] == 'OFF Malo') {
                         String f = 'hola';
                         if (codeList[a]['Q2'] != "") {
-                          meetingsDoctor.add(Meeting('OFF              👋',
-                              startTime, endTime, Colors.red, false));
+                          meetingsDoctor.add(Meeting('OFF              👋', startTime, endTime, Colors.red, false));
                         } else {
-                          meetingsDoctor.add(Meeting(
-                              'OFF', startTime, endTime, Colors.red, false));
+                          meetingsDoctor.add(Meeting('OFF', startTime, endTime, Colors.red, false));
                         }
                       }
-                      if (codeList[a]['Q1'] == 'on bueno' ||
-                          codeList[a]['Q1'] == 'ON Muy Bueno') {
+                      if (codeList[a]['Q1'] == 'on bueno' || codeList[a]['Q1'] == 'ON Muy Bueno') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsDoctor.add(Meeting('ON Bueno              👋',
-                              startTime, endTime, Colors.green[700], false));
+                          meetingsDoctor.add(Meeting('ON Bueno              👋', startTime, endTime, Colors.green[700]!, false));
                         } else {
-                          meetingsDoctor.add(Meeting('ON Bueno', startTime,
-                              endTime, Colors.green[700], false));
+                          meetingsDoctor.add(Meeting('ON Bueno', startTime, endTime, Colors.green[700]!, false));
                         }
                       }
-                      if (codeList[a]['Q1'] == 'off malo' ||
-                          codeList[a]['Q1'] == 'OFF Muy Malo') {
+                      if (codeList[a]['Q1'] == 'off malo' || codeList[a]['Q1'] == 'OFF Muy Malo') {
                         if (codeList[a]['Q2'] != "") {
-                          meetingsDoctor.add(Meeting('OFF Malo              👋',
-                              startTime, endTime, Colors.red[800], false));
+                          meetingsDoctor.add(Meeting('OFF Malo              👋', startTime, endTime, Colors.red[800]!, false));
                         } else {
-                          meetingsDoctor.add(Meeting('OFF Malo', startTime,
-                              endTime, Colors.red[800], false));
+                          meetingsDoctor.add(Meeting('OFF Malo', startTime, endTime, Colors.red[800]!, false));
                         }
                       }
                     }
@@ -242,13 +223,12 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                     print(patients[index]);
                     //RoutesDoctor().toPatientAlarmAndMedicine(context, patient.id);
                     print('patient list ${patient.id.toString()}');
-                    RoutesDoctor()
-                        .toInteractionDoctorPatient(context, patient.id);
+                    if(patient.id == null) { //TODO: Null check (TAHA)
+                      return;
+                    }
+                    RoutesDoctor().toInteractionDoctorPatient(context, patient.id!);
                   },
-                  title: Text(patient.email,
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .apply(fontSizeFactor: 1.0)),
+                  title: Text(patient.email ?? '', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.0)),
                   //subtitle: Text(user.email),
                   leading: CircleAvatar(
                     child: Icon(Icons.account_circle_outlined),
@@ -263,24 +243,18 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                     },
                     child: Icon(Icons.delete, size: 40),
                   ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                   dense: true,
                 );
               },
               separatorBuilder: (context, index) {
-                return Divider(
-                    thickness: 2,
-                    color: Colors.grey[200],
-                    indent: 10,
-                    endIndent: 10);
+                return Divider(thickness: 2, color: Colors.grey[200], indent: 10, endIndent: 10);
               },
             ),
           ],
         )),
         floatingActionButton: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(30.0)),
+          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(30.0)),
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
           backgroundColor: Colors.blue[800],
           child: Icon(
@@ -313,7 +287,7 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                     ),
                     textAlign: TextAlign.center,
                     onSaved: (val) {
-                      addPatientController.text = val;
+                      addPatientController.text = val ?? '';
                       setState(() {});
                     },
                   )
@@ -330,8 +304,8 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                 //);
                 // },
                 onPressed: () async {
-                  if (_keyDialogForm.currentState.validate()) {
-                    _keyDialogForm.currentState.save();
+                  if (_keyDialogForm.currentState?.validate() ?? false) {
+                    _keyDialogForm.currentState?.save();
                     debugPrint(addPatientController.text);
 
                     /*
@@ -352,12 +326,14 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
                     var decoded = utf8.decode(base64.decode(payload));
                     currentUser = json.decode(decoded);
                     */
-                    String tipe = await Utils().getFromToken('type');
-                    String id = await Utils().getFromToken('id');
-                    String token = await Utils().getToken();
+                    String? tipe = await Utils().getFromToken('type');
+                    String? id = await Utils().getFromToken('id');
+                    String? token = await Utils().getToken();
+                    if(tipe == null || token == null) { //TODO: Null check (TAHA)
+                      return;
+                    }
                     debugPrint(id);
-                    var response = await EndPoints()
-                        .linkUser(addPatientController.text, tipe, token);
+                    var response = await EndPoints().linkUser(addPatientController.text, tipe, token);
                     getPatients();
                     debugPrint(response.toString());
                     //getPatients();
@@ -383,17 +359,16 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-              "¡Hola! Para poder ver a tu paciente, es necesario mandarle la solicitud de relación ¿Deseas continuar? "),
+          Text("¡Hola! Para poder ver a tu paciente, es necesario mandarle la solicitud de relación ¿Deseas continuar? "),
         ],
       ),
       actions: <Widget>[
         new TextButton(
           style: buildButtonStyle(forground: Theme.of(context).primaryColor),
           onPressed: () async {
-            String token = await Utils().getToken();
-            if (_keyDialogForm.currentState.validate()) {
-              _keyDialogForm.currentState.save();
+            String? token = await Utils().getToken();
+            if ((_keyDialogForm.currentState?.validate() ?? false) && token != null) {
+              _keyDialogForm.currentState?.save();
               debugPrint(addPatientController.text);
               var lista = token.split(".");
               var payload = lista[1];
@@ -411,11 +386,13 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
 
               var decoded = utf8.decode(base64.decode(payload));
               //currentUser = json.decode(decoded);
-              String tipe = await Utils().getFromToken('type');
-              String id = await Utils().getFromToken('id');
+              String? tipe = await Utils().getFromToken('type');
+              String? id = await Utils().getFromToken('id');
               debugPrint(id);
-              var listaUsuarios = await EndPoints()
-                  .linkUser(addPatientController.text, id, token);
+              if(id == null) { //TODO: Handle Null (TAHA)
+                return;
+              }
+              var listaUsuarios = await EndPoints().linkUser(addPatientController.text, id, token);
               debugPrint(listaUsuarios.toString());
               //getPatients();
               Navigator.pop(context);
@@ -436,7 +413,7 @@ class DoctorPatientsCustom extends State<DoctorPatients> {
 }
 
 class PatientsList extends StatelessWidget {
-  List<User> _patients;
+  final List<User> _patients;
 
   PatientsList(this._patients);
 
@@ -449,7 +426,7 @@ class PatientsList extends StatelessWidget {
   }
 
   List<PatientsListItem> _buildPatiensList() {
-    return _patients.map((User) => PatientsListItem(User)).toList();
+    return _patients.map((user) => PatientsListItem(user)).toList();
   }
 }
 

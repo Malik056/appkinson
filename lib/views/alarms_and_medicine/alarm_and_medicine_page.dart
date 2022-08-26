@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AlarmAndMedicine {
-  String title; // levodopa
-  int periodicityQuantity; // 8
-  String periodicityType; // hour or day
-  String idMedicine;
-  TimeOfDay alarmTime;
-  String dose; //mg pastilla
-  int id;
-  String medicine;
+  String? title; // levodopa
+  int? periodicityQuantity; // 8
+  String? periodicityType; // hour or day
+  String? idMedicine;
+  TimeOfDay? alarmTime;
+  String? dose; //mg pastilla
+  int? id;
+  String? medicine;
 
   /// preguntas: todos los dias las dosis?
   /// dosis como mg o ml son un dropdown o un input text?
@@ -35,7 +35,7 @@ class AlarmAndMedicinePage extends StatelessWidget {
   static const String _title = 'Alarmas de Medicinas';
   final int idPatient;
 
-  AlarmAndMedicinePage({@required this.idPatient});
+  AlarmAndMedicinePage({required this.idPatient});
 
   @override
   Widget build(BuildContext context) {
@@ -49,24 +49,24 @@ class AlarmAndMedicinePage extends StatelessWidget {
 }
 
 class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
-  static List<AlarmAndMedicine> alarms;
-  static List<String> medicinesString;
+  static List<AlarmAndMedicine>? alarms;
+  static List<String>? medicinesString;
   //String dropdownValue = 'Inserte el Tipo de Dosis';
   TimeOfDay _time = TimeOfDay.now();
   String hora = 'Oprima para esoger la hora';
   List<Medicine> medicines = <Medicine>[];
   final int idPatient;
-  String medicineSelected;
+  String? medicineSelected;
   bool isPeriodic = true;
-  String title; // levodopa
+  String? title; // levodopa
   TextEditingController periodicityQuantity = new TextEditingController(); // 8
   TextEditingController quantity = new TextEditingController(); // 1 or 2 dose 1
   String periodicityType = 'Hora(s)';
-  String dose; // hour or day
+  String? dose; // hour or day
   // String idMedicine;
   // TimeOfDay alarmTime;
   TextEditingController dose2 = new TextEditingController(); //mg pastilla
-  int id;
+  int? id;
 
   ListAlarmsAndMedicine(this.idPatient);
   // TODO fill medicines from db and alarms
@@ -206,7 +206,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                             }).toList(),
                             onChanged: (selected) {
                               setState(() {
-                                periodicityType = selected;
+                                periodicityType = selected ?? periodicityType;
                               });
                             },
                           ),
@@ -287,7 +287,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                     alarmAndMedicine.dose = dose; // cantidad
                     alarmAndMedicine.idMedicine = medicineSelected; //nombre medicina
                     debugPrint("medicina: ");
-                    print("medicina" + alarmAndMedicine.idMedicine);
+                    print("medicina" + (alarmAndMedicine.idMedicine ?? 'null'));
                     print(alarmAndMedicine.periodicityQuantity);
                     print(alarmAndMedicine.periodicityType);
                     print(alarmAndMedicine.dose);
@@ -297,7 +297,11 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
                     //Aquí se agrega a la lista
                     String res = await EndPoints().saveAlarmsAndMedicines(alarmAndMedicine, idPatient);
                     print('response save medicine: $res');
-                    var token = await Utils().getToken();
+                    String? token = await Utils().getToken();
+                    if (token == null) {
+                      //TODO: Handle null (TAHA)
+                      return;
+                    }
                     //Navigator.pop(context);
                     items = await EndPoints().getMedicinesAlarms(idPatient, token);
                     AlarmAndMedicine nuevo = items[items.length - 1];
@@ -323,7 +327,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
         ),
 
         onPressed: () async {
-          _time = await showTimePicker(context: context, initialTime: _time);
+          _time = await showTimePicker(context: context, initialTime: _time) ?? _time;
           debugPrint(_time.toString());
           setState(() {
             hora = _time.format(context);
@@ -353,7 +357,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
           elevation: 16,
           style: TextStyle(color: Colors.grey, fontSize: 20),
           underline: SizedBox(),
-          onChanged: (String newValue) {
+          onChanged: (String? newValue) {
             setState(() {
               medicineSelected = newValue;
             });
@@ -361,7 +365,7 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
           items: medicines.map<DropdownMenuItem<String>>((Medicine medicine) {
             return DropdownMenuItem<String>(
               value: medicine.idMedicine.toString(),
-              child: Text(medicine.name),
+              child: Text(medicine.name ?? ''),
             );
           }).toList(),
           hint: Align(
@@ -428,15 +432,15 @@ class ListAlarmsAndMedicine extends State<ListAlarmsAndMedicinePatient> {
 
 class ListAlarmsAndMedicinePatient extends StatefulWidget {
   final int idPatient;
-  ListAlarmsAndMedicinePatient({key, this.idPatient}) : super(key: key);
+  ListAlarmsAndMedicinePatient({key, required this.idPatient}) : super(key: key);
 
   @override
   ListAlarmsAndMedicine createState() => ListAlarmsAndMedicine(this.idPatient);
 }
 
 class Medicine {
-  String name;
-  int idMedicine;
+  String? name;
+  int? idMedicine;
   Medicine();
   Medicine.filled(String name, int idMedicine) {
     this.name = name;
@@ -444,7 +448,7 @@ class Medicine {
   }
 }
 
-getToken() async {
-  String token = await Utils().getToken();
+Future<String?> getToken() async {
+  String? token = await Utils().getToken();
   return token;
 }

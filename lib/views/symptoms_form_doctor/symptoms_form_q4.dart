@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ4 extends StatefulWidget {
+class SymptomsFormQ4 extends StatefulWidget {
   @override
-  _symptomsFormQ4 createState() => _symptomsFormQ4();
+  _SymptomsFormQ4 createState() => _SymptomsFormQ4();
 }
 
 enum SigningCharacter { Ausente, Infrecuente, Persistente, Mayoria, Presente }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ4 = 0;
 
-class _symptomsFormQ4 extends State<symptomsFormQ4> {
+class _SymptomsFormQ4 extends State<SymptomsFormQ4> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _symptomsFormQ4 extends State<symptomsFormQ4> {
                   title: const Text('0: Normal   Sin problemas. '),
                   value: SigningCharacter.Ausente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ4 = 0;
@@ -54,7 +54,7 @@ class _symptomsFormQ4 extends State<symptomsFormQ4> {
                       '1: Mínimo   Cualquiera de los siguientes: a) el ritmo regular se rompe con una o dos interrupciones o titubeos en el movimiento de golpeteo; b) mínimo enlentecimiento; c) la amplitud disminuye cerca del final de los 10 golpeteos.'),
                   value: SigningCharacter.Infrecuente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ4 = 1;
@@ -69,7 +69,7 @@ class _symptomsFormQ4 extends State<symptomsFormQ4> {
                       '2: Leve   Cualquiera de los siguientes: a) de 3 a 5 interrupciones durante el golpeteo; b) enlentecimiento leve; c) la amplitud disminuye hacia la mitad de la secuencia de 10 golpeteos. '),
                   value: SigningCharacter.Persistente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ4 = 2;
@@ -84,7 +84,7 @@ class _symptomsFormQ4 extends State<symptomsFormQ4> {
                       '3: Moderado   Cualquiera de los siguientes: a) más de 5 interrupciones durante el golpeteo o al menos una interrupción más prolongada (congelación) durante el movimiento en curso; b) enlentecimiento moderado; c) la amplitud disminuye después del primer golpeteo.'),
                   value: SigningCharacter.Mayoria,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ4 = 3;
@@ -99,7 +99,7 @@ class _symptomsFormQ4 extends State<symptomsFormQ4> {
                       '4: Grave   No puede o apenas puede realizar la tarea debido a enlentecimiento, interrupciones o decrementos.'),
                   value: SigningCharacter.Presente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ4 = 4;

@@ -10,9 +10,9 @@ class UserListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         leading: CircleAvatar(
-          child: Text(_user.name[0]),
+          child: Text(_user.name?[0] ?? ''),
         ),
-        title: Text(_user.name),
-        subtitle: Text(_user.email));
+        title: Text(_user.name ?? ''),
+        subtitle: Text(_user.email ?? ''));
   }
 }

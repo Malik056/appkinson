@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 
 
 class Medicines extends StatefulWidget {
-  final int idPatient;
+  final int? idPatient;
 
-  Medicines({Key key, this.idPatient}) : super(key: key);
+  Medicines({Key? key, this.idPatient}) : super(key: key);
 
   _MedicinesState createState() => _MedicinesState(this.idPatient);
 }
@@ -26,11 +26,11 @@ class _MedicinesState extends State<Medicines> {
   }
 
   final key = GlobalKey<AnimatedListState>();
-  final int idPatient;
+  final int? idPatient;
   _MedicinesState(this.idPatient);
   //List<AlarmInfo> items;
-  DateTime _alarmTime;
-  String _alarmTimeString;
+  DateTime? _alarmTime;
+  String? _alarmTimeString;
 
   //AlarmInfo alarm;
 
@@ -76,9 +76,12 @@ class _MedicinesState extends State<Medicines> {
           onPressed: () async {
             print('otro idp ${idPatient.toString()}');
             int size = items.length;
+            if(idPatient == null) {//TODO: Handle NULL (TAHA)
+            return;
+          }
             AlarmAndMedicine result = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AlarmAndMedicinePage(idPatient: idPatient)),
+              MaterialPageRoute(builder: (context) => AlarmAndMedicinePage(idPatient: idPatient!)),
             );
             debugPrint("tamaño " + size.toString());
             if (size != 0) {
@@ -113,15 +116,18 @@ class _MedicinesState extends State<Medicines> {
   void insertItem(int index, AlarmAndMedicine item) {
     debugPrint("banderita" + item.medicine.toString());
     items.insert(index, item);
-    key.currentState.insertItem(index);
+    key.currentState?.insertItem(index);
   }
 
   void removeItem(int index) {
+    if(idPatient == null) {//TODO: Handle NULL (TAHA)
+      return;
+    }
     //EndPoints().deleteAlarm(index.toString(), getToken(), getId());
     print("id: " + items[index].id.toString());
-    EndPoints().deleteAlarm(items[index].id.toString(), idPatient);
+    EndPoints().deleteAlarm(items[index].id.toString(), idPatient!);
     final item = items.removeAt(index);
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );

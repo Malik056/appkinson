@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class InteractionDoctorPatient extends StatelessWidget {
   final int idPatient;
 
-  const InteractionDoctorPatient({Key key, this.idPatient}) : super(key: key);
+  const InteractionDoctorPatient({Key? key, required this.idPatient}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class InteractionDoctorPatient extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Colors.blue[400], Colors.blue[900]],
+                  colors: [Colors.blue[400]!, Colors.blue[900]!],
                 ),
                 image: DecorationImage(
                   image: AssetImage("assets/images/starsBackGround.png"),

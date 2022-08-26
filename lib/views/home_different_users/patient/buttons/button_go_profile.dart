@@ -24,7 +24,10 @@ class _ButtonGoProfileState extends State<ButtonGoProfile> {
         style: buildButtonStyle(border: CircleBorder(), horiztonalPadding: 10, background: Colors.grey[50]),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
+          if(token == null) {//TODO: Handle NULL (TAHA)
+            return;
+          }
           print(token);
           var patient = await EndPoints().getUserName(token);
 
@@ -38,7 +41,7 @@ class _ButtonGoProfileState extends State<ButtonGoProfile> {
             imageFilePatient = res;
           });
 
-          print(imageFilePatient.uri.toFilePath());
+          print(imageFilePatient?.uri.toFilePath());
           RoutesPatient().toPatientProfile(context);
         },
         //textColor: Colors.white,

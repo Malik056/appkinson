@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SymptomsFormPatientQ2 extends StatefulWidget {
   @override
-  _symptomsFormPatientQ2 createState() => _symptomsFormPatientQ2();
+  _SymptomsFormPatientQ2 createState() => _SymptomsFormPatientQ2();
 }
 
 enum SigningCharacter {
@@ -12,10 +12,10 @@ enum SigningCharacter {
   Alterado,
   Ininteligible
 }
-SigningCharacter _character = SigningCharacter.Normal;
-String selectedStateRadioQ1 = null;
+SigningCharacter? _character = SigningCharacter.Normal;
+String? selectedStateRadioQ1;
 
-class _symptomsFormPatientQ2 extends State<SymptomsFormPatientQ2> {
+class _SymptomsFormPatientQ2 extends State<SymptomsFormPatientQ2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _symptomsFormPatientQ2 extends State<SymptomsFormPatientQ2> {
                   title: const Text('OFF'),
                   value: SigningCharacter.Normal,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     debugPrint(BringAnswerPatient2().send().toString());
                     setState(() {
                       _character = value;
@@ -59,7 +59,7 @@ class _symptomsFormPatientQ2 extends State<SymptomsFormPatientQ2> {
                   title: const Text('ON'),
                   value: SigningCharacter.PerdidaDeExpresion,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     debugPrint(BringAnswerPatient2().send().toString());
                     setState(() {
                       _character = value;
@@ -74,7 +74,7 @@ class _symptomsFormPatientQ2 extends State<SymptomsFormPatientQ2> {
                   title: const Text('Durmiendo'),
                   value: SigningCharacter.Monotono,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     debugPrint(BringAnswerPatient2().send().toString());
                     setState(() {
                       _character = value;
@@ -95,7 +95,7 @@ class _symptomsFormPatientQ2 extends State<SymptomsFormPatientQ2> {
 }
 
 class BringAnswerPatient2 {
-  String send() {
+  String? send() {
     return selectedStateRadioQ1;
   }
 }

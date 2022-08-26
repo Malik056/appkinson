@@ -34,7 +34,7 @@ class _DoctorHomePage extends State<DoctorHomePage> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [Colors.blue[400], Colors.blue[900]],
+                      colors: [Colors.blue[400]!, Colors.blue[900]!],
                     ),
                     image: DecorationImage(
                       image: AssetImage("assets/images/starsBackGround.png"),

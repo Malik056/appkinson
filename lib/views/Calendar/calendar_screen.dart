@@ -6,11 +6,11 @@ import 'package:appkinson/routes/routes_patient.dart';
 
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-DateTime tempDate;
+DateTime? tempDate;
 TimeOfDay _time = TimeOfDay.now();
 
 class CalendarScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarState extends State<CalendarScreen> {
   DateTime _selectedDay = DateTime.now();
 
-  CalendarController _calendarController;
+  // CalendarController? _calendarController;
   Map<DateTime, List<dynamic>> _events = {};
 
   List<dynamic> _selectedEvents = [];
@@ -29,11 +29,11 @@ class _CalendarState extends State<CalendarScreen> {
   void initState() {
     super.initState();
 
-    _calendarController = CalendarController();
+    // _calendarController = CalendarController();
   }
 
   void dispose() {
-    _calendarController.dispose();
+    // _calendarController?.dispose();
     super.dispose();
   }
 
@@ -55,7 +55,7 @@ class _CalendarState extends State<CalendarScreen> {
           horiztonalPadding: 10,
         ),
         onPressed: () async {
-          _time = await showTimePicker(context: context, initialTime: _time);
+          _time = await showTimePicker(context: context, initialTime: _time) ?? _time;
           debugPrint(_time.toString());
         },
         //textColor: Colors.white,
@@ -74,22 +74,46 @@ class _CalendarState extends State<CalendarScreen> {
     return Container(
         margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
         width: double.infinity,
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6), gradient: LinearGradient(colors: [Colors.blue[800], Colors.blue[800]]), boxShadow: <BoxShadow>[BoxShadow(color: Colors.black12, blurRadius: 5, offset: new Offset(0.0, 5))]),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6), gradient: LinearGradient(colors: [Colors.blue[800]!, Colors.blue[800]!]), boxShadow: <BoxShadow>[BoxShadow(color: Colors.black12, blurRadius: 5, offset: new Offset(0.0, 5))]),
         child: TableCalendar(
+          firstDay: DateTime(0),
+          lastDay: DateTime.now().add(Duration(days: 365 * 200)),
+          focusedDay: DateTime.now(),
           calendarStyle: CalendarStyle(
-            canEventMarkersOverflow: true,
-            markersColor: Colors.white,
-            weekdayStyle: TextStyle(color: Colors.white),
-            todayColor: Colors.white54,
-            todayStyle: TextStyle(color: Colors.indigo[400], fontSize: 15, fontWeight: FontWeight.bold),
-            selectedColor: Colors.indigo[700],
-            outsideWeekendStyle: TextStyle(color: Colors.white60),
-            outsideStyle: TextStyle(color: Colors.white60),
-            weekendStyle: TextStyle(color: Colors.white),
-            renderDaysOfWeek: false,
+            canMarkersOverflow: true,
+            // canEventMarkersOverflow: true,
+            rangeHighlightColor: Colors.white,
+            markerDecoration: BoxDecoration(color: Colors.white),
+            // markersColor: Colors.white,
+            defaultTextStyle: TextStyle(color: Colors.white),
+            // weekdayStyle: TextStyle(color: Colors.white),
+            todayDecoration: BoxDecoration(color: Colors.white54),
+            // todayColor: Colors.white54,
+            todayTextStyle: TextStyle(color: Colors.indigo[400], fontSize: 15, fontWeight: FontWeight.bold),
+            // todayStyle: TextStyle(color: Colors.indigo[400], fontSize: 15, fontWeight: FontWeight.bold),
+            selectedDecoration: BoxDecoration(color: Colors.indigo[700]),
+            // selectedColor: Colors.indigo[700],
+            // outsideWeekendStyle: TextStyle(color: Colors.white60),
+            outsideTextStyle: TextStyle(color: Colors.white60),
+            // outsideStyle: TextStyle(color: Colors.white60),
+            weekendTextStyle: TextStyle(color: Colors.white),
+            // weekendStyle: TextStyle(color: Colors.white),
+            // renderDaysOfWeek: false,
           ),
-          calendarController: _calendarController,
-          events: _events,
+          daysOfWeekVisible: true,
+          daysOfWeekStyle: DaysOfWeekStyle(
+            weekdayStyle: TextStyle(color: Colors.white),
+          ),
+          
+          // calendarController: _calendarController,
+          // events: _events,
+          eventLoader: (date) {
+            return _events[date] ?? [];
+          },
+          onDaySelected: (selected, focused) {
+            _selectedDay = selected;
+          },
+          
           headerStyle: HeaderStyle(
             leftChevronIcon: Icon(Icons.arrow_back_ios, size: 15, color: Colors.white),
             rightChevronIcon: Icon(Icons.arrow_forward_ios, size: 15, color: Colors.white),
@@ -154,11 +178,11 @@ class _CalendarState extends State<CalendarScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
         onPressed: () {
-          DateTime onlyDate = new DateFormat("yyyy-MM-dd").parse(_calendarController.selectedDay.toString());
+          DateTime onlyDate = new DateFormat("yyyy-MM-dd").parse(_selectedDay.toString());
 
           String date = onlyDate.year.toString() + "-" + onlyDate.month.toString() + "-" + onlyDate.day.toString() + " " + _time.hour.toString() + ":" + _time.minute.toString() + ":00";
           tempDate = new DateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
-          debugPrint(_calendarController.selectedDay.toString());
+          debugPrint(_selectedDay.toString());
           debugPrint(tempDate.toString());
 
           RoutesPatient().toSymptomsFormPatient(context);

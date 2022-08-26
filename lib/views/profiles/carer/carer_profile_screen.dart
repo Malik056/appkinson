@@ -11,16 +11,16 @@ import 'package:appkinson/views/home_initial/home_page.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const bla = Colors.white;
 const kSpacingUnit = 10;
-File imageFileCarer;
+File? imageFileCarer;
 var nameCarer = "";
-var emailCarer = "";
+String emailCarer = "";
 
 final kTitleTextStyle = TextStyle(
   fontFamily: "Raleway",
@@ -40,25 +40,41 @@ class CarerProfileScreen extends StatefulWidget {
 
 class DoctorProfileScreenP extends State<CarerProfileScreen> {
   openGallery(BuildContext context) async {
-    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
+    final picture = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picture == null) {
+      //TODO: Handle NULL (TAHA)
+      return;
+    }
     this.setState(() {
       imageFileCarer = File(picture.path);
     });
     var newUser = new User(photo: imageFileCarer);
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
+    if (id == null || token == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     String save = await EndPoints().modifyUsersPhoto(newUser, id, token);
     RoutesGeneral().toPop(context);
   }
 
   openCamera(BuildContext context) async {
-    var picture = await ImagePicker().getImage(source: ImageSource.camera);
+    var picture = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (picture == null) {
+      //TODO: Handle NULL (TAHA)
+      return;
+    }
     this.setState(() {
       imageFileCarer = File(picture.path);
     });
     var newUser = new User(photo: imageFileCarer);
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
+    if (id == null || token == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     String save = await EndPoints().modifyUsersPhoto(newUser, id, token);
     RoutesGeneral().toPop(context);
   }
@@ -96,7 +112,7 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
       return Icon(LineAwesomeIcons.question);
     } else {
       return Image.file(
-        imageFileCarer,
+        imageFileCarer!,
         fit: BoxFit.cover,
         height: 100,
         width: 100,
@@ -106,7 +122,7 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, height: 896, width: 414, allowFontScaling: true);
+    ScreenUtil.init(context, designSize: Size(414, 896), minTextAdapt: true);
     var profileInfo = Container(
         child: Column(
       children: [
@@ -241,11 +257,11 @@ class DoctorProfileScreenP extends State<CarerProfileScreen> {
 }
 
 class ProfileListItem extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
+  const ProfileListItem({Key? key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,7 +291,7 @@ class ProfileListItem extends StatelessWidget {
             if (text == 'Cerrar Sesión') {
               debugPrint("Tapped Log Out....");
               SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs?.clear();
+              prefs.clear();
               await Utils().removeBackgroundTask();
               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage()), (Route<dynamic> route) => false);
             }

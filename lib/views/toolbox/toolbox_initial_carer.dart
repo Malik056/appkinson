@@ -18,7 +18,7 @@ class ToolboxCuidador extends StatefulWidget {
   _ToolboxCuidador0 createState() => _ToolboxCuidador0();
 }
 
-String tipe;
+String? tipe;
 
 class _ToolboxCuidador0 extends State<ToolboxCuidador> {
   // double percent=0.1;

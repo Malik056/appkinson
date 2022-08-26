@@ -1,8 +1,8 @@
 class RelationRequest {
-  int id;
-  String message;
-  String sender;
-  bool isPending;
+  int? id;
+  String? message;
+  String? sender;
+  bool? isPending;
 
   RelationRequest(
       {this.id,

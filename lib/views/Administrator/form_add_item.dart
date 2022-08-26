@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ItemToolbox {
-  int idItem;
-  String titulo;
-  String descripcion;
-  String enlace;
-  String type;
+  int? idItem;
+  String? titulo;
+  String? descripcion;
+  String? enlace;
+  String? type;
   ItemToolbox({this.idItem, this.titulo, this.descripcion, this.enlace, this.type});
 }
 
@@ -53,7 +53,7 @@ class _FormItemToolboxPageState extends State {
                     controller: titleController,
                     decoration: new InputDecoration(labelText: "Título", contentPadding: EdgeInsets.symmetric(horizontal: 10), border: OutlineInputBorder()),
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value?.isEmpty ?? true) {
                         return 'Por favor ingrese un título';
                       }
                       return null;
@@ -66,7 +66,7 @@ class _FormItemToolboxPageState extends State {
                     controller: linkController,
                     decoration: new InputDecoration(labelText: "Enlace", contentPadding: EdgeInsets.symmetric(horizontal: 10), border: OutlineInputBorder()),
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value?.isEmpty ?? true) {
                         return 'Por favor ingrese el enlace del ítem';
                       }
                       return null;
@@ -79,7 +79,7 @@ class _FormItemToolboxPageState extends State {
                     controller: descripController,
                     decoration: new InputDecoration(labelText: "Descripción", contentPadding: EdgeInsets.symmetric(horizontal: 10), border: OutlineInputBorder()),
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value?.isEmpty ?? true) {
                         return 'Por favor ingrese una breve descripción';
                       }
                       return null;
@@ -102,9 +102,9 @@ class _FormItemToolboxPageState extends State {
                       height: 2,
                       color: Colors.blue[500],
                     ),
-                    onChanged: (String newValue) {
+                    onChanged: (String? newValue) {
                       setState(() {
-                        dropdownValue = newValue;
+                        dropdownValue = newValue ?? '';
                       });
                     },
                     items: <String>['EJERCICIO', 'NOTICIA', 'ALIMENTACION'].map<DropdownMenuItem<String>>((String value) {
@@ -120,7 +120,10 @@ class _FormItemToolboxPageState extends State {
                           style: getButtonStyleRounded(18.0, Colors.blue, Colors.white),
                           onPressed: () async {
                             if (await canLaunch(linkController.text)) {
-                              String token = await Utils().getToken();
+                              String? token = await Utils().getToken();
+                              if (token == null) {
+                                return;
+                              }
                               EndPoints().sendItemToolbox(titleController.text.toString(), descripController.text.toString(), linkController.text.toString(), dropdownValue, token);
                               cleanData();
                               Navigator.pop(context);

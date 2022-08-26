@@ -22,9 +22,9 @@ class HomePage extends StatelessWidget {
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
             Colors.white,
-            Colors.yellow[200],
+            Colors.yellow[200]!,
             Colors.blue,
-            Colors.blue[700],
+            Colors.blue[700]!,
           ])),
           child: Column(children: <Widget>[
             SizedBox(

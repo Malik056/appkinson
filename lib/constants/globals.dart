@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:workmanager/workmanager.dart';
 
-ShapeBorder roundedRadius18 = RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0));
-ShapeBorder roundedRadius25 = RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0));
-ShapeBorder roundedRadius30 = RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0));
+final roundedRadius18 = RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0));
+final roundedRadius25 = RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0));
+final roundedRadius30 = RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0));
 
 ButtonStyle buttonStyleRounded18BlueWhite = ButtonStyle(
   shape: MaterialStateProperty.all(roundedRadius18),
@@ -48,27 +49,28 @@ ButtonStyle getButtonStyleRounded(double radius, Color background, Color foregro
 }
 
 ButtonStyle buildButtonStyle({
-  ShapeBorder border,
-  Color background,
-  Color forground,
-  double horiztonalPadding,
-  double verticalPadding,
-  double minWidth,
-  double height,
+  OutlinedBorder? border,
+  Color? background,
+  Color? forground,
+  double? horiztonalPadding,
+  double? verticalPadding,
+  double? minWidth,
+  double? height,
 }) {
   return ButtonStyle(
-    shape: MaterialStateProperty.all(border),
+    shape: border == null ? null : MaterialStateProperty.all(border),
     foregroundColor: MaterialStateProperty.all(forground),
     backgroundColor: MaterialStateProperty.all(background),
     padding: MaterialStateProperty.all(
       EdgeInsets.symmetric(
-        horizontal: horiztonalPadding,
-        vertical: verticalPadding,
+        horizontal: horiztonalPadding ?? 0,
+        vertical: verticalPadding ?? 0,
       ),
     ),
-    minimumSize: MaterialStateProperty.all(Size.fromWidth(minWidth)),
-    fixedSize: MaterialStateProperty.all(Size.fromHeight(height)),
+    minimumSize: minWidth == null ? null : MaterialStateProperty.all(Size.fromWidth(minWidth)),
+    fixedSize: height == null ? null : MaterialStateProperty.all(Size.fromHeight(height)),
   );
 }
 
 Color getPrimaryColor(BuildContext context) => Theme.of(context).primaryColor;
+Workmanager workmanager  = Workmanager();

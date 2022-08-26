@@ -5,11 +5,10 @@ import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/Medicines/medicines.dart';
 import 'package:flutter/material.dart';
 
-
 class ButtonGoMedicinesFromDoctor extends StatelessWidget {
   final int idPatient;
 
-  ButtonGoMedicinesFromDoctor({@required this.idPatient});
+  ButtonGoMedicinesFromDoctor({required this.idPatient});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,11 @@ class ButtonGoMedicinesFromDoctor extends StatelessWidget {
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
           print('patient bboton ${idPatient.toString()}');
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
+          if (token == null) {
+            //TODO: Handle null (TAHA)
+            return;
+          }
           items = await EndPoints().getMedicinesAlarms(idPatient, token);
           RoutesPatient().toScheduleMedicines(context, idPatient);
           //  RoutesDoctor().toPatientAlarmAndMedicine(context, idPatient);

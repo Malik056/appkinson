@@ -6,7 +6,7 @@ class NoMotorSymptomsFormQ25 extends StatefulWidget {
 }
 
 enum SigningCharacter { Si, No, Nada }
-SigningCharacter _character25;
+SigningCharacter? _character25;
 int selectedStateRadioQ25 = 0;
 
 class _NoMotorSymptomsFormQ25 extends State<NoMotorSymptomsFormQ25> {
@@ -50,7 +50,7 @@ class _NoMotorSymptomsFormQ25 extends State<NoMotorSymptomsFormQ25> {
                 ),
                 value: SigningCharacter.Si,
                 groupValue: _character25,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character25 = value;
                     selectedStateRadioQ25 = 1;
@@ -69,7 +69,7 @@ class _NoMotorSymptomsFormQ25 extends State<NoMotorSymptomsFormQ25> {
                 ),
                 value: SigningCharacter.No,
                 groupValue: _character25,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character25 = value;
                     selectedStateRadioQ25 = 0;

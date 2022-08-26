@@ -10,37 +10,37 @@ import '../views/relations/doctor_patient_add.dart';
 
 class RoutesCarer {
   //ruta hacia el home del cuidador
-  Future<T> toCarerHome<T>(BuildContext context) {
+  Future<T?> toCarerHome<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CarerHomePage()));
   }
 
   //ruta hacia el perfil del cuidador
-  Future<T> toCarerProfile<T>(BuildContext context) {
+  Future<T?> toCarerProfile<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => MyHomePage3()));
   }
 
   //ruta para la edición y visulización del calendario correspondiente a un paciente
-  Future<T> toCalendarCarer<T>(BuildContext context) {
+  Future<T?> toCalendarCarer<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CalendarScreenView2Carer()));
   }
 
   //ruta para listar los pacientes
-  Future<T> toPatientList<T>(BuildContext context) {
+  Future<T?> toPatientList<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => CarerPatients()));
   }
 
   //ruta para agregar un paciente
-  Future<T> toAddUser<T>(BuildContext context) {
+  Future<T?> toAddUser<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => DoctorPatientsAdd()));
   }
 
   //ruta para la edición de un perfil de cuidador
-  Future<T> toCarerEditProfile<T>(BuildContext context) {
+  Future<T?> toCarerEditProfile<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ProfileEditionCarer()));
   }
 
   //ruta hacia la pantalla intermedia de interacción con un paciente
-  Future<T> toInteractionCarerPatient<T>(BuildContext context, int idPatient) {
+  Future<T?> toInteractionCarerPatient<T>(BuildContext context, int idPatient) {
     print('patient pantalla intermedia ${idPatient.toString()}');
     return Navigator.push<T>(
         context,
@@ -51,7 +51,12 @@ class RoutesCarer {
   }
 
   //ruta hacia e toolbox desde un cuidador
-  Future<T> toToolbox<T>(BuildContext context) {
-    return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => Toolbox()));
+  Future<T?> toToolbox<T>(BuildContext context) {
+    return Navigator.push<T>(
+      context,
+      new MaterialPageRoute<T>(
+        builder: (context) => Toolbox(),
+      ),
+    );
   }
 }

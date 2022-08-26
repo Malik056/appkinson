@@ -2,10 +2,10 @@
 import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/views/home_different_users/doctor/doctor_home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
-import 'package:swipedetector/swipedetector.dart';
+// import 'package:foldable_sidebar/foldable_sidebar.dart';
+// import 'package:swipedetector/swipedetector.dart';
 
 import 'doctor_profile_screen.dart';
 
@@ -31,36 +31,38 @@ class MyHomePage2 extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage2> {
-  FSBStatus drawerStatus;
+  // FSBStatus drawerStatus;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SwipeDetector(
-          onSwipeRight: () {
-            setState(() {
-              drawerStatus = FSBStatus.FSB_OPEN;
-            });
-          },
-          onSwipeLeft: () {
-            setState(() {
-              drawerStatus = FSBStatus.FSB_CLOSE;
-            });
-          },
-          child: FoldableSidebarBuilder(
-            drawerBackgroundColor: Colors.blue[800],
-            drawer: CustomDrawer(
-              closeDrawer: () {
-                setState(() {
-                  drawerStatus = FSBStatus.FSB_CLOSE;
-                });
-              },
-            ),
-            screenContents: DoctorProfileScreen(),
-            status: drawerStatus,
-          ),
-        ),
+        drawer: CustomDrawer(),
+        body: DoctorProfileScreen(),
+        // SwipeDetector(
+        // onSwipeRight: () {
+        //   setState(() {
+        //     drawerStatus = FSBStatus.FSB_OPEN;
+        //   });
+        // },
+        // onSwipeLeft: () {
+        //   setState(() {
+        //     drawerStatus = FSBStatus.FSB_CLOSE;
+        //   });
+        // },
+        // child: FoldableSidebarBuilder(
+        //   drawerBackgroundColor: Colors.blue[800],
+        //   drawer: CustomDrawer(
+        //     closeDrawer: () {
+        //       setState(() {
+        //         drawerStatus = FSBStatus.FSB_CLOSE;
+        //       });
+        //     },
+        //   ),
+        //   screenContents: DoctorProfileScreen(),
+        //   status: drawerStatus,
+        // ),
+        // ),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue[800],
             child: Icon(
@@ -68,9 +70,14 @@ class _MyHomePageState extends State<MyHomePage2> {
               color: Colors.white,
             ),
             onPressed: () {
-              setState(() {
-                drawerStatus = drawerStatus == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
-              });
+              if (Scaffold.of(context).isDrawerOpen) {
+                Scaffold.of(context).closeDrawer();
+              } else {
+                Scaffold.of(context).openDrawer();
+              }
+              // setState(() {
+              // drawerStatus = drawerStatus == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
+              // });
             }),
       ),
     );
@@ -78,9 +85,9 @@ class _MyHomePageState extends State<MyHomePage2> {
 }
 
 class CustomDrawer extends StatelessWidget {
-  final Function closeDrawer;
+  final Function? closeDrawer;
 
-  const CustomDrawer({Key key, this.closeDrawer}) : super(key: key);
+  const CustomDrawer({Key? key, this.closeDrawer}) : super(key: key);
 
   Widget decideImage() {
     if (imageFileDoctor == null) {
@@ -91,7 +98,7 @@ class CustomDrawer extends StatelessWidget {
       );
     } else {
       return Image.file(
-        imageFileDoctor,
+        imageFileDoctor!,
         fit: BoxFit.cover,
         height: 100,
         width: 100,
@@ -204,11 +211,11 @@ class CustomDrawer extends StatelessWidget {
 }
 
 class ProfileListItem extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
+  const ProfileListItem({Key? key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

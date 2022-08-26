@@ -20,8 +20,11 @@ class ButtonGoMedicinesSchedule extends StatelessWidget {
         ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String id = await Utils().getFromToken('id');
-          String token = await Utils().getToken();
+          String? id = await Utils().getFromToken('id');
+          String? token = await Utils().getToken();
+          if(token == null || id == null) {//TODO: Handle NULL (TAHA)
+            return;
+          }
           items = await EndPoints().getMedicinesAlarms(id, token);
           RoutesPatient().toScheduleMedicines(context, int.parse(id));
         },

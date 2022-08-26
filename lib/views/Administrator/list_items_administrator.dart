@@ -21,9 +21,9 @@ class _ListItemsAdministratorState extends State<ListItemsAdministrator> {
 
   final key = GlobalKey<AnimatedListState>();
   // ignore: unused_field
-  DateTime _alarmTime;
+  DateTime? _alarmTime;
   // ignore: unused_field
-  String _alarmTimeString;
+  String? _alarmTimeString;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -66,14 +66,14 @@ class _ListItemsAdministratorState extends State<ListItemsAdministrator> {
 
   void insertItem(int index, AlarmAndMedicine item) {
     items.insert(index, item);
-    key.currentState.insertItem(index);
+    key.currentState?.insertItem(index);
     Navigator.pop(context);
   }
 
   void removeItem(int index) {
     EndPoints().deleteItemToolbox(items[index].idItem.toString());
     final item = items.removeAt(index);
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ14 extends StatefulWidget {
+class SymptomsFormQ14 extends StatefulWidget {
   @override
-  _symptomsFormQ14 createState() => _symptomsFormQ14();
+  _SymptomsFormQ14 createState() => _SymptomsFormQ14();
 }
 
 enum SigningCharacter {
@@ -12,10 +12,10 @@ enum SigningCharacter {
   MuyEncorvada,
   Extrema
 }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ14 = 0;
 
-class _symptomsFormQ14 extends State<symptomsFormQ14> {
+class _SymptomsFormQ14 extends State<SymptomsFormQ14> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,7 @@ class _symptomsFormQ14 extends State<symptomsFormQ14> {
                   title: const Text('Erecta normal'),
                   value: SigningCharacter.Normal,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ14 = 0;
@@ -60,7 +60,7 @@ class _symptomsFormQ14 extends State<symptomsFormQ14> {
                       'Postura no muy erecta, discretamente encorvada; podría ser normal en una persona mayor'),
                   value: SigningCharacter.PocoEncorvada,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ14 = 1;
@@ -75,7 +75,7 @@ class _symptomsFormQ14 extends State<symptomsFormQ14> {
                       'Postura moderadamente encorvada, claramente anormal. Puede inclinarse discretamente a un lado'),
                   value: SigningCharacter.ModeradoEncorvada,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ14 = 2;
@@ -89,7 +89,7 @@ class _symptomsFormQ14 extends State<symptomsFormQ14> {
                   title: const Text('Postura muy encorvada'),
                   value: SigningCharacter.MuyEncorvada,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ14 = 3;
@@ -104,7 +104,7 @@ class _symptomsFormQ14 extends State<symptomsFormQ14> {
                       'Flexión marcada con alteración postural extrema'),
                   value: SigningCharacter.Extrema,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ14 = 4;

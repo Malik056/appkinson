@@ -13,8 +13,8 @@ TextEditingController password = new TextEditingController();
 
 class __FormInputFieldLogin extends State<InputFieldLogin> {
   bool _obscurePassword = true;
-  String _password;
-  String _correo;
+  String? _password;
+  String? _correo;
 
   void _toggle() {
     setState(() {
@@ -30,7 +30,7 @@ class __FormInputFieldLogin extends State<InputFieldLogin> {
         Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+              border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
           child: TextField(
             controller: emailController,
             decoration: InputDecoration(
@@ -42,7 +42,7 @@ class __FormInputFieldLogin extends State<InputFieldLogin> {
         Container(
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-              border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+              border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
           child: Row(
             children: <Widget>[
               Expanded(

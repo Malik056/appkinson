@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import "../input_field_login.dart";
 import '../../../services/end_points.dart';
 
-Map currentUser;
+Map? currentUser;
 var token;
 
 class ButtonLogin extends StatefulWidget {
@@ -57,11 +57,14 @@ class _FormButtonLogin extends State<ButtonLogin> {
           } else {
             await Utils().saveToken(responseJson['token']);
             currentUser = Utils().tokenDecoder(token);
+            if (currentUser == null) { //TODO: Handle NULL (TAHA)
+              return;
+            }
             cleanLogin();
-            if (currentUser['type'] == 'Cuidador') {
+            if (currentUser!['type'] == 'Cuidador') {
               RoutesCarer().toCarerHome(context);
             }
-            if (currentUser['type'] == 'Paciente') {
+            if (currentUser!['type'] == 'Paciente') {
               bool isSetBackground = await Utils().isSetBackgroundTask();
               if (isSetBackground) {
                 print('esta seteaada');
@@ -71,10 +74,10 @@ class _FormButtonLogin extends State<ButtonLogin> {
               //getRelationsRequest();
               RoutesPatient().toPatientHome(context);
             }
-            if (currentUser['type'] == 'Doctor') {
+            if (currentUser!['type'] == 'Doctor') {
               RoutesDoctor().toDoctorHome(context);
             }
-            if (currentUser['type'] == 'Admin') {
+            if (currentUser!['type'] == 'Admin') {
               RoutesAdmin().toAdminHome(context);
             }
           }
@@ -87,7 +90,7 @@ class _FormButtonLogin extends State<ButtonLogin> {
 
 invalid(int reason, context) {
   debugPrint("invalidez");
-  String invalidReason;
+  String invalidReason = '';
   if (reason == 0) {
     invalidReason = "Contraseña invalida";
   }

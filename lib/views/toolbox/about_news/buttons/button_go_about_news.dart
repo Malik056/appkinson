@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:appkinson/constants/globals.dart';
 import 'package:appkinson/routes/routes_general.dart';
@@ -11,8 +10,8 @@ import '../news_list.dart';
 
 class ButtonGoAboutNews extends StatelessWidget {
   @override
-  List<ItemToolbox> itemsByType = [];
   Widget build(BuildContext context) {
+  List<ItemToolbox> itemsByType = [];
     Size size = MediaQuery.of(context).size;
     return Container(
       height: 200,
@@ -27,14 +26,14 @@ class ButtonGoAboutNews extends StatelessWidget {
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
           onPressed: () async {
             ItemToolbox itemToolbox = new ItemToolbox();
-            String id = await Utils().getFromToken('id');
-            String token = await Utils().getToken();
+            String? id = await Utils().getFromToken('id');
+            String? token = await Utils().getToken();
             itemsByType = await EndPoints().getItemsToolbox(id, token);
             print(itemsByType.length);
             news.clear();
             for (int i = 0; i < itemsByType.length; i++) {
               itemToolbox = itemsByType[i];
-              if (itemToolbox.type.compareTo('NOTICIA') == 0) {
+              if (itemToolbox.type?.compareTo('NOTICIA') == 0) {
                 print("No entra");
                 news.add(itemToolbox);
               }

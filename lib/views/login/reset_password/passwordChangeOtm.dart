@@ -59,7 +59,7 @@ class _LoginPageState extends State<PasswordChangeOtm> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -80,7 +80,7 @@ class _LoginPageState extends State<PasswordChangeOtm> {
             ),
             Container(
               padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -133,7 +133,7 @@ class _LoginPageState extends State<PasswordChangeOtm> {
 
 invalid(int reason, context) {
   debugPrint("invalidez");
-  String invalidReason;
+  String invalidReason = '';
   if (reason == 0) {
     invalidReason = "El email no es un correo valido";
   }

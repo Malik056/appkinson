@@ -1,28 +1,19 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import '../symptoms_form_doctor/symptoms_form_q1.dart';
 import '../symptoms_form_doctor/symptoms_form_q2.dart';
 import '../symptoms_form_doctor/symptoms_form_q3.dart';
 import '../symptoms_form_doctor/symptoms_form_q4.dart';
 import '../symptoms_form_doctor/symptoms_form_q5.dart';
-import '../symptoms_form_doctor/symptoms_form_q6.dart';
-import '../symptoms_form_doctor/symptoms_form_q7.dart';
-import '../symptoms_form_doctor/symptoms_form_q8.dart';
-import '../symptoms_form_doctor/symptoms_form_q9.dart';
-import '../symptoms_form_doctor/symptoms_form_q10.dart';
-import '../symptoms_form_doctor/symptoms_form_q11.dart';
-import '../symptoms_form_doctor/symptoms_form_q12.dart';
-import '../symptoms_form_doctor/symptoms_form_q13.dart';
-import '../symptoms_form_doctor/symptoms_form_q14.dart';
-import '../symptoms_form_doctor/symptoms_form_q15.dart';
-import '../symptoms_form_doctor/symptoms_form_q16.dart';
 import '../symptoms_form_doctor/symptoms_form_q29.dart';
 
-class symptomsFormQ extends StatefulWidget {
+class SymptomsFormQ extends StatefulWidget {
   @override
-  _symptomsFormQ createState() => _symptomsFormQ();
+  _SymptomsFormQ createState() => _SymptomsFormQ();
 }
 
-class _symptomsFormQ extends State<symptomsFormQ> {
+class _SymptomsFormQ extends State<SymptomsFormQ> {
   final controller = PageController(
     initialPage: 0,
   );
@@ -49,11 +40,11 @@ class _symptomsFormQ extends State<symptomsFormQ> {
         controller: controller,
         scrollDirection: Axis.vertical,
         children: [
-          symptomsFormQ1(),
-          symptomsFormQ2(),
-          symptomsFormQ3(),
-          symptomsFormQ4(),
-          symptomsFormQ5(),
+          SymptomsFormQ1(),
+          SymptomsFormQ2(),
+          SymptomsFormQ3(),
+          SymptomsFormQ4(),
+          SymptomsFormQ5(),
           /*
           symptomsFormQ6(),
           symptomsFormQ7(),
@@ -78,7 +69,7 @@ class _symptomsFormQ extends State<symptomsFormQ> {
           symptomsFormQ26(),
           symptomsFormQ27(),
           symptomsFormQ28(),*/
-          symptomsFormQ29(),
+          SymptomsFormQ29(),
         ],
       ),
     );

@@ -12,10 +12,10 @@ class VideoScreenDoctor extends StatefulWidget {
   _SymptomsFormQ29 createState() => _SymptomsFormQ29();
 }
 
-File fileMediaDoctor;
+File? fileMediaDoctor;
 
 class _SymptomsFormQ29 extends State<VideoScreenDoctor> {
-  MediaSource source;
+  MediaSource? source;
   int selectedStateRadio = 0;
   int selectedDyskinesiaRadio = 0;
 
@@ -31,9 +31,9 @@ class _SymptomsFormQ29 extends State<VideoScreenDoctor> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.grey[350],
-                      border: Border(top: BorderSide(width: 2, color: Colors.grey[350]), bottom: BorderSide(width: 1, color: Colors.grey[350])),
+                      border: Border(top: BorderSide(width: 2, color: Colors.grey[350]!), bottom: BorderSide(width: 1, color: Colors.grey[350]!)),
                     ),
-                    child: fileMediaDoctor == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMediaDoctor) : VideoWidget(fileMediaDoctor)),
+                    child: fileMediaDoctor == null ? Icon(Icons.play_circle_outline, size: 240) : (source == MediaSource.image ? Image.file(fileMediaDoctor!) : VideoWidget(fileMediaDoctor!)),
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -126,13 +126,13 @@ class _SymptomsFormQ29 extends State<VideoScreenDoctor> {
 
   Future save() async {}
 
-  void onChangedStateValue(Object value) {
+  void onChangedStateValue(int value) {
     setState(() {
       selectedStateRadio = value;
     });
   }
 
-  void onChangedDyskinesiaValue(Object value) {
+  void onChangedDyskinesiaValue(int value) {
     setState(() {
       selectedDyskinesiaRadio = value;
     });

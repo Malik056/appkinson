@@ -1,21 +1,13 @@
-import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/home_different_users/patient/patient_home_page.dart';
 import 'package:appkinson/views/relation_request/relations_requets.dart';
-import 'package:appkinson/views/profiles/patient/patient_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
-import 'package:appkinson/routes/routes_patient.dart';
-import 'package:swipedetector/swipedetector.dart';
 import 'package:appkinson/views/profiles/patient/patient_profile_screen.dart';
 import 'package:appkinson/views/profiles/patient/profile_edition/profile_edition_patient.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/src/widgets/safe_area.dart';
-import '../home_initial/home_page.dart';
 
 class CustomDrawerMenuPatient extends StatelessWidget {
-  final Function closeDrawer;
+  final Function? closeDrawer;
 
-  const CustomDrawerMenuPatient({Key key, this.closeDrawer}) : super(key: key);
+  const CustomDrawerMenuPatient({Key? key, this.closeDrawer}) : super(key: key);
 
   Widget decideImage() {
     if (imageFilePatient == null) {
@@ -26,7 +18,7 @@ class CustomDrawerMenuPatient extends StatelessWidget {
       );
     } else {
       return Image.file(
-        imageFilePatient,
+        imageFilePatient!,
         fit: BoxFit.cover,
         height: 100,
         width: 100,

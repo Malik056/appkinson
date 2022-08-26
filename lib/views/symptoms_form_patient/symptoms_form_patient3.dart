@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q2_off.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q2_on.dart';
 import 'package:appkinson/views/symptoms_form_patient/symptoms_form_patient_q3.dart';
@@ -11,10 +13,10 @@ import 'symptoms_form_patient_q2.dart';
 
 class SymptomsFormPatient3 extends StatefulWidget {
   @override
-  _symptomsForm3 createState() => _symptomsForm3();
+  _SymptomsForm3 createState() => _SymptomsForm3();
 }
 
-class _symptomsForm3 extends State<SymptomsFormPatient3> {
+class _SymptomsForm3 extends State<SymptomsFormPatient3> {
   final controller = PageController(
     initialPage: 0,
   );

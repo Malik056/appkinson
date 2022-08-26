@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ12 extends StatefulWidget {
+class SymptomsFormQ12 extends StatefulWidget {
   @override
-  _symptomsFormQ12 createState() => _symptomsFormQ12();
+  _SymptomsFormQ12 createState() => _SymptomsFormQ12();
 }
 
 enum SigningCharacter { Normal, Enlentecimiento, Moderado, Alterado, Dificil }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ12 = 0;
 
-class _symptomsFormQ12 extends State<symptomsFormQ12> {
+class _SymptomsFormQ12 extends State<SymptomsFormQ12> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _symptomsFormQ12 extends State<symptomsFormQ12> {
                   title: const Text('Normal'),
                   value: SigningCharacter.Normal,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ12 = 0;
@@ -54,7 +54,7 @@ class _symptomsFormQ12 extends State<symptomsFormQ12> {
                       'Enlentecimiento discreto y/o reducción de la amplitud.'),
                   value: SigningCharacter.Enlentecimiento,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ12 = 1;
@@ -69,7 +69,7 @@ class _symptomsFormQ12 extends State<symptomsFormQ12> {
                       'Fatigoso de manera evidente y precoz. Puede haber detenciones ocasionales en el movimiento'),
                   value: SigningCharacter.Moderado,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ12 = 2;
@@ -84,7 +84,7 @@ class _symptomsFormQ12 extends State<symptomsFormQ12> {
                       'Frecuentes titubeos al iniciar los movimientos o detenciones mientras se realiza el movimiento'),
                   value: SigningCharacter.Alterado,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ12 = 3;
@@ -98,7 +98,7 @@ class _symptomsFormQ12 extends State<symptomsFormQ12> {
                   title: const Text('Apenas puede realizar la acción'),
                   value: SigningCharacter.Dificil,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ12 = 4;

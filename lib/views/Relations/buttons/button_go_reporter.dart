@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ButtonGoReporter extends StatelessWidget {
   final int idPatient;
 
-  ButtonGoReporter({@required this.idPatient});
+  ButtonGoReporter({required this.idPatient});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +24,14 @@ class ButtonGoReporter extends StatelessWidget {
         ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String type = await Utils().getFromToken("type");
+          String? type = await Utils().getFromToken("type");
           if (type == "Paciente") {
             print("object");
             var aux = await Utils().getFromToken("id");
+            if (aux == null) {
+              //TODO: Handle null (TAHA)
+              return;
+            }
             idPatient = int.parse(aux);
             print("entra pat" + idPatient.toString());
             //RoutesDoctor().toReportConfigPage(context, idPatient);

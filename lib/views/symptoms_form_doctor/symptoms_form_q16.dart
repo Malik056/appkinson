@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ16 extends StatefulWidget {
+class SymptomsFormQ16 extends StatefulWidget {
   @override
-  _symptomsFormQ16 createState() => _symptomsFormQ16();
+  _SymptomsFormQ16 createState() => _SymptomsFormQ16();
 }
 
 enum SigningCharacter { Inexistente, Minima, Leve, Moderada, Marcada }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ16 = 0;
 
-class _symptomsFormQ16 extends State<symptomsFormQ16> {
+class _SymptomsFormQ16 extends State<SymptomsFormQ16> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _symptomsFormQ16 extends State<symptomsFormQ16> {
                   title: const Text('No hay'),
                   value: SigningCharacter.Inexistente,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ16 = 0;
@@ -54,7 +54,7 @@ class _symptomsFormQ16 extends State<symptomsFormQ16> {
                       'Mínima lentitud que da al movimiento un carácter deliberado, podría ser normal en algunas personas. Amplitud posiblemente reducida.'),
                   value: SigningCharacter.Minima,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ16 = 1;
@@ -69,7 +69,7 @@ class _symptomsFormQ16 extends State<symptomsFormQ16> {
                       'Lentitud y pobreza de movimientos en grado leve, que es claramente anormal. Como alternativa, cierto grado de reducción en la amplitud'),
                   value: SigningCharacter.Leve,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ16 = 2;
@@ -84,7 +84,7 @@ class _symptomsFormQ16 extends State<symptomsFormQ16> {
                       'Lentitud, pobreza o pequeña amplitud de movimientos moderado'),
                   value: SigningCharacter.Moderada,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ16 = 3;
@@ -99,7 +99,7 @@ class _symptomsFormQ16 extends State<symptomsFormQ16> {
                       'Lentitud, pobreza o pequeña amplitud de movimientos marcado.'),
                   value: SigningCharacter.Marcada,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ16 = 4;

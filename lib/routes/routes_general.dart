@@ -11,17 +11,17 @@ import 'package:flutter/material.dart';
 
 class RoutesGeneral {
   //ruta para registrar un nuevo usuario
-  Future<T> toRegister<T>(BuildContext context) {
+  Future<T?> toRegister<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => RegisterPage()));
   }
 
   //ruta hacia la pantalla de "acerca de nosotros"
-  Future<T> toAboutUs<T>(BuildContext context) {
+  Future<T?> toAboutUs<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => HelpSupport()));
   }
 
 //ruta para el logueo de un usuario nuevo
-  Future<T> toLogin<T>(BuildContext context) {
+  Future<T?> toLogin<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => LoginPage()));
   }
 
@@ -31,27 +31,27 @@ class RoutesGeneral {
   }
 
 //ruta para los items de comida
-  Future<T> toListFood<T>(BuildContext context) {
+  Future<T?> toListFood<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ListFood()));
   }
 
 //rutas para listar los ejercicios
-  Future<T> toListExcercises<T>(BuildContext context) {
+  Future<T?> toListExcercises<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ListExcercises()));
   }
 
 //ruta para listar las noticias
-  Future<T> toListNews<T>(BuildContext context) {
+  Future<T?> toListNews<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => ListNews()));
   }
 
 //ruta hacia cambiar la contraseña
-  Future<T> toChangePassword<T>(BuildContext context) {
+  Future<T?> toChangePassword<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PasswordChange()));
   }
 
 // ruta para la generación de la otm
-  Future<T> toChangePasswordOtm<T>(BuildContext context) {
+  Future<T?> toChangePasswordOtm<T>(BuildContext context) {
     return Navigator.push<T>(context, new MaterialPageRoute<T>(builder: (context) => PasswordChangeOtm()));
   }
 }

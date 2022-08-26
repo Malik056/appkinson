@@ -1,28 +1,25 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotification {
-  static FlutterLocalNotificationsPlugin flutterNotificationPlugin;
-  static AndroidNotificationDetails androidSettings;
-  static IOSNotificationDetails iosSettings;
+  static late FlutterLocalNotificationsPlugin flutterNotificationPlugin;
+  static late AndroidNotificationDetails androidSettings;
+  static late IOSNotificationDetails iosSettings;
 
   static void initializer() {
     flutterNotificationPlugin = FlutterLocalNotificationsPlugin();
-    androidSettings = AndroidNotificationDetails(
-        "111", "Solicitud de relación", "Tienes una solicitud de relación",
-        importance: Importance.High, priority: Priority.Max);
+    androidSettings = AndroidNotificationDetails("111", "Solicitud de relación", channelDescription: "Tienes una solicitud de relación", importance: Importance.high, priority: Priority.max);
     var androidInitialization = AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings =
-    InitializationSettings(androidInitialization, null);
-    flutterNotificationPlugin.initialize(initializationSettings,
-        onSelectNotification: onNotificationSelect);
+    var initializationSettings = InitializationSettings(android: androidInitialization, iOS: null);
+    flutterNotificationPlugin.initialize(initializationSettings, onSelectNotification: onNotificationSelect);
   }
 
-  static Future<void> onNotificationSelect(String payload) async {
+  static Future<void> onNotificationSelect(String? payload) async {
     print(payload);
   }
 
   static Future<void> showOneTimeNotification(DateTime scheduledDate) async {
-    var notificationDetails = NotificationDetails(androidSettings, null);
+    var notificationDetails = NotificationDetails(android: androidSettings, iOS: null);
+    // ignore: deprecated_member_use
     await flutterNotificationPlugin.schedule(1, "Solicitud de relación",
         "¡Alguien quiere cuidar de tí!", scheduledDate, notificationDetails,
         androidAllowWhileIdle: true);

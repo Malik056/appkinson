@@ -1,12 +1,12 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class AlarmInfo {
-  int id;
-  String title;
-  String dateString;
-  Time alarmDateTimeDaily;
-  DateTime alarmDateTime;
-  bool isPending;
+  int? id;
+  String? title;
+  String? dateString;
+  Time? alarmDateTimeDaily;
+  DateTime? alarmDateTime;
+  bool? isPending;
 
   AlarmInfo(
       {this.id,
@@ -28,7 +28,7 @@ class AlarmInfo {
     "id": id,
     "title": title,
     "alarmDateTimeDaily": alarmDateTimeDaily,
-    "alarmDateTime": alarmDateTime.toIso8601String(),
+    "alarmDateTime": alarmDateTime?.toIso8601String(),
     "isPending": isPending,
   };
   

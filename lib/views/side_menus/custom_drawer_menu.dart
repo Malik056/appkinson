@@ -2,25 +2,16 @@
 import 'package:appkinson/utils/utils.dart';
 import 'package:appkinson/views/home_different_users/carer/carer_home_page.dart';
 import 'package:appkinson/views/home_different_users/doctor/doctor_home_page.dart';
-import 'package:appkinson/views/home_different_users/patient/patient_home_page.dart';
-import 'package:appkinson/views/relation_request/relations_requets.dart';
 import 'package:appkinson/views/profiles/carer/carer_profile_screen.dart';
 import 'package:appkinson/views/profiles/doctor/doctor_profile_screen.dart';
-import 'package:appkinson/views/profiles/patient/patient_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
-import 'package:appkinson/routes/routes_patient.dart';
-import 'package:swipedetector/swipedetector.dart';
 import 'package:appkinson/views/profiles/patient/patient_profile_screen.dart';
 import 'package:appkinson/views/profiles/patient/profile_edition/profile_edition_patient.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/src/widgets/safe_area.dart';
-import '../home_initial/home_page.dart';
 
 class CustomDrawerMenu extends StatelessWidget {
-  final Function closeDrawer;
+  final Function? closeDrawer;
 
-  const CustomDrawerMenu({Key key, this.closeDrawer}) : super(key: key);
+  const CustomDrawerMenu({Key? key, this.closeDrawer}) : super(key: key);
 
   Widget decideImage() {
     if (imageFilePatient == null) {
@@ -31,7 +22,7 @@ class CustomDrawerMenu extends StatelessWidget {
       );
     } else {
       return Image.file(
-        imageFilePatient,
+        imageFilePatient!,
         fit: BoxFit.cover,
         height: 100,
         width: 100,
@@ -71,7 +62,7 @@ class CustomDrawerMenu extends StatelessWidget {
           ListTile(
             onTap: () async {
               debugPrint("Tapped Profile");
-              String tipe = await Utils().getFromToken('type');
+              String? tipe = await Utils().getFromToken('type');
               if (tipe == 'Cuidador') {
                 Navigator.pushReplacement(
                     context,
@@ -108,7 +99,7 @@ class CustomDrawerMenu extends StatelessWidget {
           ),
           ListTile(
             onTap: () async {
-              String tipe = await Utils().getFromToken('type');
+              String? tipe = await Utils().getFromToken('type');
               if (tipe == 'Cuidador') {
                 Navigator.pushReplacement(
                     context,

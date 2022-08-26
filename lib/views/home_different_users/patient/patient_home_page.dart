@@ -18,7 +18,7 @@ class PatientHomePage extends StatefulWidget {
 
 class _PatientHomePage extends State<PatientHomePage> {
   bool shouldPop = false;
-  String token;
+  String? token;
   var id;
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _PatientHomePage extends State<PatientHomePage> {
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
-                          colors: [Colors.blue[400], Colors.blue[900]],
+                          colors: [Colors.blue[400]!, Colors.blue[900]!],
                         ),
                         image: DecorationImage(
                           image:

@@ -1,4 +1,3 @@
-
 // ignore_for_file: unused_local_variable
 
 import 'package:appkinson/constants/globals.dart';
@@ -12,17 +11,17 @@ import 'package:appkinson/views/home_initial/home_page.dart';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const bla = Colors.white;
 const kSpacingUnit = 10;
-File imageFilePatient;
+File? imageFilePatient;
 String namePatient = " ";
 String emailPatient = " ";
-Map currentUser;
+Map? currentUser;
 var token = Utils().getToken();
 var tokenId = Utils().getFromToken('id');
 
@@ -52,27 +51,42 @@ class PatientProfileScreenP extends State<PatientProfileScreen> {
   }
 
   openGallery(BuildContext context) async {
-    var picture = await ImagePicker().getImage(source: ImageSource.gallery);
+    var picture = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (picture == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     this.setState(() {
       imageFilePatient = File(picture.path);
     });
     var newUser = new User(photo: imageFilePatient);
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
+    if (id == null || token == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     String save = await EndPoints().modifyUsersPhoto(newUser, id, token);
     RoutesGeneral().toPop(context);
   }
 
   openCamera(BuildContext context) async {
-    var picture = await ImagePicker().getImage(source: ImageSource.camera);
-
+    var picture = await ImagePicker().pickImage(source: ImageSource.camera);
+    if (picture == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     this.setState(() {
       imageFilePatient = File(picture.path);
     });
 
     var newUser = new User(photo: imageFilePatient);
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
+    if (id == null || token == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     String save = await EndPoints().modifyUsersPhoto(newUser, id, token);
     RoutesGeneral().toPop(context);
   }
@@ -122,10 +136,15 @@ class PatientProfileScreenP extends State<PatientProfileScreen> {
                     */
 
                     debugPrint('aqui');
-                    currentUser = Utils().tokenDecoder(token);
+                    String? _tokenId = await tokenId; //TODO: Check Logic (TAHA)
+                    String? _token = await tokenId; //TODO: Check Logic (TAHA)
+                    if (_tokenId == null || _token == null) {
+                      //TODO: Handle null (TAHA)
+                      return;
+                    }
+                    currentUser = Utils().tokenDecoder(_token);
                     print(currentUser.toString());
-
-                    String save = await EndPoints().modifyUsersPhoto(newUser, tokenId, token);
+                    String save = await EndPoints().modifyUsersPhoto(newUser, _tokenId, _token);
 
                     //debugPrint('aqui' + save);
                   },
@@ -141,7 +160,7 @@ class PatientProfileScreenP extends State<PatientProfileScreen> {
       return Icon(LineAwesomeIcons.question);
     } else {
       return Image.file(
-        imageFilePatient,
+        imageFilePatient!,
         fit: BoxFit.cover,
         height: 100,
         width: 100,
@@ -151,7 +170,7 @@ class PatientProfileScreenP extends State<PatientProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context, height: 896, width: 414, allowFontScaling: true);
+    ScreenUtil.init(context, designSize: Size(414, 896), minTextAdapt: true);
     var profileInfo = Expanded(
         child: Column(
       children: [
@@ -296,11 +315,11 @@ class PatientProfileScreenP extends State<PatientProfileScreen> {
 }
 
 class ProfileListItem extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final text;
   final bool hasNavigation;
 
-  const ProfileListItem({Key key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
+  const ProfileListItem({Key? key, this.icon, this.text, this.hasNavigation = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -329,7 +348,7 @@ class ProfileListItem extends StatelessWidget {
             if (text == 'Cerrar Sesión') {
               debugPrint("Tapped Log Out....");
               SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs?.clear();
+              prefs.clear();
               await Utils().removeBackgroundTask();
               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => HomePage()), (Route<dynamic> route) => false);
             }

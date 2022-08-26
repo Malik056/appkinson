@@ -16,8 +16,11 @@ class ButtonGoWeeklyForm extends StatelessWidget {
         style: buildButtonStyle(border: CircleBorder(), horiztonalPadding: 10, background: Colors.grey[50]),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String id = await Utils().getFromToken('id');
-          String token = await Utils().getToken();
+          String? id = await Utils().getFromToken('id');
+          String? token = await Utils().getToken();
+          if(id == null) {//TODO: Handle NULL (TAHA)
+            return;
+          }
           RoutesPatient().toFeelsForm(context, int.parse(id));
         },
         //textColor: Colors.white,

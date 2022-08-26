@@ -5,9 +5,9 @@ import '../emotional_form/emotional_form_q1.dart';
 import '../emotional_form/emotional_form_q2.dart';
 
 class EmotionalFormQ extends StatefulWidget {
-  final int idPatient;
+  final int? idPatient;
   
-  EmotionalFormQ({Key key, this.idPatient}) : super(key: key);
+  EmotionalFormQ({Key? key, this.idPatient}) : super(key: key);
   @override
   _EmotionalFormQ createState() => _EmotionalFormQ(this.idPatient);
 }
@@ -19,7 +19,7 @@ class _EmotionalFormQ extends State<EmotionalFormQ> {
     //selectedStateRadioQ1 = 0;
   }
   
-  final int idPatient;
+  final int? idPatient;
   _EmotionalFormQ(this.idPatient);
   final controller = PageController(
     initialPage: 0,

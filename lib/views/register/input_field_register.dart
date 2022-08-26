@@ -19,7 +19,7 @@ TextEditingController passwordv = new TextEditingController();
 class InputFieldRegisterCustom extends State<InputFieldRegister> {
   bool _obscurePassword = true;
   bool _obscureVerPassword = true;
-  String _password;
+  String? _password;
   final validationKey = GlobalKey<FormState>();
 
   void _toggle() {
@@ -53,9 +53,9 @@ class InputFieldRegisterCustom extends State<InputFieldRegister> {
                   items: lista.map((String a) {
                     return DropdownMenuItem(value: a, child: Text(a));
                   }).toList(),
-                  onChanged: (value) {
+                  onChanged: (String? value) {
                     setState(() {
-                      selectUser = value;
+                      selectUser = value ?? '';
                     });
                   },
                   hint: Text(selectUser),
@@ -65,32 +65,23 @@ class InputFieldRegisterCustom extends State<InputFieldRegister> {
           ),
           Container(
             padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
             child: TextFormField(
               controller: emailController,
-              decoration: InputDecoration(
-                  hintText: "Ingrese su Correo Eléctronico",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: InputBorder.none),
+              decoration: InputDecoration(hintText: "Ingrese su Correo Eléctronico", hintStyle: TextStyle(color: Colors.grey), border: InputBorder.none),
             ),
           ),
           Container(
             padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
             child: TextFormField(
               controller: nameController,
-              decoration: InputDecoration(
-                  hintText: "Ingrese su Nombre",
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: InputBorder.none),
+              decoration: InputDecoration(hintText: "Ingrese su Nombre", hintStyle: TextStyle(color: Colors.grey), border: InputBorder.none),
             ),
           ),
           Container(
             padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -106,9 +97,7 @@ class InputFieldRegisterCustom extends State<InputFieldRegister> {
                 Expanded(
                   child: TextButton(
                     onPressed: _toggle,
-                    child: new Icon(_obscurePassword
-                        ? Icons.remove_red_eye_sharp
-                        : Icons.remove_red_eye_outlined),
+                    child: new Icon(_obscurePassword ? Icons.remove_red_eye_sharp : Icons.remove_red_eye_outlined),
                   ),
                 ),
               ],
@@ -116,8 +105,7 @@ class InputFieldRegisterCustom extends State<InputFieldRegister> {
           ),
           Container(
             padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+            decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.grey[200]!))),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -140,12 +128,7 @@ class InputFieldRegisterCustom extends State<InputFieldRegister> {
 
 class Method {
   Future<User> send() async {
-    var newUser = new User(
-        email: emailController.text,
-        name: nameController.text,
-        password: password.text,
-        passwordVerify: passwordv.text,
-        type: selectUser);
+    var newUser = new User(email: emailController.text, name: nameController.text, password: password.text, passwordVerify: passwordv.text, type: selectUser);
     debugPrint(newUser.password);
     return newUser;
   }

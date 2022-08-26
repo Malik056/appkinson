@@ -20,9 +20,12 @@ class ButtonGoNoMotorSymptoms extends StatelessWidget {
         ),
         //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
         onPressed: () async {
-          String id = await Utils().getFromToken('id');
+          String? id = await Utils().getFromToken('id');
+          if(id == null) { //TODO: Handle NULL (TAHA)
+            return;
+          }
           // ignore: unused_local_variable
-          String token = await Utils().getToken();
+          String? token = await Utils().getToken();
           RoutesPatient().toNoMotorSymptoms(context, int.parse(id));
         },
         //textColor: Colors.white,

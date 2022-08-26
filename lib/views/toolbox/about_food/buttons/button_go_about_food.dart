@@ -27,15 +27,15 @@ class ButtonGoAboutFood extends StatelessWidget {
           //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
           onPressed: () async {
             ItemToolbox itemToolbox = new ItemToolbox();
-            String token = await Utils().getToken();
-            String id = await Utils().getFromToken('id');
+            String? token = await Utils().getToken();
+            String? id = await Utils().getFromToken('id');
             itemsByType = await EndPoints().getItemsToolbox(id, token);
             print(itemsByType.length);
             food.clear();
             for (int i = 0; i < itemsByType.length; i++) {
               itemToolbox = itemsByType[i];
-              print(itemToolbox.type.compareTo('ALIMENTACION'));
-              if (itemToolbox.type.compareTo('ALIMENTACION') == 0) {
+              print(itemToolbox.type?.compareTo('ALIMENTACION'));
+              if (itemToolbox.type?.compareTo('ALIMENTACION') == 0) {
                 food.add(itemToolbox);
               }
             }

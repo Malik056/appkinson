@@ -1,14 +1,11 @@
+// ignore_for_file: unused_field, unused_local_variable
+
 import 'dart:convert';
 
 import 'package:appkinson/constants/globals.dart';
-import 'package:appkinson/routes/routes_doctor.dart';
-import 'package:appkinson/routes/routes_patient.dart';
 import 'package:appkinson/services/end_points.dart';
 import 'package:appkinson/utils/utils.dart';
-import '../relations/doctor_patient_add.dart';
 //import 'package:appkinson/views/calendar/calendar_screen_view2.dart';
-import 'package:appkinson/views/calendar/calendar_screen_view2_doctor.dart';
-import 'package:appkinson/views/toolbox/about_excercises/excercises_list.dart';
 import 'package:flutter/material.dart';
 import '../../model/user.dart';
 
@@ -20,8 +17,7 @@ class DoctorPatientsAdd extends StatefulWidget {
 var codeListPatients;
 
 class DoctorPatientsCustomAdd extends State<DoctorPatientsAdd> {
-  final TextEditingController addPatientController =
-      new TextEditingController();
+  final TextEditingController addPatientController = new TextEditingController();
   final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
   TextEditingController editingController2 = TextEditingController();
   List<User> patientsAdd = [];
@@ -39,9 +35,13 @@ class DoctorPatientsCustomAdd extends State<DoctorPatientsAdd> {
     User patientAdd;
     //Pedir lista de pacientes relacionados
     debugPrint("pidiendo pacientes");
-    String tipe = await Utils().getFromToken('type');
-    String id = await Utils().getFromToken('id');
-    String token = await Utils().getToken();
+    String? tipe = await Utils().getFromToken('type');
+    String? id = await Utils().getFromToken('id');
+    String? token = await Utils().getToken();
+    if (tipe == null || token == null) {
+      //TODO: Handle null (TAHA)
+      return;
+    }
     var patientsAux = await EndPoints().getUnrelatedPatients(token, tipe);
     debugPrint("pacientes pedidos");
     codeListPatients = json.decode(patientsAux);
@@ -66,12 +66,12 @@ class DoctorPatientsCustomAdd extends State<DoctorPatientsAdd> {
   }
 
   void filterSearchResults(String query) {
-    List<User> dummySearchList = List<User>();
+    List<User> dummySearchList = [];
     dummySearchList.addAll(patientsAdd);
     if (query.isNotEmpty) {
-      List<User> dummyListData = List<User>();
+      List<User> dummyListData = [];
       dummySearchList.forEach((item) {
-        if (item.email.contains(query)) {
+        if (item.email?.contains(query) ?? false) {
           dummyListData.add(item);
         }
       });
@@ -107,8 +107,7 @@ class DoctorPatientsCustomAdd extends State<DoctorPatientsAdd> {
                       borderSide: BorderSide(color: Colors.white, width: 3.0),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Colors.grey[400], width: 2.0),
+                      borderSide: BorderSide(color: Colors.grey[400]!, width: 2.0),
                     ),
                   ),
                 ),
@@ -149,30 +148,21 @@ class DoctorPatientsCustomAdd extends State<DoctorPatientsAdd> {
                   onTap: () async {
                     showDialog(
                       context: context,
-                      builder: (BuildContext context) =>
-                          _buildPopupDialog(context, patient.email),
+                      builder: (BuildContext context) => _buildPopupDialog(context, patient.email ?? ''),
                     );
                     //getPatients();
                   },
-                  title: Text(patient.email,
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .apply(fontSizeFactor: 1.4)),
+                  title: Text(patient.email ?? '', style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.4)),
                   //subtitle: Text(user.email),
                   leading: CircleAvatar(
                     child: Icon(Icons.account_circle_outlined),
                   ),
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                  contentPadding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
                   dense: true,
                 );
               },
               separatorBuilder: (context, index) {
-                return Divider(
-                    thickness: 2,
-                    color: Colors.grey[200],
-                    indent: 15,
-                    endIndent: 20);
+                return Divider(thickness: 2, color: Colors.grey[200], indent: 15, endIndent: 20);
               },
             ),
           ],
@@ -183,7 +173,7 @@ class DoctorPatientsCustomAdd extends State<DoctorPatientsAdd> {
 }
 
 class PatientsList extends StatelessWidget {
-  List<User> _patients;
+  final List<User> _patients;
 
   PatientsList(this._patients);
 
@@ -197,7 +187,7 @@ class PatientsList extends StatelessWidget {
   }
 
   List<PatientsListItem> _buildPatiensList() {
-    return _patients.map((User) => PatientsListItem(User)).toList();
+    return _patients.map((user) => PatientsListItem(user)).toList();
   }
 }
 
@@ -219,16 +209,19 @@ class PatientsListItem extends ListTile {
 Widget _buildPopupDialog(BuildContext context, String email) {
   return new AlertDialog(
     title: Text("Enviar solicitud a " + email),
-    content: Text(
-        '\nDebe esperar a que el paciente \nacepte la solicitud en el icono\nde la campana'),
+    content: Text('\nDebe esperar a que el paciente \nacepte la solicitud en el icono\nde la campana'),
 
     // '\nDebe esperar a que el paciente \nacepte la solicitud en el icono\n de la campana'
     actions: <Widget>[
       new TextButton(
         style: buildButtonStyle(forground: Theme.of(context).primaryColor),
         onPressed: () async {
-          String tipe = await Utils().getFromToken('type');
-          String token = await Utils().getToken();
+          String? tipe = await Utils().getFromToken('type');
+          String? token = await Utils().getToken();
+          if (tipe == null || token == null) {
+            //TODO: Handle null (TAHA)
+            return;
+          }
           var response = await EndPoints().linkUser(email, tipe, token);
           Navigator.of(context).pop();
         },

@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-DateTime dateChoosed;
+DateTime? dateChoosed;
 int count = 0;
 
 class CalendarScreenView2Carer extends StatefulWidget {
@@ -27,20 +27,20 @@ var color = Colors.green;
 //File fileMedia;
 
 List<Meeting> meetingsCarer = <Meeting>[];
-String listPacientes;
+String? listPacientes;
 var conta = 0;
 int hora = 0;
 var cont = 0;
-String q2;
-String q1;
-int desface;
-String datePatient;
-String idCurrent;
+String? q2;
+String? q1;
+int? desface;
+String? datePatient;
+String? idCurrent;
 bool isLoading = false;
 
-DateTime deleteTime;
+DateTime? deleteTime;
 
-List<Color> _colors = <Color>[Colors.green, Colors.green[700], Colors.red, Colors.red[800]];
+List<Color> _colors = <Color>[Colors.green, Colors.green[700]!, Colors.red, Colors.red[800]!];
 
 var contCalendar = 0;
 
@@ -67,20 +67,20 @@ class _Calendar extends State<CalendarScreenView2Carer> {
       content: Form(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
         new CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[200]),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[200]!),
         ),
       ])),
     );
   }
 
-  CalendarController _controller;
+  CalendarController? _controller;
 
   @override
   void initState() {
     super.initState();
     currentMeeting = null;
     _controller = CalendarController();
-    _controller.view = CalendarView.week;
+    _controller?.view = CalendarView.week;
     contCalendar = 0;
     //todos.add("Regular Colors");
     //todos.add("Power Coating");
@@ -103,10 +103,10 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                   setState(() {
                     print('ey');
                     if (contCalendar == 0) {
-                      _controller.view = CalendarView.day;
+                      _controller?.view = CalendarView.day;
                       contCalendar = 1;
                     } else {
-                      _controller.view = CalendarView.week;
+                      _controller?.view = CalendarView.week;
                       contCalendar = 0;
                     }
                   });
@@ -127,24 +127,32 @@ class _Calendar extends State<CalendarScreenView2Carer> {
             var sizeAppo = calendarTapDetails.appointments;
             print(sizeAppo.toString() + 'hola6');
             Meeting calen;
-            String r;
-            String dateNoZ;
-            String pathVideo;
+            String? r;
+            String? dateNoZ;
+            String? pathVideo;
             if (sizeAppo.toString() != 'null') {
-              calen = calendarTapDetails.appointments[0];
+              calen = calendarTapDetails.appointments![0];
               r = calen.from.toString() + 'Z';
               dateNoZ = calen.from.toString();
             }
 
             //print(calen.from);
             dateChoosed = calendarTapDetails.date;
+            if (dateChoosed == null) {
+              //TODO: Properly handle null (TAHA)
+              return;
+            }
             //var calen = calendarTapDetails.targetElement;
             //print(calen.index);
             //int horaPrueba = calen.index;
             //print(horaPrueba.toString());
 
-            final DateTime probTime = DateTime(dateChoosed.year, dateChoosed.month, dateChoosed.day, 0, 0, 0);
-            var convertedList = json.decode(listPacientes);
+            final DateTime probTime = DateTime(dateChoosed!.year, dateChoosed!.month, dateChoosed!.day, 0, 0, 0);
+            if (listPacientes == null) {
+              //TODO: Properly handle null (TAHA)
+              return;
+            }
+            var convertedList = json.decode(listPacientes!);
             for (var a = 0; a < convertedList.length; a++) {
               DateTime dateBd = DateTime.parse(convertedList[a]['formdate']);
               print(dateBd.toString() + 'hola');
@@ -189,7 +197,7 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                               ),
                             ],
                           ),
-                          Text(q2),
+                          Text(q2 ?? ""),
                           Divider(
                             thickness: 1,
                           ),
@@ -220,7 +228,7 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                             //   side: BorderSide(color: Color.fromRGBO(0, 160, 227, 1))),
                             //onPressed: _incrementColorIndex,
                             onPressed: () async {
-                              String token = await Utils().getToken();
+                              String? token = await Utils().getToken();
                               var video = await EndPoints().getVideoUser(token, pathVideo);
                               this.setState(() {
                                 fileMediaCarer = video;
@@ -249,15 +257,22 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                                 patientForm.formDate = dateChoosed;
 
                                 debugPrint('enviado');
-                                String token = await Utils().getToken();
+                                String? token = await Utils().getToken();
                                 //String id = await Utils().getFromToken('id');
-                                var savedDone = await EndPoints().deleteSymtomsPatientForm(datePatient, token, idCurrent);
+                                if (token == null || idCurrent == null) {
+                                  //TODO: Check for null (TAHA)
+                                  return;
+                                }
+                                var savedDone = await EndPoints().deleteSymtomsPatientForm(datePatient, token, idCurrent!);
 
                                 debugPrint(savedDone.toString());
 
-                                int hora = deleteTime.hour;
+                                if (deleteTime == null) {
+                                  return;
+                                }
+                                int hora = deleteTime!.hour;
 
-                                final DateTime startTime = DateTime(deleteTime.year, deleteTime.month, deleteTime.day, hora, 0, 0);
+                                final DateTime startTime = DateTime(deleteTime!.year, deleteTime!.month, deleteTime!.day, hora, 0, 0);
                                 final DateTime endTime = startTime.add(const Duration(hours: 1));
                                 Meeting m = new Meeting(_onOff[cont], startTime, endTime, _colors[cont], false);
                                 debugPrint(m.eventName);
@@ -331,7 +346,7 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                             TextFormField(
                               controller: _disqui,
                               validator: (value) {
-                                return value.isNotEmpty ? null : "Invalido";
+                                return (value?.isNotEmpty ?? false) ? null : "Invalido";
                               },
                               decoration: InputDecoration(hintText: "Ej:'Movimento anormal en la mano'"),
                             ),
@@ -445,13 +460,19 @@ class _Calendar extends State<CalendarScreenView2Carer> {
                                       isLoading = true;
                                     });
 
-                                    String token = await Utils().getToken();
+                                    String? token = await Utils().getToken();
                                     // String id = await Utils().getFromToken('id');
-                                    var savedDone = await EndPoints().registerSymptomsFormPatient(patientForm, idCurrent, token);
+                                    if (token == null || idCurrent == null) {
+                                      //TODO: Check for null (TAHA)
+                                      return;
+                                    }
+                                    var savedDone = await EndPoints().registerSymptomsFormPatient(patientForm, idCurrent!, token);
+                                    if (dateChoosed == null) {
+                                      return;
+                                    }
+                                    int hora = dateChoosed!.hour;
 
-                                    int hora = dateChoosed.hour;
-
-                                    final DateTime startTime = DateTime(dateChoosed.year, dateChoosed.month, dateChoosed.day, hora, 0, 0);
+                                    final DateTime startTime = DateTime(dateChoosed!.year, dateChoosed!.month, dateChoosed!.day, hora, 0, 0);
                                     final DateTime endTime = startTime.add(const Duration(hours: 1));
                                     Meeting m = new Meeting(_onOff[cont], startTime, endTime, _colors[cont], false);
                                     debugPrint(m.eventName);
@@ -494,25 +515,27 @@ class _Calendar extends State<CalendarScreenView2Carer> {
     meetingsCarer = <Meeting>[];
 
     //final DateTime today = DateTime.now();
-    if (dateChoosed.hour != null) {
-      hora = dateChoosed.hour;
+    if (dateChoosed?.hour != null) {
+      hora = dateChoosed!.hour;
+    } else {
+      return [];
     }
 
     print(conta);
-    final DateTime startTime = DateTime(dateChoosed.year, dateChoosed.month, dateChoosed.day, hora, 0, 0);
+    final DateTime startTime = DateTime(dateChoosed!.year, dateChoosed!.month, dateChoosed!.day, hora, 0, 0);
     final DateTime endTime = startTime.add(const Duration(hours: 1));
 
     if (conta == 1) {
       meetingsCarer.add(Meeting('on', startTime, endTime, const Color(0xFF0F8644), false));
     }
     if (conta == 3) {
-      meetingsCarer.add(Meeting('on Bueno', startTime, endTime, Colors.green[900], false));
+      meetingsCarer.add(Meeting('on Bueno', startTime, endTime, Colors.green[900]!, false));
     }
     if (conta == 5) {
-      meetingsCarer.add(Meeting('off', startTime, endTime, Colors.red[400], false));
+      meetingsCarer.add(Meeting('off', startTime, endTime, Colors.red[400]!, false));
     }
     if (conta == 7) {
-      meetingsCarer.add(Meeting('off Malo', startTime, endTime, Colors.red[900], false));
+      meetingsCarer.add(Meeting('off Malo', startTime, endTime, Colors.red[900]!, false));
     }
 
     return meetingsCarer;
@@ -528,27 +551,27 @@ class MeetingDataSource extends CalendarDataSource {
 
   @override
   DateTime getStartTime(int index) {
-    return appointments[index].from;
+    return appointments![index].from;
   }
 
   @override
   DateTime getEndTime(int index) {
-    return appointments[index].to;
+    return appointments![index].to;
   }
 
   @override
   String getSubject(int index) {
-    return appointments[index].eventName;
+    return appointments![index].eventName;
   }
 
   @override
   Color getColor(int index) {
-    return appointments[index].background;
+    return appointments![index].background;
   }
 
   @override
   bool isAllDay(int index) {
-    return appointments[index].isAllDay;
+    return appointments![index].isAllDay;
   }
 }
 

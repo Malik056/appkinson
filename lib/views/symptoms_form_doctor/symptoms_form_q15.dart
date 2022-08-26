@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class symptomsFormQ15 extends StatefulWidget {
+class SymptomsFormQ15 extends StatefulWidget {
   @override
-  _symptomsFormQ15 createState() => _symptomsFormQ15();
+  _SymptomsFormQ15 createState() => _SymptomsFormQ15();
 }
 
 enum SigningCharacter { Normal, Lento, Dificultad, Grave, Impedimento }
-SigningCharacter _character;
+SigningCharacter? _character;
 int selectedStateRadioQ15 = 0;
 
-class _symptomsFormQ15 extends State<symptomsFormQ15> {
+class _SymptomsFormQ15 extends State<SymptomsFormQ15> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _symptomsFormQ15 extends State<symptomsFormQ15> {
                   title: const Text('Normal'),
                   value: SigningCharacter.Normal,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ15 = 0;
@@ -54,7 +54,7 @@ class _symptomsFormQ15 extends State<symptomsFormQ15> {
                       'Camina lentamente, puede arrastrar los pies, con pasos cortos'),
                   value: SigningCharacter.Lento,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ15 = 1;
@@ -69,7 +69,7 @@ class _symptomsFormQ15 extends State<symptomsFormQ15> {
                       'Camina con dificultad, pero no requiere ayuda o muy escasa'),
                   value: SigningCharacter.Dificultad,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ15 = 2;
@@ -84,7 +84,7 @@ class _symptomsFormQ15 extends State<symptomsFormQ15> {
                       'Trastornos graves de la marcha que requieren ayuda.'),
                   value: SigningCharacter.Grave,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ15 = 3;
@@ -98,7 +98,7 @@ class _symptomsFormQ15 extends State<symptomsFormQ15> {
                   title: const Text('No puede caminar, incluso con ayuda.'),
                   value: SigningCharacter.Impedimento,
                   groupValue: _character,
-                  onChanged: (SigningCharacter value) {
+                  onChanged: (SigningCharacter? value) {
                     setState(() {
                       _character = value;
                       selectedStateRadioQ15 = 4;

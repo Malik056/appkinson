@@ -53,8 +53,8 @@ class _RelationsRequestState extends State<RelationsRequest> {
   //final items = List.from(Data.relations);
 
   //List<AlarmInfo> items;
-  DateTime _alarmTime;
-  String _alarmTimeString;
+  DateTime? _alarmTime;
+  String? _alarmTimeString;
   //AlarmInfo alarm;
 
   @override
@@ -109,10 +109,10 @@ class _RelationsRequestState extends State<RelationsRequest> {
     debugPrint("bandera");
     debugPrint(rq.id.toString());
     debugPrint(rq.sender);
-    EndPoints().sendResponseRelation('ACCEPT', rq.sender, rq.id.toString());
+    EndPoints().sendResponseRelation('ACCEPT', rq.sender??'', rq.id.toString());
     final item = items.removeAt(index);
 
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );
@@ -121,18 +121,18 @@ class _RelationsRequestState extends State<RelationsRequest> {
   void removeItem2(int index) {
     debugPrint("Entra");
     RelationRequest rq = items[index];
-    EndPoints().sendResponseRelation('DENIED', rq.sender, rq.id.toString());
+    EndPoints().sendResponseRelation('DENIED', rq.sender??'', rq.id.toString());
     final item = items.removeAt(index);
 
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );
   }
 }
 
-getToken() async {
-  String token = await Utils().getToken();
+Future<String?> getToken() async {
+  String? token = await Utils().getToken();
   return token;
 }
 

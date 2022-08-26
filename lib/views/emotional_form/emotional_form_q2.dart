@@ -7,19 +7,19 @@ import '../../services/end_points.dart';
 import 'emotional_form_q1.dart';
 
 class EmotionalFormQ2 extends StatefulWidget {
-  final int idPatient;
+  final int? idPatient;
 
-  EmotionalFormQ2({Key key, this.idPatient}) : super(key: key);
+  EmotionalFormQ2({Key? key, this.idPatient}) : super(key: key);
   @override
   _EmotionalFormQ2 createState() => _EmotionalFormQ2(this.idPatient);
 }
 
 enum SigningCharacter2 { Cero, Uno, Dos, Tres, Nada }
-SigningCharacter2 _character2;
-int selectedStateRadioQ2;
+SigningCharacter2? _character2;
+int? selectedStateRadioQ2;
 
 class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
-  final int idPatient;
+  final int? idPatient;
   _EmotionalFormQ2(this.idPatient);
   void initState() {
     super.initState();
@@ -63,7 +63,7 @@ class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
                 ),
                 value: SigningCharacter2.Cero,
                 groupValue: _character2,
-                onChanged: (SigningCharacter2 value) {
+                onChanged: (SigningCharacter2? value) {
                   setState(() {
                     _character2 = value;
                     selectedStateRadioQ2 = 0;
@@ -82,7 +82,7 @@ class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
                 ),
                 value: SigningCharacter2.Uno,
                 groupValue: _character2,
-                onChanged: (SigningCharacter2 value) {
+                onChanged: (SigningCharacter2? value) {
                   setState(() {
                     _character2 = value;
                     selectedStateRadioQ2 = 1;
@@ -101,7 +101,7 @@ class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
                 ),
                 value: SigningCharacter2.Dos,
                 groupValue: _character2,
-                onChanged: (SigningCharacter2 value) {
+                onChanged: (SigningCharacter2? value) {
                   setState(() {
                     _character2 = value;
                     selectedStateRadioQ2 = 2;
@@ -120,7 +120,7 @@ class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
                 ),
                 value: SigningCharacter2.Tres,
                 groupValue: _character2,
-                onChanged: (SigningCharacter2 value) {
+                onChanged: (SigningCharacter2? value) {
                   setState(() {
                     _character2 = value;
                     selectedStateRadioQ2 = 3;
@@ -141,8 +141,11 @@ class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
                   patientForm.date = new DateTime.now();
                   debugPrint("formulario llenado");
                   // ignore: unused_local_variable
-                  String id = await Utils().getFromToken('id');
-                  String token = await Utils().getToken();
+                  String? id = await Utils().getFromToken('id');
+                  String? token = await Utils().getToken();
+                  if(token == null) { //TODO: Handle NULL (TAHA)
+                    return;
+                  }
                   // ignore: unused_local_variable
                   var savedEmotional = await EndPoints()
                       .registerEmotionalForm(patientForm, idPatient, token);
@@ -167,7 +170,7 @@ class _EmotionalFormQ2 extends State<EmotionalFormQ2> {
 }
 
 class BringAnswer2 {
-  int send() {
+  int? send() {
     return selectedStateRadioQ2;
   }
 }

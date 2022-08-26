@@ -32,16 +32,18 @@ class CameraButtonWidget extends StatelessWidget {
       );
 
   Future pickCameraMedia(BuildContext context) async {
-    final MediaSource source = ModalRoute.of(context).settings.arguments;
+    final MediaSource source = ModalRoute.of(context)!.settings.arguments as MediaSource; //TODO: Check for null
 
-    final getMedia = source == MediaSource.image
-        ? ImagePicker().getImage
-        : ImagePicker().getVideo;
+    final getMedia = source == MediaSource.image ? ImagePicker().pickImage : ImagePicker().pickVideo;
 
     final media = await getMedia(source: ImageSource.camera);
-    final file = File(media.path);
-
-    Navigator.of(context).pop(file);
+    if (media != null) {
+      //TODO: manage null (TAHA)
+      final file = File(media.path);
+      Navigator.of(context).pop(file);
+    } else {
+      Navigator.of(context).pop(null);
+    }
   }
 }
 
@@ -54,16 +56,17 @@ class GalleryButtonWidget extends StatelessWidget {
       );
 
   Future pickGalleryMedia(BuildContext context) async {
-    final MediaSource source = ModalRoute.of(context).settings.arguments;
+    final MediaSource source = ModalRoute.of(context)!.settings.arguments as MediaSource; //TODO: Check for null (TAHA)
 
-    final getMedia = source == MediaSource.image
-        ? ImagePicker().getImage
-        : ImagePicker().getVideo;
+    final getMedia = source == MediaSource.image ? ImagePicker().pickImage : ImagePicker().pickVideo;
 
     final media = await getMedia(source: ImageSource.gallery);
-    final file = File(media.path);
-
-    Navigator.of(context).pop(file);
+    if (media != null) {
+      final file = File(media.path);
+      Navigator.of(context).pop(file);
+    } else {
+      Navigator.of(context).pop(null);
+    }
   }
 }
 
@@ -73,10 +76,10 @@ class ListTileWidget extends StatelessWidget {
   final VoidCallback onClicked;
 
   const ListTileWidget({
-    @required this.text,
-    @required this.icon,
-    @required this.onClicked,
-    Key key,
+    required this.text,
+    required this.icon,
+    required this.onClicked,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -101,10 +104,10 @@ class VideoWidget extends StatefulWidget {
 }
 
 class VideoWidgetState extends State<VideoWidget> {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   bool _isPlaying = false;
 
-  Widget videoStatusAnimation;
+  Widget? videoStatusAnimation;
 
   @override
   void initState() {
@@ -140,7 +143,7 @@ class VideoWidgetState extends State<VideoWidget> {
   @override
   Widget build(BuildContext context) => AspectRatio(
         aspectRatio: 16 / 9,
-        child: _controller.value.initialized ? videoPlayer() : Container(),
+        child: (_controller.value.isInitialized) ? videoPlayer() : Container(),
       );
 
   Widget videoPlayer() => Stack(
@@ -161,16 +164,14 @@ class VideoWidgetState extends State<VideoWidget> {
   Widget video() => GestureDetector(
         child: VideoPlayer(_controller),
         onTap: () {
-          if (!_controller.value.initialized) {
+          if (!_controller.value.isInitialized) {
             return;
           }
           if (_controller.value.isPlaying) {
-            videoStatusAnimation =
-                FadeAnimation(child: const Icon(Icons.pause, size: 100.0));
+            videoStatusAnimation = FadeAnimation(child: const Icon(Icons.pause, size: 100.0));
             _controller.pause();
           } else {
-            videoStatusAnimation =
-                FadeAnimation(child: const Icon(Icons.play_arrow, size: 100.0));
+            videoStatusAnimation = FadeAnimation(child: const Icon(Icons.play_arrow, size: 100.0));
             _controller.play();
           }
         },
@@ -178,8 +179,7 @@ class VideoWidgetState extends State<VideoWidget> {
 }
 
 class FadeAnimation extends StatefulWidget {
-  const FadeAnimation(
-      {this.child, this.duration = const Duration(milliseconds: 1000)});
+  const FadeAnimation({required this.child, this.duration = const Duration(milliseconds: 1000)});
 
   final Widget child;
   final Duration duration;
@@ -188,15 +188,13 @@ class FadeAnimation extends StatefulWidget {
   _FadeAnimationState createState() => _FadeAnimationState();
 }
 
-class _FadeAnimationState extends State<FadeAnimation>
-    with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+class _FadeAnimationState extends State<FadeAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
-    animationController =
-        AnimationController(duration: widget.duration, vsync: this);
+    animationController = AnimationController(duration: widget.duration, vsync: this);
     animationController.addListener(() {
       if (mounted) {
         setState(() {});

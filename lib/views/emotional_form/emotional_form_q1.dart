@@ -6,8 +6,8 @@ class EmotionalFormQ1 extends StatefulWidget {
 }
 
 enum SigningCharacter { Cero, Uno, Dos, Tres, Nada }
-SigningCharacter _character = SigningCharacter.Nada;
-int selectedStateRadioQ1;
+SigningCharacter? _character = SigningCharacter.Nada;
+int? selectedStateRadioQ1;
 
 class _EmotionalFormQ1 extends State<EmotionalFormQ1> {
   void initState() {
@@ -53,7 +53,7 @@ class _EmotionalFormQ1 extends State<EmotionalFormQ1> {
                 ),
                 value: SigningCharacter.Cero,
                 groupValue: _character,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character = value;
                     selectedStateRadioQ1 = 0;
@@ -72,7 +72,7 @@ class _EmotionalFormQ1 extends State<EmotionalFormQ1> {
                 ),
                 value: SigningCharacter.Uno,
                 groupValue: _character,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character = value;
                     selectedStateRadioQ1 = 1;
@@ -91,7 +91,7 @@ class _EmotionalFormQ1 extends State<EmotionalFormQ1> {
                 ),
                 value: SigningCharacter.Dos,
                 groupValue: _character,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character = value;
                     selectedStateRadioQ1 = 2;
@@ -110,7 +110,7 @@ class _EmotionalFormQ1 extends State<EmotionalFormQ1> {
                 ),
                 value: SigningCharacter.Tres,
                 groupValue: _character,
-                onChanged: (SigningCharacter value) {
+                onChanged: (SigningCharacter? value) {
                   setState(() {
                     _character = value;
                     selectedStateRadioQ1 = 3;
@@ -133,7 +133,7 @@ class _EmotionalFormQ1 extends State<EmotionalFormQ1> {
 }
 
 class BringAnswer1 {
-  int send() {
+  int? send() {
     return selectedStateRadioQ1;
   }
 }

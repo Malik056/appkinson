@@ -4,10 +4,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 
 class NotificationPlugin {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  final BehaviorSubject<ReceivedNotification>
-      didReceivedLocalNotificationSubject =
-      BehaviorSubject<ReceivedNotification>();
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final BehaviorSubject<ReceivedNotification> didReceivedLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
   var initializationSettings;
 
   NotificationPlugin._() {
@@ -22,27 +20,21 @@ class NotificationPlugin {
   }
 
   initializePlatformSpecifics() {
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
       requestSoundPermission: true,
       onDidReceiveLocalNotification: (id, title, body, payload) async {
-        ReceivedNotification receivedNotification = ReceivedNotification(
-            id: id, title: title, body: body, payload: payload);
+        ReceivedNotification receivedNotification = ReceivedNotification(id: id, title: title ?? '', body: body ?? '', payload: payload ?? '');
         didReceivedLocalNotificationSubject.add(receivedNotification);
       },
     );
-    initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+    initializationSettings = InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
   }
 
   _requestIOSPermission() {
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        .requestPermissions(
+    flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions(
           alert: false,
           badge: true,
           sound: true,
@@ -56,26 +48,27 @@ class NotificationPlugin {
   }
 
   setOnNotificationClick(Function onNotificationClick) async {
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String payload) async {
-      onNotificationClick(payload);
-    });
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: (String? payload) async {
+        onNotificationClick(payload);
+      },
+    );
   }
 
   Future<void> showNotification() async {
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID',
       'CHANNEL_NAME',
-      "CHANNEL_DESCRIPTION",
-      importance: Importance.Max,
-      priority: Priority.High,
+      channelDescription: "CHANNEL_DESCRIPTION",
+      importance: Importance.max,
+      priority: Priority.high,
       playSound: true,
       timeoutAfter: 4000,
       styleInformation: DefaultStyleInformation(true, true),
     );
     var iosChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics =
-        NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
+    var platformChannelSpecifics = NotificationDetails(android: androidChannelSpecifics, iOS: iosChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       0,
       'SINTOMAS',
@@ -86,12 +79,11 @@ class NotificationPlugin {
   }
 
   Future<void> scheduleNotification() async {
-    var scheduleNotificationDateTime =
-        DateTime.now().add(Duration(seconds: 10));
+    var scheduleNotificationDateTime = DateTime.now().add(Duration(seconds: 10));
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 1',
       'CHANNEL_NAME 1',
-      "CHANNEL_DESCRIPTION 1",
+      channelDescription: "CHANNEL_DESCRIPTION 1",
       icon: '@mipmap/ic_launcher',
       //sound: RawResourceAndroidNotificationSound('my_sound'),
       largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
@@ -100,8 +92,8 @@ class NotificationPlugin {
       ledColor: const Color.fromARGB(255, 255, 0, 0),
       ledOnMs: 1000,
       ledOffMs: 500,
-      importance: Importance.Max,
-      priority: Priority.High,
+      importance: Importance.max,
+      priority: Priority.high,
       playSound: true,
       timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
@@ -110,9 +102,10 @@ class NotificationPlugin {
         // sound: 'my_sound.aiff',
         );
     var platformChannelSpecifics = NotificationDetails(
-      androidChannelSpecifics,
-      iosChannelSpecifics,
+      android: androidChannelSpecifics,
+      iOS: iosChannelSpecifics,
     );
+    // ignore: deprecated_member_use
     await flutterLocalNotificationsPlugin.schedule(
       0,
       'Test Title',
@@ -128,13 +121,13 @@ class NotificationPlugin {
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 4',
       'CHANNEL_NAME 4',
-      "CHANNEL_DESCRIPTION 4",
-      importance: Importance.Max,
-      priority: Priority.High,
+      channelDescription: "CHANNEL_DESCRIPTION 4",
+      importance: Importance.max,
+      priority: Priority.high,
     );
     var iosChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics =
-        NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
+    var platformChannelSpecifics = NotificationDetails(android: androidChannelSpecifics, iOS: iosChannelSpecifics);
+    // ignore: deprecated_member_use
     await flutterLocalNotificationsPlugin.showDailyAtTime(
       0,
       'Test Title at ${time.hour}:${time.minute}.${time.second}',
@@ -150,18 +143,18 @@ class NotificationPlugin {
     var androidChannelSpecifics = AndroidNotificationDetails(
       'CHANNEL_ID 5',
       'CHANNEL_NAME 5',
-      "CHANNEL_DESCRIPTION 5",
-      importance: Importance.Max,
-      priority: Priority.High,
+      channelDescription: "CHANNEL_DESCRIPTION 5",
+      importance: Importance.max,
+      priority: Priority.high,
     );
     var iosChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics =
-        NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
+    var platformChannelSpecifics = NotificationDetails(android: androidChannelSpecifics, iOS: iosChannelSpecifics);
+    // ignore: deprecated_member_use
     await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
       0,
       'Test Title at ${time.hour}:${time.minute}.${time.second}',
       'Test', //null
-      Day.Sunday,
+      Day.sunday,
       time,
       platformChannelSpecifics,
       payload: 'Test Payload',
@@ -186,9 +179,9 @@ class ReceivedNotification {
   final String payload;
 
   ReceivedNotification({
-    @required this.id,
-    @required this.title,
-    @required this.body,
-    @required this.payload,
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.payload,
   });
 }

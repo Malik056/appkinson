@@ -7,14 +7,14 @@ import 'package:appkinson/views/report/Widget_Chart_Pie.dart';
 import 'package:flutter/material.dart';
 import 'widget_chart_serie.dart';
 
-String averageSymtomsResponse;
-String averageSymptomsByMonth;
-String averageGameScore;
-String averageDyskineciasWithoutMonth;
-String averageEmotionalSymptoms;
-String dataDisrepancy;
-String dataNoMotors;
-String dataSymptomsByDay;
+String? averageSymtomsResponse;
+String? averageSymptomsByMonth;
+String? averageGameScore;
+String? averageDyskineciasWithoutMonth;
+String? averageEmotionalSymptoms;
+String? dataDisrepancy;
+String? dataNoMotors;
+String? dataSymptomsByDay;
 
 var piedata; //Gráfica promedio de sintomas
 var seriedata; //Gráfica promedio de sintomas por mes
@@ -58,7 +58,7 @@ class ListReportPage extends StatefulWidget {
   final int idPatient;
   final List<DateTime> picked;
 
-  ListReportPage({Key key, this.idPatient, this.picked}) : super(key: key);
+  ListReportPage({Key? key, required this.idPatient, required this.picked}) : super(key: key);
   _ListReportPage createState() => _ListReportPage(idPatient, picked);
 }
 
@@ -73,83 +73,102 @@ class _ListReportPage extends State<ListReportPage> {
     var now = picked[1];
     var lastDate = picked[0];
     _getAllDataCharts(lastDate, now).then((value) {
-      var averageSymtomsResponseDecode = json.decode(averageSymtomsResponse);
-      List<double> averageSymptoms = [];
-      //Construyendo los datos de la gráfica de promedio de los síntomas del paciente - Gráfica de tortas
-      averageSymptoms.add(averageSymtomsResponseDecode["on"].toDouble());
-      averageSymptoms.add(averageSymtomsResponseDecode["onG"].toDouble());
-      averageSymptoms.add(averageSymtomsResponseDecode["off"].toDouble());
-      averageSymptoms.add(averageSymtomsResponseDecode["offB"].toDouble());
+      if (averageSymtomsResponse != null) {
+        //TODO: Handle Null (TAHA)
 
-      piedata = returnDataPie(averageSymptoms);
+        var averageSymtomsResponseDecode = json.decode(averageSymtomsResponse!);
+        List<double> averageSymptoms = [];
+        //Construyendo los datos de la gráfica de promedio de los síntomas del paciente - Gráfica de tortas
+        averageSymptoms.add(averageSymtomsResponseDecode["on"].toDouble());
+        averageSymptoms.add(averageSymtomsResponseDecode["onG"].toDouble());
+        averageSymptoms.add(averageSymtomsResponseDecode["off"].toDouble());
+        averageSymptoms.add(averageSymtomsResponseDecode["offB"].toDouble());
+
+        piedata = returnDataPie(averageSymptoms);
+      }
 
       //---------------------------------------------------------------------------
       //Construyendo la gráfica del promedio de síntomas por cada mes - Gráfica de barras
-      var averageSymtomsByMonthResponseDecode = json.decode(averageSymptomsByMonth);
-      if (dataDescriptionSymptomsByMonth != "") {
-        dataDescriptionSymptomsByMonth = "";
+      if (averageSymptomsByMonth != null) {
+        //TODO: Handle Null (TAHA)
+        var averageSymtomsByMonthResponseDecode = json.decode(averageSymptomsByMonth!);
+        if (dataDescriptionSymptomsByMonth != "") {
+          dataDescriptionSymptomsByMonth = "";
+        }
+        for (int i = 0; i < averageSymtomsByMonthResponseDecode.length; i++) {
+          dataDescriptionSymptomsByMonth = dataDescriptionSymptomsByMonth + toMonthString(averageSymtomsByMonthResponseDecode[i]['mes']) + " : " + averageSymtomsByMonthResponseDecode[i]['onG'].toString() + " en ON MUY BUENO " + averageSymtomsByMonthResponseDecode[i]['on'].toString() + " en ON " + averageSymtomsByMonthResponseDecode[i]['off'].toString() + " en OFF " + averageSymtomsByMonthResponseDecode[i]['offG'].toString() + "en OFF MUY MALO \n";
+        }
+        seriedata = returnDataSeries(averageSymtomsByMonthResponseDecode.length, averageSymtomsByMonthResponseDecode);
       }
-      for (int i = 0; i < averageSymtomsByMonthResponseDecode.length; i++) {
-        dataDescriptionSymptomsByMonth = dataDescriptionSymptomsByMonth + toMonthString(averageSymtomsByMonthResponseDecode[i]['mes']) + " : " + averageSymtomsByMonthResponseDecode[i]['onG'].toString() + " en ON MUY BUENO " + averageSymtomsByMonthResponseDecode[i]['on'].toString() + " en ON " + averageSymtomsByMonthResponseDecode[i]['off'].toString() + " en OFF " + averageSymtomsByMonthResponseDecode[i]['offG'].toString() + "en OFF MUY MALO \n";
-      }
-      seriedata = returnDataSeries(averageSymtomsByMonthResponseDecode.length, averageSymtomsByMonthResponseDecode);
-
       //Construyendo la gráfica de promedio de puntaje obtenido en el juego por mes - Gráfica de barras
-      var averageGameResponseDecode = json.decode(averageGameScore);
-      if (dataDescriptionAverageGame != "") {
-        dataDescriptionAverageGame = "";
+
+      if (averageGameScore != null) {
+        //TODO: Manage null (TAHA)
+        var averageGameResponseDecode = json.decode(averageGameScore!);
+        if (dataDescriptionAverageGame != "") {
+          dataDescriptionAverageGame = "";
+        }
+        for (int i = 0; i < averageGameResponseDecode.length; i++) {
+          dataDescriptionAverageGame = dataDescriptionAverageGame + toMonthString(averageGameResponseDecode[i]['mes']) + " : " + averageGameResponseDecode[i]['Promedio'].toString() + " en promedio de puntaje jugado y " + averageGameResponseDecode[i]['Cantidad'].toString() + " de veces jugadas. \n Puntaje máximo:" + averageGameResponseDecode[i]['Max'].toString() + ". Puntaje mínimo: " + averageGameResponseDecode[i]['Min'].toString() + " \n";
+        }
+        seriedataGameAverage = returnDataSeriesGameAverage(averageGameResponseDecode.length, averageGameResponseDecode);
       }
-      for (int i = 0; i < averageGameResponseDecode.length; i++) {
-        dataDescriptionAverageGame = dataDescriptionAverageGame + toMonthString(averageGameResponseDecode[i]['mes']) + " : " + averageGameResponseDecode[i]['Promedio'].toString() + " en promedio de puntaje jugado y " + averageGameResponseDecode[i]['Cantidad'].toString() + " de veces jugadas. \n Puntaje máximo:" + averageGameResponseDecode[i]['Max'].toString() + ". Puntaje mínimo: " + averageGameResponseDecode[i]['Min'].toString() + " \n";
-      }
-      seriedataGameAverage = returnDataSeriesGameAverage(averageGameResponseDecode.length, averageGameResponseDecode);
       //
       //Construyeno la gráfica de porcentaje de disquinecias por meses - Gráfica de pie
-      var averageDyskineciasDecode = json.decode(averageDyskineciasWithoutMonth);
-      if (dataDescriptionAverageDyskinecias != "") {
-        dataDescriptionAverageDyskinecias = "";
+      if (averageDyskineciasWithoutMonth != null) {
+        //TODO: Manage null (TAHA)
+        var averageDyskineciasDecode = json.decode(averageDyskineciasWithoutMonth!);
+        if (dataDescriptionAverageDyskinecias != "") {
+          dataDescriptionAverageDyskinecias = "";
+        }
+        for (int i = 0; i < averageDyskineciasDecode.length; i++) {
+          dataDescriptionAverageDyskinecias = dataDescriptionAverageDyskinecias + toMonthString(averageDyskineciasDecode[i]['mes']) + " : " + averageDyskineciasDecode[i]['Promedio'].toString() + " en porcentaje de disquinesias presentadas en el mes \n ";
+        }
+        serieDataDiskineias = returnDataPieAverageDiskinecias(averageDyskineciasDecode.length, averageDyskineciasDecode);
       }
-      for (int i = 0; i < averageDyskineciasDecode.length; i++) {
-        dataDescriptionAverageDyskinecias = dataDescriptionAverageDyskinecias + toMonthString(averageDyskineciasDecode[i]['mes']) + " : " + averageDyskineciasDecode[i]['Promedio'].toString() + " en porcentaje de disquinesias presentadas en el mes \n ";
-      }
-      serieDataDiskineias = returnDataPieAverageDiskinecias(averageDyskineciasDecode.length, averageDyskineciasDecode);
-
       //Construyendo la gráfica de promedio de puntaje del formulario emocional por meses
-      var averageEmotionalSymptomsDecode = json.decode(averageEmotionalSymptoms);
-      if (dataDescriptionAverageEmotional != "") {
-        dataDescriptionAverageEmotional = "";
+      if (averageEmotionalSymptoms != null) {
+        //TODO: manage null (TAHA)
+        var averageEmotionalSymptomsDecode = json.decode(averageEmotionalSymptoms!);
+        if (dataDescriptionAverageEmotional != "") {
+          dataDescriptionAverageEmotional = "";
+        }
+        for (int i = 0; i < averageEmotionalSymptomsDecode.length; i++) {
+          dataDescriptionAverageEmotional = dataDescriptionAverageEmotional + toMonthString(averageEmotionalSymptomsDecode[i]['mes']) + " : " + averageEmotionalSymptomsDecode[i]['Promedio'].toString() + " en promedio de puntaje de ánimo \n ";
+        }
+        seriesDataEmotional = returnDataSeriesEmotionalAverage(averageEmotionalSymptomsDecode.length, averageEmotionalSymptomsDecode);
       }
-      for (int i = 0; i < averageEmotionalSymptomsDecode.length; i++) {
-        dataDescriptionAverageEmotional = dataDescriptionAverageEmotional + toMonthString(averageEmotionalSymptomsDecode[i]['mes']) + " : " + averageEmotionalSymptomsDecode[i]['Promedio'].toString() + " en promedio de puntaje de ánimo \n ";
-      }
-      seriesDataEmotional = returnDataSeriesEmotionalAverage(averageEmotionalSymptomsDecode.length, averageEmotionalSymptomsDecode);
-
       //Construyendo la gráfica de disrepania en los tiempos de toma de médicamentos
-      var discrepandyDataDecode = json.decode(dataDisrepancy);
-      lineDataMedicinesDiscrepacy = returnDataLine(discrepandyDataDecode.length, discrepandyDataDecode);
-
+      if (dataDisrepancy != null) {
+        var discrepandyDataDecode = json.decode(dataDisrepancy!);
+        lineDataMedicinesDiscrepacy = returnDataLine(discrepandyDataDecode.length, discrepandyDataDecode);
+      }
       //Construyendo la gráfica del puntaje promedio de los sintomas no motores
-      var noMotorsDataDecode = json.decode(dataNoMotors);
-      if (dataDescriptionNoMotores != "") {
-        dataDescriptionNoMotores = "";
+      if (dataNoMotors != null) {
+        //TODO: Manage null (TAHA)
+        var noMotorsDataDecode = json.decode(dataNoMotors!);
+        if (dataDescriptionNoMotores != "") {
+          dataDescriptionNoMotores = "";
+        }
+        for (int i = 1; i < noMotorsDataDecode.length; i++) {
+          dataDescriptionNoMotores = dataDescriptionNoMotores + "Semana " + noMotorsDataDecode[i]['Week'].toString() + " : " + noMotorsDataDecode[i]['Promedio'].toString() + " en promedio. Fecha: " + noMotorsDataDecode[i]['Fecha'] + "\n Preguntas en las que respondió 'Sí': \n" + _dataNoMotorsSymptoms(noMotorsDataDecode[i]['Preguntas']) + "\n";
+        }
+        lineDataNoMotors = returnDataLineMotors(noMotorsDataDecode.length, noMotorsDataDecode);
       }
-      for (int i = 1; i < noMotorsDataDecode.length; i++) {
-        dataDescriptionNoMotores = dataDescriptionNoMotores + "Semana " + noMotorsDataDecode[i]['Week'].toString() + " : " + noMotorsDataDecode[i]['Promedio'].toString() + " en promedio. Fecha: " + noMotorsDataDecode[i]['Fecha'] + "\n Preguntas en las que respondió 'Sí': \n" + _dataNoMotorsSymptoms(noMotorsDataDecode[i]['Preguntas']) + "\n";
-      }
-      lineDataNoMotors = returnDataLineMotors(noMotorsDataDecode.length, noMotorsDataDecode);
-
       //Construyendo la gráfica de los sintomas por día
-      var symptomsByDayDataDecode = json.decode(dataSymptomsByDay);
+      if (dataSymptomsByDay == null) {
+        var symptomsByDayDataDecode = json.decode(dataSymptomsByDay!);
 
-      if (dataDescriptionSymptomsDay != "") {
-        dataDescriptionSymptomsDay = "";
-      }
-      for (int i = 0; i < symptomsByDayDataDecode.length; i++) {
-        dataDescriptionSymptomsDay = dataDescriptionSymptomsDay + "Hora " + symptomsByDayDataDecode[i]['Hora'].toString() + '. Estado : ' + symptomsByDayDataDecode[i]['Estado'].toString() + "\n";
-      }
+        if (dataDescriptionSymptomsDay != "") {
+          dataDescriptionSymptomsDay = "";
+        }
+        for (int i = 0; i < symptomsByDayDataDecode.length; i++) {
+          dataDescriptionSymptomsDay = dataDescriptionSymptomsDay + "Hora " + symptomsByDayDataDecode[i]['Hora'].toString() + '. Estado : ' + symptomsByDayDataDecode[i]['Estado'].toString() + "\n";
+        }
 
-      lineDataSymptomsDay = returnDataLineSymptomsByDay(symptomsByDayDataDecode.length, symptomsByDayDataDecode);
-      print(lineDataSymptomsDay);
+        lineDataSymptomsDay = returnDataLineSymptomsByDay(symptomsByDayDataDecode.length, symptomsByDayDataDecode);
+        print(lineDataSymptomsDay);
+      }
     });
     print(lastDate);
     print(now);
@@ -481,19 +500,19 @@ String toMonthString(int month) {
 
 returnDataPie(List<double> datos) {
   var linealdata = [
-    new DataPieChart('ON MUY BUENO', datos[1], Colors.green[700]),
+    new DataPieChart('ON MUY BUENO', datos[1], Colors.green[700]!),
     new DataPieChart('ON BUENO', datos[0], Colors.lightGreen),
     new DataPieChart('OFF MALO', datos[2], Colors.red),
-    new DataPieChart('OFF MUY MALO', datos[3], Colors.red[800]),
+    new DataPieChart('OFF MUY MALO', datos[3], Colors.red[800]!),
   ];
   return linealdata;
 }
 
 returnDataLineSymptomsByDay(int length, var symptomsDay) {
   var allData = [];
-  List<dataLineSerie> data = [];
+  List<DataLineSerie> data = [];
   for (int i = 0; i < length; i++) {
-    data.add(new dataLineSerie(symptomsDay[i]['Hora'].toInt(), symptomsDay[i]['Estado'].toDouble())); // mes y promedio en tiempo del desfase calculado
+    data.add(new DataLineSerie(symptomsDay[i]['Hora'].toInt(), symptomsDay[i]['Estado'].toDouble())); // mes y promedio en tiempo del desfase calculado
   }
   allData.add(data);
 
@@ -520,9 +539,9 @@ returnDataLine(int length, var discrepancyaDataDecode) {
 returnDataLineMotors(int length, var motorsDataDecode) {
   //Gráfica de discrepancia del tiempo en la toma de médicamentos
   var allData = [];
-  List<dataLineSerie> data = [];
+  List<DataLineSerie> data = [];
   for (int i = 0; i < length; i++) {
-    data.add(new dataLineSerie(motorsDataDecode[i]['Week'].toInt(), motorsDataDecode[i]['Promedio'].toDouble())); // mes y promedio en tiempo del desfase calculado
+    data.add(new DataLineSerie(motorsDataDecode[i]['Week'].toInt(), motorsDataDecode[i]['Promedio'].toDouble())); // mes y promedio en tiempo del desfase calculado
   }
   allData.add(data);
 

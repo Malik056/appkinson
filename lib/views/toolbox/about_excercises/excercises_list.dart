@@ -18,8 +18,8 @@ var id = 0;
 class _ListExcercisesState extends State<ListExcercises> {
   final key = GlobalKey<AnimatedListState>();
   //List<AlarmInfo> items;
-  DateTime _alarmTime;
-  String _alarmTimeString;
+  DateTime? _alarmTime;
+  String? _alarmTimeString;
 
   //AlarmInfo alarm;
   @override
@@ -66,7 +66,7 @@ class _ListExcercisesState extends State<ListExcercises> {
 
   void insertItem(int index, ItemToolbox item) {
     items.insert(index, item);
-    key.currentState.insertItem(index);
+    key.currentState?.insertItem(index);
     Navigator.pop(context);
   }
 
@@ -74,19 +74,19 @@ class _ListExcercisesState extends State<ListExcercises> {
     //EndPoints().deleteAlarm(index.toString(), getToken(), getId());
     final item = items.removeAt(index);
 
-    key.currentState.removeItem(
+    key.currentState?.removeItem(
       index,
       (context, animation) => buildItem(item, index, animation),
     );
   }
 }
 
-getId() async {
-  String id = await Utils().getFromToken('id');
+Future<String?> getId() async {
+  String? id = await Utils().getFromToken('id');
   return id;
 }
 
-getToken() async {
-  String token = await Utils().getToken();
+Future<String?> getToken() async {
+  String? token = await Utils().getToken();
   return token;
 }

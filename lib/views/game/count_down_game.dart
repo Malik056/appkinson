@@ -12,14 +12,14 @@ class CountDownTimer extends StatefulWidget {
 
 int count = 0;
 bool envio = false;
-bool isPlaying;
+bool? isPlaying;
 bool isopen = false;
 
 class CustomTimerPainter extends CustomPainter {
   CustomTimerPainter({
-    this.animation,
-    this.backgroundColor,
-    this.color,
+    required this.animation,
+    required this.backgroundColor,
+    required this.color,
   }) : super(repaint: animation);
 
   final Animation<double> animation;
@@ -56,18 +56,15 @@ class CustomTimerPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomTimerPainter old) {
-    return animation.value != old.animation.value ||
-        color != old.color ||
-        backgroundColor != old.backgroundColor;
+    return animation.value != old.animation.value || color != old.color || backgroundColor != old.backgroundColor;
   }
 }
 
-class _CountDownTimerState extends State<CountDownTimer>
-    with TickerProviderStateMixin {
-  AnimationController controller;
+class _CountDownTimerState extends State<CountDownTimer> with TickerProviderStateMixin {
+  late AnimationController controller;
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = (controller.duration ?? Duration.zero) * controller.value; //TODO: Handle NULL (TAHA)
     return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
@@ -107,8 +104,7 @@ class _CountDownTimerState extends State<CountDownTimer>
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     color: Colors.amber,
-                    height:
-                        controller.value * MediaQuery.of(context).size.height,
+                    height: controller.value * MediaQuery.of(context).size.height,
                   ),
                 ),
                 Padding(
@@ -134,23 +130,17 @@ class _CountDownTimerState extends State<CountDownTimer>
                                 Align(
                                   alignment: FractionalOffset.center,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
                                         "¡Presiona tantas \nveces como puedas!",
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            color: Colors.white),
+                                        style: TextStyle(fontSize: 20.0, color: Colors.white),
                                       ),
                                       Text(
                                         timerString,
-                                        style: TextStyle(
-                                            fontSize: 60.0,
-                                            color: Colors.white),
+                                        style: TextStyle(fontSize: 60.0, color: Colors.white),
                                       ),
                                     ],
                                   ),
@@ -160,7 +150,7 @@ class _CountDownTimerState extends State<CountDownTimer>
                           ),
                         ),
                       ),
-                      !isPlaying
+                      !(isPlaying??false) //TODO: Handle NULL (TAHA)
                           ? Column(children: [
                               SizedBox(
                                 width: 250,
@@ -186,8 +176,7 @@ class _CountDownTimerState extends State<CountDownTimer>
                               ),
                               Text(
                                 '$count',
-                                style:
-                                    TextStyle(fontSize: 60, color: Colors.blue),
+                                style: TextStyle(fontSize: 60, color: Colors.blue),
                               ),
                             ])
                           : SizedBox(
@@ -203,17 +192,14 @@ class _CountDownTimerState extends State<CountDownTimer>
                                         isExtended: true,
                                         heroTag: "btn2",
                                         onPressed: () {
-                                          controller.reverse(
-                                              from: controller.value == 0.0
-                                                  ? 1.0
-                                                  : controller.value);
+                                          controller.reverse(from: controller.value == 0.0 ? 1.0 : controller.value);
                                           if (controller.value == 1.0) {
                                             envio = false;
                                             print("Se acabó el tie");
                                             //Aquí llamar el servicio y si es diferente de 0 se guarda el resultado
                                             count = 0;
                                           }
-                                          isPlaying = !isPlaying;
+                                          isPlaying = !(isPlaying??false); //TODO: Handle NULL (TAHA)
                                         },
                                         label: Text(
                                           "Empezar",

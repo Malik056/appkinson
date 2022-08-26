@@ -1,6 +1,5 @@
 import 'package:appkinson/views/notifications/notification_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:foldable_sidebar/foldable_sidebar.dart';
 import '../side_menus/custom_drawer_menu_patient.dart';
 
 class PatientNotifications extends StatefulWidget {
@@ -9,16 +8,19 @@ class PatientNotifications extends StatefulWidget {
 }
 
 class _PatientNotifications extends State<PatientNotifications> {
-  FSBStatus status;
+  // FSBStatus status;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FoldableSidebarBuilder(
-            status: status,
-            drawer: CustomDrawerMenuPatient(),
-            screenContents: PatientNotifications0()),
+        drawer: CustomDrawerMenuPatient(),
+        body: PatientNotifications0(),
+        // FoldableSidebarBuilder(
+        //   status: status,
+        //   drawer: CustomDrawerMenuPatient(),
+        //   screenContents: PatientNotifications0(),
+        // ),
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue[800],
             child: Icon(
@@ -27,9 +29,12 @@ class _PatientNotifications extends State<PatientNotifications> {
             ),
             onPressed: () {
               setState(() {
-                status = status == FSBStatus.FSB_OPEN
-                    ? FSBStatus.FSB_CLOSE
-                    : FSBStatus.FSB_OPEN;
+                if (!Scaffold.of(context).isDrawerOpen) {
+                  Scaffold.of(context).openDrawer();
+                } else {
+                  Scaffold.of(context).closeDrawer();
+                }
+                // status = status == FSBStatus.FSB_OPEN ? FSBStatus.FSB_CLOSE : FSBStatus.FSB_OPEN;
               });
             }),
       ),
@@ -48,8 +53,7 @@ class _PatientNotifications0 extends State<PatientNotifications0> {
   @override
   void initState() {
     super.initState();
-    notificationPlugin
-        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationPlugin.setListenerForLowerVersions(onNotificationInLowerVersions);
     notificationPlugin.setOnNotificationClick(onNotificationClick);
   }
 
@@ -73,8 +77,7 @@ class _PatientNotifications0 extends State<PatientNotifications0> {
               'Síntomas',
               style: new TextStyle(fontSize: 20.0),
             ),
-            subtitle:
-                new Text('¡Recuerde registrar sus síntomas todos los días!'),
+            subtitle: new Text('¡Recuerde registrar sus síntomas todos los días!'),
           ),
           SizedBox(
             height: 30,
@@ -88,8 +91,7 @@ class _PatientNotifications0 extends State<PatientNotifications0> {
               'Estado de Ánimo',
               style: new TextStyle(fontSize: 20.0),
             ),
-            subtitle:
-                new Text('¡Recuerde registrar su estado de ánimo cada semana!'),
+            subtitle: new Text('¡Recuerde registrar su estado de ánimo cada semana!'),
           ),
           SizedBox(
             height: 30,

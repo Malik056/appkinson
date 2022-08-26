@@ -52,8 +52,11 @@ class __ProfileEdition extends State<ProfileEditionCarer> {
                   nameCarer = nameControllerCarer.text;
                 });
 
-                String id = await Utils().getFromToken('id');
-                String token = await Utils().getToken();
+                String? id = await Utils().getFromToken('id');
+                String? token = await Utils().getToken();
+                if(token == null || id == null) {
+                  return;
+                }
                 String save = await EndPoints().modifyUsers(user, id, token);
                 debugPrint(save);
 

@@ -9,8 +9,8 @@ final String columnPending = 'isPending';
 final String columnColorIndex = 'gradientColorIndex';
 
 class MedicinesDB {
-  static Database _database;
-  static MedicinesDB _medicinesDB;
+  static Database? _database;
+  static MedicinesDB? _medicinesDB;
 
 
   MedicinesDB._createInstance();
@@ -18,14 +18,14 @@ class MedicinesDB {
     if (_medicinesDB == null) {
       _medicinesDB = MedicinesDB._createInstance();
     }
-    return _medicinesDB;
+    return _medicinesDB!;
   }
 
    Future<Database> get database async {
     if (_database == null) {
       _database = await initializeDatabase();
     }
-    return _database;
+    return _database!;
   }
 
    Future<Database> initializeDatabase() async {
