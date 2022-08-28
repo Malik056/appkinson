@@ -4,13 +4,13 @@ import 'package:appkinson/utils/utils.dart';
 import 'package:flutter/material.dart';
 
 class ButtonGoReporter extends StatelessWidget {
-  final int idPatient;
+  final int? idPatient;
 
-  ButtonGoReporter({required this.idPatient});
+  ButtonGoReporter({this.idPatient});
 
   @override
   Widget build(BuildContext context) {
-    int idPatient = this.idPatient;
+    int? idPatient = this.idPatient;
     print("id ppp" + idPatient.toString());
     Size size = MediaQuery.of(context).size;
     return Container(

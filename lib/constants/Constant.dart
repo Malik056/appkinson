@@ -6,9 +6,8 @@ const linkUserRelatedURL = '/api/doctor/patients/related';
 const modifyNameOfUserURL = '/api/users/';
 const getNameUSer = '/api/users/me';
 const getPhotoUserURL = '/uploads/photo/';
-const ip = '18.222.20.36';
+const ip = 'parking.virtualtecserver.com';
 const port = '9000';
-const endpointBack = 'http://$ip:$port';
-const pagePath = '$ip:$port';
+const endpointBack = 'https://$ip';
+const pagePath = '$ip';
 const TASK_SET_ALARMS = "alarmsTask";
-

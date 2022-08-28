@@ -55,7 +55,7 @@ String dataDescriptionSymptomsDay = "";
 String dataDescriptionNoMotores = "";
 
 class ListReportPage extends StatefulWidget {
-  final int idPatient;
+  final int? idPatient;
   final List<DateTime> picked;
 
   ListReportPage({Key? key, required this.idPatient, required this.picked}) : super(key: key);
@@ -63,7 +63,7 @@ class ListReportPage extends StatefulWidget {
 }
 
 class _ListReportPage extends State<ListReportPage> {
-  final int idPatient;
+  final int? idPatient;
   List<DateTime> picked;
 
   _ListReportPage(this.idPatient, this.picked);

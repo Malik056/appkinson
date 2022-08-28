@@ -9,15 +9,15 @@ String selectedChoice = "";
 DateTime selectedDate = DateTime.now();
 
 class ReportConfigPage extends StatefulWidget {
-  final int idPatient;
+  final int? idPatient;
 
-  const ReportConfigPage({Key? key, required this.idPatient}) : super(key: key);
+  const ReportConfigPage({Key? key, this.idPatient}) : super(key: key);
   @override
   _ReportConfigPageState createState() => _ReportConfigPageState(idPatient);
 }
 
 class _ReportConfigPageState extends State<ReportConfigPage> {
-  final int idPatient;
+  final int? idPatient;
   _ReportConfigPageState(this.idPatient);
 
   List<String> dataList = ["Síntomas", "Ánimo", "Médicamentos", "Destreza"];

@@ -25,7 +25,7 @@ class RoutesDoctor {
   }
 
 //ruta hacia la configuración para el intervalo de creación de las gráficas
-  Future<T?> toReportConfigPage<T>(BuildContext context, int idPatient) {
+  Future<T?> toReportConfigPage<T>(BuildContext context, int? idPatient) {
     return Navigator.push<T>(
         context,
         new MaterialPageRoute<T>(
@@ -52,7 +52,7 @@ class RoutesDoctor {
   }
 
 //ruta para ir a la lista de los reportes posibles a generar
-  Future<T?> toListReportPage<T>(BuildContext context, int idPatient, List<DateTime> picked) {
+  Future<T?> toListReportPage<T>(BuildContext context, int? idPatient, List<DateTime> picked) {
     return Navigator.push<T>(
         context,
         new MaterialPageRoute(
